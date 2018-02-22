@@ -21,8 +21,10 @@ build-prod: ## build on a prod-version
 change-version: ## change the project version
 	$(PKG) version
 
-clean:
+clean: ## make it clean, pls sir
 	$(PKG) clean-files
+
+clear: clean
 
 deploy: build-prod
 

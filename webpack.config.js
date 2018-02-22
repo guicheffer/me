@@ -65,7 +65,7 @@ module.exports = function(env = {}) {
       {
         context: path.resolve(__dirname, inputPath),
         from: '**/*.html',
-        to: path.resolve(__dirname, outputPath, './'),
+        to: path.resolve(__dirname, outputPath, './index.html'),
       },
     ]),
     watch : new WatchPlugin({
@@ -77,10 +77,9 @@ module.exports = function(env = {}) {
   return {
     entry: {
       vendor: ['lodash'],
-      home: [
-        `${inputPath}home/home`,
-        `${inputPath}home/home.html`,
-        `${inputPath}home/home.sty`
+      setup: [
+        './src/app/setup',
+        './src/app/setup.styl'
       ],
     },
 
@@ -91,7 +90,6 @@ module.exports = function(env = {}) {
 
     resolve: {
       alias: {
-        _: 'lodash/lodash',
         underscore: 'lodash/lodash',
       },
       extensions: ['.js', '.styl'],

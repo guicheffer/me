@@ -2,7 +2,7 @@
   "reveal": true,
   "license": "GPL-3.0",
   "name": "guicheffer.me",
-  "description": "💼 This is basically my digital home ",
+  "description": "💼 This is basically my digital home",
   "version": "0.1.1",
   "author": "João Guilherme <hi@guicheffer.me>",
   "homepage": "http://guicheffer.me/",
@@ -12,9 +12,6 @@
         "dev": "static/",
         "prod": "http://guicheffer.me/"
       },
-      "ignore": [
-        "node_modules"
-      ],
       "input": "src/app/",
       "output": "dist/"
     },
@@ -57,7 +54,6 @@
     "glob": "^7.1.2",
     "html-minifier": "^3.5.2",
     "loader-utils": "~1.1.0",
-    "lodash": "^4.17.4",
     "path": "^0.12.7",
     "postcss-loader": "^2.0.6",
     "raw-loader": "^0.5.1",
@@ -66,12 +62,13 @@
     "yarn": "~1.1.0"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "node-static": "^0.7.10",
-    "stylint": "^1.5.9",
     "stylint-loader": "^1.0.0",
     "stylint-stylish": "^1.4.0",
-    "stylus": "^0.54.5",
+    "stylint": "^1.5.9",
     "stylus-loader": "^3.0.1",
+    "stylus": "^0.54.5",
     "uglifyjs-webpack-plugin": "^1.0.0-beta.3"
   },
   "keywords": [
