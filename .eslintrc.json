@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "plugins": ["import"],
+  "extends": ["airbnb-base"],
+  "rules": {
+    "class-methods-use-this": ["off"],
+    "complexity": ["error", 7],
+    "func-names": ["error", "never"],
+    "no-underscore-dangle": ["off"],
+    "no-unexpected-multiline": "error",
+    "no-unused-expressions": ["warn"],
+    "no-unused-vars": ["error", { "argsIgnorePattern" : "_" }],
+    "semi": ["error", "never"],
+    "space-before-function-paren": ["error", "always"],
+    "spaced-comment": ["off"]
+  }
+}

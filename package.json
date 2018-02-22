@@ -1,0 +1,91 @@
+{
+  "license": "GPL-3.0",
+  "name": "guicheffer.me",
+  "description": "💼 This is basically my digital home ",
+  "version": "0.1.1",
+  "author": "João Guilherme <hi@guicheffer.me>",
+  "homepage": "http://guicheffer.me/",
+  "config": {
+    "path": {
+      "ignore": [
+        "node_modules"
+      ],
+      "output": "app/"
+    },
+    "default-port": 3000,
+    "run": "run.js",
+    "stylintrc": ".stylintrc"
+  },
+  "scripts": {
+    "preinstall": "echo \"Make sure node ~8.6.0 and yarn ~1.1.0 are being settled up!\"",
+    "postinstall": "make start",
+    "clean-files": "rm -rf $npm_package_config_path_output",
+    "run-local": "node $npm_package_config_run",
+    "tests": "echo \"Please add needed e2e/unit tests\"",
+    "start": "make clean && make build-prod",
+    "watch": "webpack --watch --env.dev",
+    "build": "webpack --progress --env.dev",
+    "build:prod": "webpack --progress --env.prod"
+  },
+  "engines": {
+    "node": "~8.6.0",
+    "yarn": "~1.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.2",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-es2017": "^6.24.1",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-tree": "^1.0.0-alpha19",
+    "cssnano": "^3.10.0",
+    "diacritics": "^1.3.0",
+    "es2015": "^0.0.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint": "^4.2.0",
+    "express": "~4.16.2",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "glob": "^7.1.2",
+    "html-minifier": "^3.5.2",
+    "loader-utils": "~1.1.0",
+    "lodash": "^4.17.4",
+    "path": "^0.12.7",
+    "postcss-loader": "^2.0.6",
+    "raw-loader": "^0.5.1",
+    "watch": "^1.0.2",
+    "webpack": "~3.6.0",
+    "yarn": "~1.1.0"
+  },
+  "dependencies": {
+    "node-static": "^0.7.10",
+    "stylint": "^1.5.9",
+    "stylint-loader": "^1.0.0",
+    "stylint-stylish": "^1.4.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.3"
+  },
+  "keywords": [
+    "portfolio",
+    "portfolio-website",
+    "vue",
+    "vuejs",
+    "jest",
+    "webpack",
+    "webpack3",
+    "html",
+    "html5",
+    "css",
+    "css3",
+    "stylus",
+    "formspree",
+    "aws-s3"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guicheffer/.me/"
+  }
+}
