@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<meta name="author" content="@guicheffer">
+	<meta name="description" content="💼 This is basically my digital home">
+
+	<title> @guicheffer.me | A João Guilherme you heard about </title>
+
+	<link rel="stylesheet" href="./css/setup.css">
+
+	<!--Insert a nice shortcut here 😜-->
+	<!-- <link ref="shortcut icon" href="" /> -->
+
+	<script>
+    function getInitializationData () {
+      return {
+        x: 1,
+				y: 2
+      }
+    }
+
+	  function setupApp (options) {
+			options.before()
+
+			var app = new window.App['HomeEntry']({
+        initilizationData: getInitializationData()
+      })
+	  }
+	</script>
+</head>
+<body>
+	<header class="guicheffer__header"></header>
+
+	<div class="guicheffer__container">
+		<section class="guicheffer__home"></section>
+	</div>
+
+  <footer class="guicheffer__footer"></footer>
+
+	<script async src="./js/setup.js"></script>
+	<script async src="./js/vendor.js" async></script>
+</body>
+</html>

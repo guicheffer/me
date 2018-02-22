@@ -1,0 +1,20 @@
+/*- 🎨 Base container layout
+ *
+ * Responsible for all containers layout
+ *
+-*/
+
+@import 'typography';
+@import 'spacing';
+
+container() {
+  display: block;
+  padding: $spacing-xxsmall;
+  margin: $spacing-xsmall;
+}
+
+container-responsive() {
+  +mq-large-up() {
+    width: auto;
+  }
+}
