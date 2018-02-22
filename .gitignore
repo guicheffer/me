@@ -1,5 +1,5 @@
 # Local things
-app/
+dist/
 .yarnclean
 
 # External

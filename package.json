@@ -9,13 +9,14 @@
   "config": {
     "path": {
       "cdn": {
-        "dev": "app/static/",
+        "dev": "static/",
         "prod": "http://guicheffer.me/"
       },
       "ignore": [
         "node_modules"
       ],
-      "output": "app/"
+      "input": "src/app/",
+      "output": "dist/"
     },
     "default-port": 3000,
     "run": "run.js",
