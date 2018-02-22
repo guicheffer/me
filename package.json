@@ -1,4 +1,5 @@
 {
+  "reveal": true,
   "license": "GPL-3.0",
   "name": "guicheffer.me",
   "description": "💼 This is basically my digital home ",
@@ -7,6 +8,10 @@
   "homepage": "http://guicheffer.me/",
   "config": {
     "path": {
+      "cdn": {
+        "dev": "app/static/",
+        "prod": "http://guicheffer.me/"
+      },
       "ignore": [
         "node_modules"
       ],

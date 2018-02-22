@@ -38,6 +38,11 @@ run: ## runs locally on a 3000 port pre-defined on package.json
 start: ## start development
 	$(PKG) start
 
+test: ## tests guicheffer.me unit tests
+	$(PKG) tests
+
+tests: test
+
 watch: ## watch what's important to
 	$(PKG) watch
 

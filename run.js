@@ -6,5 +6,5 @@ const path = require('path')
 const PORT = process.env.PORT || config['default-port']
 
 express()
-  .use(express.static(path.join(__dirname, 'app/')))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .use(express.static(path.join(__dirname, config.path.output)))
+  .listen(PORT, () => console.log(`⚽️  Listening on ${ PORT }`))
