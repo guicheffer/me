@@ -19,6 +19,8 @@
 
 @import 'layout';
 
+@import '../commons/header/header';
+
 @import '../home/entry';
 
 font-face-normal()
@@ -47,6 +49,11 @@ body, input, a {
   &__home {
     home();
     home-responsive();
+  }
+
+  &__header {
+    header();
+    header-responsive();
   }
 
   &__footer {}
