@@ -7,10 +7,73 @@
 @import '../styleguide/typography';
 
 header() {
-	background: red;
-	display:block;
-	height: 40px;
-	width: 100;
+	text-transform: uppercase;
+	background-image: url('https://media.istockphoto.com/photos/coding-code-program-compute-coder-develop-developer-development-picture-id664845328?s=2048x2048');
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+  background-size: cover;
+  isolation: isolate;
+  position: relative;
+  height: 100vh;
+  padding: 0;
+	user-select: none;
+
+	.header {
+		&__navigation { display: none; }
+
+		&__content,
+		&__blender::before {
+			$size = 228px;
+
+			// content: $cdn-path;
+			box-sizing: border-box;
+	    display: block;
+	    font-size: $font-size-headline;
+	    height: $size;
+	    left: 50%;
+	    padding: "calc(%s * 2)" % $font-size-headline 0;
+	    position: fixed;
+	    top: 50%;
+	    transform: translate3d(-50%, -50%, 0);
+	    width: "calc(%s * 2)" % $size;
+		}
+
+		&__blender {
+			clip: rect(auto auto auto auto);
+	    bottom: 0;
+	    left: 0;
+	    position: absolute;
+	    right: 0;
+	    top: 0;
+
+			&::before {
+				background: $blue-action;
+				content: '';
+				padding: 100% $spacing-small;
+		    box-sizing: content-box;
+		    mix-blend-mode: darken;
+			}
+		}
+
+		&__content {
+			font-weight: bold;
+	    text-align: center;
+	    z-index: 1;
+	    background: #fff;
+	    color: #000;
+	    mix-blend-mode: lighten;
+		}
+
+		&__present {
+			font-size: $font-size-base;
+			margin-bottom: $spacing-small;
+		}
+		&__role {
+			$size = 43px;
+
+			font-size: $size;
+		}
+	}
 }
 
 header-responsive() {}
