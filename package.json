@@ -25,7 +25,7 @@
     "clean-files": "rm -rf $npm_package_config_path_output",
     "run-local": "node $npm_package_config_run",
     "tests": "echo \"Please add needed e2e/unit tests\"",
-    "start": "make clean && make build-prod",
+    "start": "make clean && make deploy",
     "watch": "webpack --watch --env.dev",
     "build": "webpack --progress --env.dev",
     "build:prod": "webpack --progress --env.prod"
