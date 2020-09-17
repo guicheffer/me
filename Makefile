@@ -1,7 +1,4 @@
-PKG:=yarn #❤️
-
-DEPLOY:=build:prod
-GOURCE:=gource
+PKG:=npm
 
 help:
 	@echo
@@ -12,41 +9,8 @@ help:
 
 # ------------------------------------------------------------------------------------ #
 
-build: ## build locally the files
-	$(PKG) build
-
-build-prod: ## build on a prod-version
-	$(PKG) $(DEPLOY)
-
-change-version: ## change the project version
-	$(PKG) version
-
-clean: ## make it clean, pls sir
-	$(PKG) clean-files
-
-clear: clean
-
-deploy: build-prod
-
-install: ## install missing dependencies
-	$(PKG)
-
-pack: ## pack project if needed
-	$(PKG) pack
-
-run: ## runs locally on a 3000 port pre-defined on package.json
-	$(PKG) run-local
+clean: ## clean uneeded files
+	$(PKG) clean
 
 start: ## start development
 	$(PKG) start
-
-test: ## tests guicheffer.me unit tests
-	$(PKG) tests
-
-tests: test
-
-watch: ## watch what's important to
-	$(PKG) watch
-
-gource:
-	@echo "No '$(GOURCE)' task was settled up 😞"

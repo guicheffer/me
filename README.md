@@ -1,8 +1,7 @@
 # [guicheffer.me](http://guicheffer.me/)
 > This is basically where I live digitally 💼
 
-## Initial testing
-Heroku is available [right here](https://guichefferdotme.herokuapp.com/) in case of your first test :)
+_soon_
 
 ___
 
