@@ -1,0 +1,12 @@
+[
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/joaoprado/www/extras/.me/pages/index.vue",
+    "chunkName": "pages/index",
+    "pathToRegexpOptions": {
+      "strict": true
+    },
+    "_name": "_09f6cb5a"
+  }
+]
