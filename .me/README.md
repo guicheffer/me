@@ -1,4 +1,4 @@
-# gatsby-starter-resume
+# The Gatsby starter (guicheffer.me)
 
 Gatsby.js V2 starter template based on Resume by startbootstrap
 
