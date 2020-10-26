@@ -8,34 +8,15 @@ Check online preview [here](https://anubhavsrivastava.github.io/gatsby-starter-r
 
 ## Screenshot
 
-![Screenshot](./src/assets/img/demo.png)
+![Screenshot](./src/assets/images/demo.jpeg)
 
-## Install
+## Run
 
-Make sure that you have the Gatsby CLI program installed:
-
-```sh
-npm install --global gatsby-cli
-```
-
-And run from your CLI:
+Make sure that you have the Gatsby CLI and all the dependencies program installed:
 
 ```sh
-gatsby new <site-name> https://github.com/anubhavsrivastava/gatsby-starter-resume
+npm run develop
 ```
-
-Then you can run it by:
-
-```sh
-cd gatsby-example-site
-npm install
-gatsby develop
-```
-
-#### Changing Theme Colour
-
-To change theme colour, change `$primary` variable in `src/assets/sass/_variables.scss`.
-
 
 ### Deploying using Github page
 
