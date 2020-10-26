@@ -33,7 +33,7 @@ class Layout extends Component {
               <html lang="en" />
 
               {/* Facebook Meta Tags */}
-              <meta property="og:url" content="http://guicheffer.me/"/>
+              <meta property="og:url" content="https://guicheffer.me/"/>
               <meta property="og:type" content="website"/>
               <meta property="og:title" content={data.site.siteMetadata.title}/>
               <meta property="og:description" content={data.site.siteMetadata.description}/>
@@ -42,7 +42,7 @@ class Layout extends Component {
               {/* Twitter Meta Tags */}
               <meta name="twitter:card" content="summary_large_image"/>
               <meta property="twitter:domain" content="guicheffer.me"/>
-              <meta property="twitter:url" content="http://guicheffer.me/"/>
+              <meta property="twitter:url" content="https://guicheffer.me/"/>
               <meta name="twitter:title" content={data.site.siteMetadata.title}/>
               <meta name="twitter:description" content={data.site.siteMetadata.description}/>
               <meta name="twitter:image" content={avatar}/>
