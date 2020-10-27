@@ -1,7 +1,7 @@
 # 🏠 [guicheffer.me](https://guicheffer.me/)
 > This is basically where I live digitally 💼
 
-![CI to S3](https://github.com/guicheffer/.me/workflows/Node.js%20CI/badge.svg)
+![CI to S3](https://github.com/guicheffer/.me/workflows/CI%20to%20S3/badge.svg)
 
 ___
 
