@@ -46,8 +46,12 @@ class Layout extends Component {
               <meta name="twitter:title" content={data.site.siteMetadata.title}/>
               <meta name="twitter:description" content={data.site.siteMetadata.description}/>
               <meta name="twitter:image" content={avatar}/>
+
+              {/* Global site tag (gtag.js) - Google Analytics */}
+              <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZD8LXGMM14"/>
+              <script>{'window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag(\'js\', new Date()); gtag(\'config\', \'G-ZD8LXGMM14\');'}</script>
             </Helmet>
-            <div className={'main-body'}>{children}</div>
+            <div className={'guicheffer-me'}>{children}</div>
           </>
         )}
       />
