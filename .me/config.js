@@ -28,9 +28,29 @@ module.exports = {
       url: 'https://twitter.com/guicheffer',
     },
     {
+      icon: 'fa-reddit',
+      name: 'Reddit',
+      url: 'https://www.reddit.com/user/guicheffer',
+    },
+    {
       icon: 'fa-facebook-f',
       name: 'Facebook',
       url: 'https://facebook.com/guicheffer',
+    },
+    {
+      icon: 'fa-instagram',
+      name: 'Instagram',
+      url: 'https://www.instagram.com/guicheffer/',
+    },
+    {
+      icon: 'fa-youtube',
+      name: 'Youtube',
+      url: 'https://youtube.com/c/Jo%C3%A3oGuilhermeChefferPrado',
+    },
+    {
+      icon: 'fa-telegram-plane',
+      name: 'Telegram',
+      url: 'http://telegram.me/guicheffer',
     },
   ],
   email: 'hi@guicheffer.me',
