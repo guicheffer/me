@@ -47,3 +47,11 @@ jobs:
         dest-s3-bucket: guicheffer.me
         cloudfront-id-to-invalidate: E2XMCUFDH56QSJ
         public-source-path: ./.me/public/
+    - uses: actions/checkout@master
+    - name: Send custom message with args
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        args: Your website has now been deployed successfully -> http://guicheffer.me?${{ github.commit.sha }}
+
