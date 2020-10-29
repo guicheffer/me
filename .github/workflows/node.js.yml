@@ -53,5 +53,5 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        args: Your website has now been deployed successfully -> http://guicheffer.me?${{ github.commit.sha }}
+        args: Your website has now been deployed successfully -> http://guicheffer.me/?check
 
