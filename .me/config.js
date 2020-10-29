@@ -18,6 +18,11 @@ module.exports = {
       url: 'https://github.com/guicheffer',
     },
     {
+      icon: 'fa-gitlab',
+      name: 'Gitlab',
+      url: 'https://gitlab.com/guicheffer',
+    },
+    {
       icon: 'fa-linkedin-in',
       name: 'Linkedin',
       url: 'https://linkedin.com/in/guicheffer/',
