@@ -22,6 +22,11 @@ module.exports = {
       name: 'Gitlab',
       url: 'https://gitlab.com/guicheffer',
     },
+    {,
+      icon: 'fa-codepen',
+      name: 'Codepen',
+      url: 'https://codepen.io/guicheffer/',
+    },
     {
       icon: 'fa-linkedin-in',
       name: 'Linkedin',
