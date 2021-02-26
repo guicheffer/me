@@ -24,7 +24,7 @@ const IndexPage = () => (
           </div>
 
           <p className="lead mb-5">
-            I'm a Lead and Senior Frontend Engineer @ <a href='http://getyourguide.com/' rel='noreferrer' target='_blank'>GetYourGuide</a>, Javascript lover and also addicted for new tech trends. <br/>
+            I'm a Lead Software Engineer @ <a href='https://gorillas.io/' rel='noreferrer' target='_blank'>Gorillas</a>, Javascript lover and also addicted for new tech trends. <br/>
             I build complex frontend applications and I love being part of the creation of a better user experience system.
           </p>
 
