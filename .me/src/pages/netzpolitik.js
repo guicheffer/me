@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '../components/Layout';
 
 if (typeof window !== 'undefined') {
-  if (window.location.pathname === "/netzpolitik") {
+  if (window.location.pathname.includes("/netzpolitik")) {
     window.location.href="https://netzpolitik.org/2021/npp-232-zur-digitalen-vergabe-von-impfterminen-ein-angebot-dass-du-nicht-annehmen-kannst/"
   }
 }
