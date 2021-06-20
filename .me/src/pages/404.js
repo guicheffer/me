@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from '../components/Layout';
 
-const IndexPage = () => (
+const ErrorPage = () => (
   <Layout>
     <div className="container-fluid p-0">
       <section
@@ -21,4 +21,4 @@ const IndexPage = () => (
   </Layout>
 );
 
-export default IndexPage;
+export default ErrorPage;
