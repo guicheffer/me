@@ -24,8 +24,8 @@ const IndexPage = () => (
           </div>
 
           <p className="lead mb-5">
-            I'm a Lead Software Engineer @ <a href='https://gorillas.io/' rel='noreferrer' target='_blank'>Gorillas</a>, Javascript lover and also addicted for new tech trends. <br/>
-            I build complex frontend applications and I love being part of the creation of a better user experience system.
+            I'm an Engineering Lead @ <a href='https://gorillas.io/' rel='noreferrer' target='_blank'>Gorillas</a>, Javascript lover and also addicted for new tech trends and chocolated. <br/>
+            I build complex frontend applications and I love being part of the journey of a better user experience system.
           </p>
 
           <div className="social-icons">
