@@ -64,6 +64,5 @@ module.exports = {
     },
   ],
   email: 'hi@guicheffer.me',
-  phone: '+4915771417434',
   address: 'Berlin, Germany',
 };
