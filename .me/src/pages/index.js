@@ -210,19 +210,7 @@ const IndexPage = () => (
           <ul className="fa-ul mb-0">
             <li>
               <i className="fa-li fa fa-check"></i>
-              Mobile-First, Responsive Design
-            </li>
-            <li>
-              <i className="fa-li fa fa-check"></i>
-              Cross Browser Testing &amp; Debugging
-            </li>
-            <li>
-              <i className="fa-li fa fa-check"></i>
-              Agile Development &amp; Scrum<i>-ban</i>
-            </li>
-            <li>
-              <i className="fa-li fa fa-check"></i>
-              Cross Functional Teams
+              People driven
             </li>
             <li>
               <i className="fa-li fa fa-check"></i>
@@ -230,7 +218,23 @@ const IndexPage = () => (
             </li>
             <li>
               <i className="fa-li fa fa-check"></i>
-              I like hiring too 🙂
+              Mobile-First, Responsive Design
+            </li>
+            <li>
+              <i className="fa-li fa fa-check"></i>
+              Agile Development &amp; Scrum<i>-ban</i>
+            </li>
+            <li>
+              <i className="fa-li fa fa-check"></i>
+              Cross Browser Testing &amp; Debugging
+            </li>
+            <li>
+              <i className="fa-li fa fa-check"></i>
+              Cross Functional Teams
+            </li>
+            <li>
+              <i className="fa-li fa fa-check"></i>
+              Love hiring 🙂
             </li>
           </ul>
         </div>

@@ -74,7 +74,7 @@ export class Sidebar extends Component {
             {tabs.map((tab, i) => {
               const { href, content, inConstruction = false, title } = tab;
               return (
-                <li className="nav-item" key={href}>
+                <li className={`nav-item ${inConstruction ? "nav-item--disabled" : ""}`} key={href}>
                   <Scroll type="id" element={href}>
                     <a className="nav-link" href={`#${href}`} disabled={inConstruction} title={title || content}>
                       {content}
