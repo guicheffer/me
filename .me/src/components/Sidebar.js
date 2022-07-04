@@ -49,11 +49,11 @@ export class Sidebar extends Component {
               />
             </span>
           </a>
-          </Scroll>
+        </Scroll>
         <button
           className={`navbar-toggler navbar-toggler-right ${
             isCollapsed ? 'collapsed' : ''
-            }`}
+          }`}
           type="button"
           data-toggle="collapse"
           aria-controls="navbarSupportedContent"
@@ -63,8 +63,11 @@ export class Sidebar extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className={`collapse navbar-collapse ${isCollapsed ? '' : 'show'}`}
-          id="navbarSupportedContent" role='navigation'>
+        <div
+          className={`collapse navbar-collapse ${isCollapsed ? '' : 'show'}`}
+          id="navbarSupportedContent"
+          role="navigation"
+        >
           <Scrollspy
             items={tabs.map(s => s.href)}
             currentClassName="active"
@@ -74,9 +77,20 @@ export class Sidebar extends Component {
             {tabs.map((tab, i) => {
               const { href, content, inConstruction = false, title } = tab;
               return (
-                <li className={`nav-item ${inConstruction ? "nav-item--disabled" : ""}`} key={href}>
+                <li
+                  className={`nav-item ${
+                    inConstruction ? 'nav-item--disabled' : ''
+                  }`}
+                  title={inConstruction ? 'Soon!' : `Access ${title}`}
+                  key={href}
+                >
                   <Scroll type="id" element={href}>
-                    <a className="nav-link" href={`#${href}`} disabled={inConstruction} title={title || content}>
+                    <a
+                      className="nav-link"
+                      href={`#${href}`}
+                      disabled={inConstruction}
+                      title={title || content}
+                    >
                       {content}
                     </a>
                   </Scroll>

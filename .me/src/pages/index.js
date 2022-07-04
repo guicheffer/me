@@ -24,15 +24,20 @@ const IndexPage = () => (
           </div>
 
           <p className="lead mb-5">
-            I'm an Engineering Lead @ <a href='https://gorillas.io/' rel='noreferrer' target='_blank'>Gorillas</a>, Javascript lover and also addicted for new tech trends and chocolates. <br/>
-            I build complex frontend applications and I love being part of the journey of a better user experience system.
+            I'm an Engineering Manager @{' '}
+            <a href="https://gorillas.io/" rel="noreferrer" target="_blank">
+              Gorillas
+            </a>
+            , Javascript lover and also addicted for new tech trends and
+            chocolates. <br />I build complex frontend applications and I love
+            being part of the journey of a better user experience system.
           </p>
 
           <div className="social-icons">
             {config.socialLinks.map(social => {
               const { icon, url } = social;
               return (
-                <a key={url} href={url} rel='noreferrer' target='_blank'>
+                <a key={url} href={url} rel="noreferrer" target="_blank">
                   <i className={`fab ${icon}`}></i>
                 </a>
               );
@@ -197,7 +202,9 @@ const IndexPage = () => (
             <li className="list-inline-item">
               <i className="fab fa-yarn"></i>
             </li>
-            <li className="list-inline-item"><small>, &amp; of course: </small></li>
+            <li className="list-inline-item">
+              <small>, &amp; of course: </small>
+            </li>
             <li className="list-inline-item">
               <i className="fab fa-stack-overflow"></i>
             </li>

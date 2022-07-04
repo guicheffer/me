@@ -2,6 +2,10 @@
   "name": "guicheffer.me",
   "version": "0.0.1",
   "description": "Gatsby.js V2 starter template based on Resume by startbootstrap – site for @guicheffer",
+  "engines": {
+    "node": "14",
+    "npm": "8"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/guicheffer/.me"
