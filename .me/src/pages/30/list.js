@@ -23,21 +23,23 @@ const LIST30 = () => {
   const [data, setData] = useState(mockData);
 
   useEffect(() => {
-    fetch(`https://api.kvstore.io/collections/guests/items`, {
-      method: 'GET',
-      headers: {
-        kvstoreio_api_key:
-          '452ed2220bdcabcd4f4d867410ebaa8c86d47b632452bda1a11799b0b8610507',
-      },
-    })
-      .then(data => {
-        console.log(data);
-        setData(data);
-      })
+    fetch(
+      `https://joao-30th-bday-cors-anywhere.herokuapp.com/https://api.kvstore.io/collections/guests/items`,
+      {
+        method: 'GET',
+        headers: {
+          kvstoreio_api_key:
+            '452ed2220bdcabcd4f4d867410ebaa8c86d47b632452bda1a11799b0b8610507',
+        },
+      }
+    )
+      .then(data => data.json())
+      .then(data => setData(data))
+      // TODO: Add error catch later
       .catch(() => {});
-  });
+  }, []);
 
-  if (!data.length) return <></>;
+  if (!data.length) return <>Empty!</>;
 
   return (
     <Layout>

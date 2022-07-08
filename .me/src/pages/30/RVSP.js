@@ -15,17 +15,20 @@ const FormReply = () => {
     const form = formRef.current;
     const formData = new FormData(form);
 
-    fetch(`https://api.kvstore.io/collections/guests/items/${+new Date()}`, {
-      method: 'PUT',
-      headers: {
-        kvstoreio_api_key:
-          '452ed2220bdcabcd4f4d867410ebaa8c86d47b632452bda1a11799b0b8610507',
-      },
-      body: JSON.stringify({
-        attending: formData.get('attending'),
-        name: `${formData.get('name')} ${formData.get('surname')}`,
-      }),
-    })
+    fetch(
+      `https://joao-30th-bday-cors-anywhere.herokuapp.com/https://api.kvstore.io/collections/guests/items/${+new Date()}/`,
+      {
+        method: 'PUT',
+        headers: {
+          kvstoreio_api_key:
+            '452ed2220bdcabcd4f4d867410ebaa8c86d47b632452bda1a11799b0b8610507',
+        },
+        body: JSON.stringify({
+          attending: formData.get('attending'),
+          name: `${formData.get('name')} ${formData.get('surname')}`,
+        }),
+      }
+    )
       .then(() => {
         setSent(true);
       })

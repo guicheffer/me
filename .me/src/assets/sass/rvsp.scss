@@ -20,6 +20,9 @@ header {
 }
 
 .description {
+  max-width: 400px;
+  margin: 0 auto;
+
   &--quote {
     display: block;
     font-style: italic;
@@ -93,6 +96,7 @@ header {
     width: 45%;
 
     &--attending {
+      user-select: none;
       width: 100%;
     }
   }
@@ -119,6 +123,7 @@ header {
         padding: 8px;
         text-align: center;
         width: 33%;
+        user-select: none;
 
         &:hover {
           background: $purple;
@@ -131,6 +136,7 @@ header {
   label {
     display: block;
     font-weight: bold;
+    user-select: none;
   }
 
   input {
@@ -140,6 +146,7 @@ header {
     color: $white;
     font-size: 24px;
     padding: 8px;
+    user-select: none;
     width: 100%;
 
     &[type='radio'] {
@@ -149,6 +156,7 @@ header {
 
   button {
     margin-top: 20px;
+    user-select: none;
 
     &[disabled] {
       background: $gray-400;

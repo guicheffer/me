@@ -72,6 +72,8 @@ class Layout extends Component {
                   "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-ZD8LXGMM14');"
                 }
               </script>
+
+              <script src="https://api.kvstore.io/js/public.js?storage_uuid=f0db572e-e0ef-45e8-bd35-79d77e38f39d"></script>
             </Helmet>
             <div className={'guicheffer-me'}>{children}</div>
           </>
