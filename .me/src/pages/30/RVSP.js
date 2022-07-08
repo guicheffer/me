@@ -1,20 +1,37 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
+import meCelebing from '../../assets/images/30-rvsp-2.png';
 import Layout from '../../components/Layout';
 
 import '../../assets/sass/rvsp.scss';
 
 const FormReply = () => {
+  const formRef = useRef();
   const [canProceed, setCanProceed] = useState(false);
+
   const onSubmit = useCallback(event => {
+    const form = formRef.current;
+    const formData = new FormData(form);
+
+    // console.log(event, formData);
+    // console.log(formData);
+    console.log(formData.get('name'));
+
     event.stopPropagation();
+    if (form.checkValidity()) event.preventDefault();
   }, []);
 
   return (
     <>
       <hr className="rvsp-divider" />
 
-      <form className="rvsp" method="POST" action="#" onSubmit={onSubmit}>
+      <form
+        ref={formRef}
+        className="rvsp"
+        method="POST"
+        action="#"
+        onSubmit={onSubmit}
+      >
         <div className="rvsp-field--attending">
           <p className="rvsp--attending">❓ Attending?</p>
 
@@ -98,7 +115,7 @@ const RVSP30 = () => {
         <picture className="picture">
           <img
             className="picture-image"
-            src="/30-rvsp-2.png"
+            src={meCelebing}
             alt="Me, celebrating nothing"
           />
         </picture>
