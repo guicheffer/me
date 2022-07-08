@@ -25,7 +25,7 @@ const LIST30 = () => {
       .catch(() => {});
   }, []);
 
-  if (!data.length) return <>Empty!</>;
+  if (!data.length) return <>Loading...</>;
 
   return (
     <Layout>
