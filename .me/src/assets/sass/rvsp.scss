@@ -169,6 +169,8 @@ header {
 .rvsp-list {
   margin-top: 20px;
   width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 
   &--name {
     min-width: 200px;
