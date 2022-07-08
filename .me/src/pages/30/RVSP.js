@@ -15,8 +15,6 @@ const FormReply = () => {
     const form = formRef.current;
     const formData = new FormData(form);
 
-    // console.log(event, formData);
-    // console.log(formData);
     fetch(`https://api.kvstore.io/collections/guests/items/${+new Date()}`, {
       method: 'PUT',
       headers: {

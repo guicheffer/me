@@ -158,3 +158,28 @@ header {
     }
   }
 }
+
+.rvsp-list {
+  margin-top: 20px;
+  width: 100%;
+
+  &--name {
+    min-width: 200px;
+  }
+
+  &--attending {
+    margin-left: 30px;
+
+    &--yes {
+      color: $green;
+    }
+
+    &--no {
+      color: $red;
+    }
+
+    &--maybe {
+      color: $gray-400;
+    }
+  }
+}
