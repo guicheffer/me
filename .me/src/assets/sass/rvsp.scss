@@ -76,6 +76,10 @@ header {
   height: 7vh;
   outline-color: #000;
   width: 100%;
+
+  &.reply {
+    margin-top: 20px;
+  }
 }
 
 .rvsp {
@@ -187,7 +191,7 @@ header {
     }
 
     &--maybe {
-      color: $gray-400;
+      color: $gray-700;
     }
   }
 }

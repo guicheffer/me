@@ -6,21 +6,7 @@ import Layout from '../../components/Layout';
 import '../../assets/sass/rvsp.scss';
 
 const LIST30 = () => {
-  const mockData = [
-    {
-      key: '1657314307406',
-      value: '{"attending":"yes","name":"João Guilherme  Cheffer Prado"}',
-      created_at: 1.657314307929e9,
-      updated_at: 1.657314307929e9,
-    },
-    {
-      key: '1657311827450',
-      value: '{"attending":"yes","name":"Luiza Soubihe"}',
-      created_at: 1.657311828094e9,
-      updated_at: 1.657311828094e9,
-    },
-  ];
-  const [data, setData] = useState(mockData);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -53,24 +39,35 @@ const LIST30 = () => {
         </picture>
       </header>
 
+      <p>
+        <strong>Total</strong>: {data.length}
+      </p>
+
       <table className="rvsp-list">
-        <tr>
-          <th className="rvsp-list--name">Name</th>
-          <th className="rvsp-list--attending">Attending?</th>
-        </tr>
+        <thead>
+          <tr>
+            <th className="rvsp-list--name">Name</th>
+            <th className="rvsp-list--attending">Attending?</th>
+            <th className="rvsp-list--id">ID</th>
+          </tr>
+        </thead>
 
-        {data.map(row => {
-          const guest = JSON.parse(row.value);
+        <tbody>
+          {data.length &&
+            data.map(row => {
+              const guest = JSON.parse(row.value);
 
-          return (
-            <tr key={row.key}>
-              <td>{guest.name}</td>
-              <td className={`rvsp-list--attending--${guest.attending}`}>
-                {guest.attending}
-              </td>
-            </tr>
-          );
-        })}
+              return (
+                <tr key={row.key}>
+                  <td>{guest.name}</td>
+                  <td className={`rvsp-list--attending--${guest.attending}`}>
+                    {guest.attending}
+                  </td>
+                  <td>{row.key}</td>
+                </tr>
+              );
+            })}
+        </tbody>
       </table>
     </Layout>
   );
