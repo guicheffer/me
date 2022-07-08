@@ -8,6 +8,8 @@ import '../../assets/sass/rvsp.scss';
 const FormReply = () => {
   const formRef = useRef();
   const [canProceed, setCanProceed] = useState(false);
+  const [hasError, setError] = useState(false);
+  const [isSent, setSent] = useState(false);
 
   const onSubmit = useCallback(event => {
     const form = formRef.current;
@@ -15,11 +17,43 @@ const FormReply = () => {
 
     // console.log(event, formData);
     // console.log(formData);
-    console.log(formData.get('name'));
+    fetch(`https://api.kvstore.io/collections/guests/items/${+new Date()}`, {
+      method: 'PUT',
+      headers: {
+        kvstoreio_api_key:
+          '452ed2220bdcabcd4f4d867410ebaa8c86d47b632452bda1a11799b0b8610507',
+      },
+      body: JSON.stringify({
+        attending: formData.get('attending'),
+        name: `${formData.get('name')} ${formData.get('surname')}`,
+      }),
+    })
+      .then(() => {
+        setSent(true);
+      })
+      .catch(() => {
+        setError(true);
+      });
 
     event.stopPropagation();
     if (form.checkValidity()) event.preventDefault();
   }, []);
+
+  if (hasError)
+    return (
+      <>
+        <h3 className="rvsp-thanks">
+          Error! Please contact <a href="mailto:hi@guicheffer.me">João</a>
+        </h3>
+      </>
+    );
+
+  if (isSent)
+    return (
+      <>
+        <h3 className="rvsp-thanks">Thanks!</h3>
+      </>
+    );
 
   return (
     <>
@@ -105,8 +139,12 @@ const FormReply = () => {
 
 const RVSP30 = () => {
   const [isReplying, setIsReplying] = useState(false);
+
   const onReply = useCallback(() => {
     setIsReplying(true);
+
+    // Go to form
+    window.scrollTo(0, 99999);
   }, []);
 
   return (
@@ -144,7 +182,10 @@ const RVSP30 = () => {
                 <strong>📆 When</strong>
               </p>
 
-              <p className="details--info">Sat, July 16th at ~2pm</p>
+              <p className="details--info details--info--primary">
+                Sat, July 16th
+              </p>
+              <p className="details--info--secondary">around ~2pm</p>
             </div>
 
             <div className="details-piece">
@@ -154,9 +195,11 @@ const RVSP30 = () => {
 
               <p className="details--info">
                 <a href="https://goo.gl/maps/hV6LVE5J1EKrD6KE6" target="_blank">
-                  Zollpackhof
+                  Zollpackhof 🔗
                 </a>{' '}
-                <p>Elisabeth-Abegg-Straße 1, 10557 Berlin)</p>
+                <span className="address">
+                  Elisabeth-Abegg-Straße 1, 10557 Berlin)
+                </span>
               </p>
             </div>
           </section>

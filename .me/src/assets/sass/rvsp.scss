@@ -43,6 +43,24 @@ header {
 
   &--info {
     font-weight: bold;
+
+    a {
+      color: $indigo;
+    }
+
+    &--primary {
+      margin-bottom: 0;
+    }
+
+    &--secondary {
+      font-weight: normal;
+      margin: 0;
+    }
+
+    & .address {
+      display: block;
+      font-size: 12px;
+    }
   }
 }
 
@@ -61,6 +79,11 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  &-thanks {
+    text-align: center;
+    margin-top: 30px;
+  }
 
   &-divider {
     background: $white;
