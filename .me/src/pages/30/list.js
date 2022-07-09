@@ -10,7 +10,7 @@ const LIST30 = () => {
 
   useEffect(() => {
     fetch(
-      `https://joao-30th-bday-cors-anywhere.herokuapp.com/https://api.kvstore.io/collections/guests/items`,
+      `https://joao-30th-bday-cors-anywhere.herokuapp.com/https://api.kvstore.io/collections/guests/items?limit=100`,
       {
         method: 'GET',
         headers: {
