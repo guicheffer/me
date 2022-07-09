@@ -129,6 +129,9 @@ const FormReply = () => {
           />
         </div>
 
+        <p className="rvsp-warning">
+          (ps. if you change your mind, please submit your rvsp again!)
+        </p>
         <button
           disabled={!canProceed}
           className="button submit"

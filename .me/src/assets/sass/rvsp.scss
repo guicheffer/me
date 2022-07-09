@@ -148,10 +148,19 @@ header {
     font-size: 24px;
     padding: 8px;
     width: 100%;
+    outline-color: $purple;
 
     &[type='radio'] {
       display: none;
     }
+  }
+
+  &-warning {
+    font-size: 11px;
+    margin-bottom: -16px;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
   }
 
   button {
@@ -164,31 +173,31 @@ header {
       opacity: 0.5;
     }
   }
-}
 
-.rvsp-list {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
+  &-list {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 
-  &--name {
-    min-width: 200px;
-  }
-
-  &--attending {
-    margin-left: 30px;
-
-    &--yes {
-      color: $green;
+    &--name {
+      min-width: 200px;
     }
 
-    &--no {
-      color: $red;
-    }
+    &--attending {
+      margin-left: 30px;
 
-    &--maybe {
-      color: $gray-700;
+      &--yes {
+        color: $green;
+      }
+
+      &--no {
+        color: $red;
+      }
+
+      &--maybe {
+        color: $gray-700;
+      }
     }
   }
 }
