@@ -40,7 +40,30 @@ const LIST30 = () => {
       </header>
 
       <p>
-        <strong>Total</strong>: {data.length}
+        <strong>Total</strong>: {data.length} // <strong>Going</strong>:{' '}
+        {
+          data.filter(row => {
+            const guest = JSON.parse(row.value);
+
+            return guest.attending === 'yes';
+          }).length
+        }{' '}
+        // <strong>Not going</strong>:{' '}
+        {
+          data.filter(row => {
+            const guest = JSON.parse(row.value);
+
+            return guest.attending === 'no';
+          }).length
+        }{' '}
+        // <strong>Maybe</strong>:{' '}
+        {
+          data.filter(row => {
+            const guest = JSON.parse(row.value);
+
+            return guest.attending === 'maybe';
+          }).length
+        }
       </p>
 
       <table className="rvsp-list">
