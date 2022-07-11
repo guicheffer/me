@@ -39,7 +39,7 @@ const LIST30 = () => {
         </picture>
       </header>
 
-      <p>
+      <p className="rvsp-list-total">
         <strong>Total</strong>: {data.length} // <strong>Going</strong>:{' '}
         {
           data.filter(row => {

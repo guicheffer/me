@@ -180,6 +180,11 @@ header {
     max-width: 500px;
     margin: 0 auto;
 
+    &-total {
+      margin: 40px auto;
+      width: 400px;
+    }
+
     &--name {
       min-width: 200px;
     }
