@@ -201,12 +201,13 @@ const RVSP30 = () => {
               </p>
 
               <p className="details--info">
-                <a href="https://goo.gl/maps/hV6LVE5J1EKrD6KE6" target="_blank">
-                  Zollpackhof 🔗
+                <a
+                  href="https://g.page/brewdogberlinmitte?share"
+                  target="_blank"
+                >
+                  BrewDog Mitte 🔗
                 </a>{' '}
-                <span className="address">
-                  Elisabeth-Abegg-Straße 1, 10557 Berlin)
-                </span>
+                <span className="address">Ackerstraße 29, 10115 Berlin</span>
               </p>
             </div>
           </section>
