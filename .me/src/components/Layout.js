@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { StaticQuery, graphql } from 'gatsby';
 
 import '../assets/sass/resume.scss';
-import avatar from '../assets/images/avatar.jpeg';
+import avatar from '../assets/images/avatar-2.jpeg';
 
 class Layout extends Component {
   render() {

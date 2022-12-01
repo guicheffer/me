@@ -25,8 +25,8 @@ const IndexPage = () => (
 
           <p className="lead mb-5">
             I'm an Engineering Manager @{' '}
-            <a href="https://gorillas.io/" rel="noreferrer" target="_blank">
-              Gorillas
+            <a href="https://hellofresh.com/" rel="noreferrer" target="_blank">
+              HelloFresh
             </a>
             , Javascript lover and also addicted for new tech trends and
             chocolates. <br />I build complex frontend applications and I love
