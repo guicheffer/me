@@ -18,7 +18,7 @@ body {
 }
 
 .where {
-  width: 90%;
+  width: 100vw;
   overflow: hidden;
   height: 250px;
   text-align: center;
