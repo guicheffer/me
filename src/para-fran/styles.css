@@ -27,8 +27,8 @@ body {
   width: 340px;
   height: 200px;
   position: absolute;
-  bottom: 0;
   left: 0;
+  top: 30px;
 }
 
 .content {
