@@ -72,7 +72,7 @@ a.btn {
 a.btn:hover {
   background-color: #d81b60;
   transform: scale(1.05);
-}@
+}
 
 /* Responsividade para iPhone 12 Pro (menor) */
 @media (max-width: 390px) {
