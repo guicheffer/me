@@ -23,6 +23,7 @@ body {
   height: 300px;
   text-align: center;
   position: relative;
+  padding-top: 10px;
 }
 
 .where {
