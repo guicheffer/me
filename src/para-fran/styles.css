@@ -1,0 +1,186 @@
+/* Configuração básica */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #ffe1f3;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.content {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 350px;
+  margin: 0 auto;
+  animation: fadeIn 1.5s ease-out;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  color: #e91e63;
+  font-size: 26px;
+  margin-bottom: 15px;
+  animation: slideInFromLeft 1s ease-out;
+}
+
+.intro-text {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+  animation: slideInFromRight 1.5s ease-out;
+}
+
+p.highlight {
+  font-weight: bold;
+  color: #e91e63;
+  font-size: 20px;
+  margin-bottom: 30px;
+  animation: fadeIn 2s ease-out;
+}
+
+.extra-section {
+  margin-top: 30px;
+  animation: slideUp 2s ease-out;
+}
+
+.extra-text {
+  font-size: 18px;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.extra-text::after {
+  content: '✨';
+  display: inline-block;
+  margin-left: 5px;
+  animation: blink 1.5s infinite;
+}
+
+.reveal p {
+  color: #333;
+  margin-top: 10px;
+}
+
+a.btn {
+  background-color: #e91e63;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 20px;
+  animation: buttonAppear 2.5s ease-out;
+}
+
+a.btn:hover {
+  background-color: #d81b60;
+  transform: scale(1.05);
+}
+
+/* Animações de texto */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+      transform: translateX(-50px);
+      opacity: 0;
+  }
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+      transform: translateX(50px);
+      opacity: 0;
+  }
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+      transform: translateY(50px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+      opacity: 1;
+  }
+  50% {
+      opacity: 0.5;
+  }
+}
+
+@keyframes buttonAppear {
+  from {
+      opacity: 0;
+      transform: scale(0.9);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+/* Responsividade para iPhone 12 Pro (menor) */
+@media (max-width: 390px) {
+  .content {
+      padding: 15px;
+      max-width: 300px;
+  }
+
+  h1 {
+      font-size: 22px;
+  }
+
+  .intro-text, .highlight {
+      font-size: 16px;
+  }
+
+  a.btn {
+      font-size: 14px;
+      padding: 10px 15px;
+  }
+}
+
+canvas {
+  position: absolute;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+}
