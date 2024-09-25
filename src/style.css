@@ -1,0 +1,208 @@
+:root {
+  --purple: #8A3BBA;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--purple);
+  text-decoration: none;
+}
+
+a:hover {
+  color: gray;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+}
+
+#sidebar {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+/* Remove bullets and padding from the list */
+.icons-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style individual list items */
+.icons-list li {
+  display: inline-block; /* Display the list items horizontally */
+  margin-right: 15px;    /* Add spacing between the icons */
+}
+
+/* Style anchor tags */
+.icons-list li a {
+  text-decoration: none; /* Remove underline from links */
+  color: #333;           /* Default text/icon color */
+  font-size: 20px;       /* Size of the icons */
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+/* Style the icons */
+.icons-list li a i {
+  margin-right: 5px; /* Space between the icon and text */
+}
+
+/* Change color on hover */
+.icons-list li a:hover {
+  color: #663399; /* Change this to any hover color you like */
+}
+
+
+aside {
+  background-color: #4B2E83;
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+aside.hidden {
+  transform: translateX(-100%);
+}
+
+.profile-pic img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+nav ul {
+  margin-top: 20px;
+}
+
+nav ul li {
+  margin-bottom: 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  padding: 10px;
+  background-color: #5C3A99;
+  border-radius: 5px;
+}
+
+nav ul li a.active {
+  background-color: #3A2D5D;
+}
+
+main {
+  flex-grow: 1;
+  padding: 40px;
+  margin-left: 250px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #fff;
+}
+
+h1 span {
+  color: var(--purple);
+}
+
+p {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.icons-list {
+  margin-top: 20px;
+}
+
+.icons-list img {
+  width: 30px;
+  margin-right: 10px;
+}
+
+.icons img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+ul {
+  margin-top: 20px;
+}
+
+ul:not(.skills) {
+  list-style: none;
+  margin-top: 20px;
+}
+
+ul li {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  aside {
+      position: fixed;
+      width: 250px;
+      height: 100%;
+      transform: translateX(-100%);
+  }
+
+  aside.show {
+      transform: translateX(0);
+  }
+
+  .menu-toggle {
+      display: block;
+  }
+
+  main {
+      margin-left: 0;
+      padding: 20px;
+  }
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
