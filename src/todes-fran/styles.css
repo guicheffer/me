@@ -24,10 +24,7 @@ body {
   text-align: center;
   position: relative;
   padding-top: 10px;
-}
-
-.where {
-  margin-top: 20px;
+  margin: 0 auto;
 }
 
 .content {
@@ -40,6 +37,7 @@ body {
   animation: fadeIn 1.5s ease-out;
   position: relative;
   z-index: 1;
+  margin-bottom: 20px;
 }
 
 h1 {
