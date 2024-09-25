@@ -52,6 +52,38 @@ h1 {
   text-align: left;
 }
 
+p.highlight {
+  font-weight: bold;
+  color: #e91e63;
+  font-size: 20px;
+  margin-bottom: 30px;
+  animation: fadeIn 2s ease-out;
+}
+
+.extra-section {
+  margin-top: 30px;
+  animation: slideUp 2s ease-out;
+}
+
+.extra-text {
+  font-size: 18px;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.extra-text::after {
+  content: '✨';
+  display: inline-block;
+  margin-left: 5px;
+  animation: blink 1.5s infinite;
+}
+
+.reveal p {
+  color: #333;
+  margin-top: 10px;
+}
+
 a.btn {
   background-color: #e91e63;
   color: white;
