@@ -23,6 +23,11 @@ body {
   position: relative;
 }
 
+.where img {
+  width: 200px;
+  height: 200px;
+}
+
 .content {
   background-color: #ffffff;
   border-radius: 20px;
