@@ -34,7 +34,7 @@ body {
   margin: 0 auto;
   animation: fadeIn 1.5s ease-out;
   position: relative;
-  z-index: 2;
+  z-index: 0;
 }
 
 h1 {
