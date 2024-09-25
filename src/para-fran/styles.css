@@ -24,8 +24,10 @@ body {
 }
 
 .where img {
-  width: 200px;
+  width: 340px;
   height: 200px;
+  position: absolute;
+  bottom: 0;
 }
 
 .content {
