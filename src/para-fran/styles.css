@@ -42,7 +42,7 @@ body {
   margin: 0 auto;
   animation: fadeIn 1.5s ease-out;
   position: relative;
-  z-index: 0;
+  z-index: 1;
 }
 
 h1 {
@@ -168,7 +168,7 @@ canvas {
   overflow-x: hidden;
   width: 100%;
   margin: 0;
-  z-index: 999;
+  z-index: 999999;
   top: 0;
   left: 0;
 }
