@@ -137,7 +137,6 @@ a.btn:hover {
 @media (max-width: 390px) {
   .content {
       padding: 15px;
-      max-width: 300px;
   }
 
   h1 {
