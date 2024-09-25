@@ -40,7 +40,6 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   max-width: 350px;
   margin: 0 auto;
-  animation: fadeIn 1.5s ease-out;
   position: relative;
   z-index: -50;
 }
@@ -49,14 +48,12 @@ h1 {
   color: #e91e63;
   font-size: 26px;
   margin-bottom: 15px;
-  animation: slideInFromLeft 1s ease-out;
 }
 
 .intro-text {
   color: #333;
   font-size: 18px;
   margin-bottom: 20px;
-  animation: slideInFromRight 1.5s ease-out;
   text-align: left;
 }
 
@@ -70,76 +67,12 @@ a.btn {
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.3s ease;
   margin-top: 20px;
-  animation: buttonAppear 2.5s ease-out;
 }
 
 a.btn:hover {
   background-color: #d81b60;
   transform: scale(1.05);
-}
-
-/* Animações de texto */
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-  }
-  to {
-      opacity: 1;
-  }
-}
-
-@keyframes slideInFromLeft {
-  from {
-      transform: translateX(-50px);
-      opacity: 0;
-  }
-  to {
-      transform: translateX(0);
-      opacity: 1;
-  }
-}
-
-@keyframes slideInFromRight {
-  from {
-      transform: translateX(50px);
-      opacity: 0;
-  }
-  to {
-      transform: translateX(0);
-      opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-      transform: translateY(50px);
-      opacity: 0;
-  }
-  to {
-      transform: translateY(0);
-      opacity: 1;
-  }
-}
-
-@keyframes blink {
-  0%, 100% {
-      opacity: 1;
-  }
-  50% {
-      opacity: 0.5;
-  }
-}
-
-@keyframes buttonAppear {
-  from {
-      opacity: 0;
-      transform: scale(0.9);
-  }
-  to {
-      opacity: 1;
-      transform: scale(1);
-  }
-}
+}@
 
 /* Responsividade para iPhone 12 Pro (menor) */
 @media (max-width: 390px) {
