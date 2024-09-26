@@ -15,7 +15,7 @@
     "email": "joao@guicheffer.me"
   },
   "scripts": {
-    "dev": "open http://localhost:3000 && http-serve ./src -p 3000",
+    "dev": "open http://localhost:3000 && http-serve ./src -p 3000 -P ./src/404.html",
     "s3": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
