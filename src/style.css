@@ -1,5 +1,5 @@
 :root {
-  --purple: #8A3BBA;
+  --purple: #8a07da;
 }
 
 * {
@@ -59,7 +59,7 @@ body {
 /* Style anchor tags */
 .icons-list li a {
   text-decoration: none; /* Remove underline from links */
-  color: #333;           /* Default text/icon color */
+  color: #5d5d5d;           /* Default text/icon color */
   font-size: 20px;       /* Size of the icons */
   transition: color 0.3s ease; /* Smooth color transition on hover */
 }
@@ -159,6 +159,10 @@ ul {
   margin-top: 20px;
 }
 
+ul.skills {
+  margin-left: 20px;
+}
+
 ul:not(.skills) {
   list-style: none;
   margin-top: 20px;
@@ -205,4 +209,12 @@ ul li {
 .disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.cv-links {
+  margin-top: 30px;
+}
+
+.cv-links p {
+  margin: 10px 0;
 }
