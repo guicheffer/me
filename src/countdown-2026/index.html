@@ -10,6 +10,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         body {
@@ -401,9 +405,7 @@
         }
 
         // Countdown logic
-        // Testing: 15 seconds from now
-        const targetDate = new Date().getTime() + (15 * 1000);
-        // Production: const targetDate = new Date('2026-01-01T00:00:00').getTime();
+        const targetDate = new Date('2026-01-01T00:00:00').getTime();
         let hasReachedZero = false;
         let lastSecond = -1;
 
