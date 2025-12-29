@@ -234,6 +234,41 @@
             oscillator.stop(audioContext.currentTime + 0.1);
         }
 
+        // Function to play exciting countdown sound (last 10 seconds)
+        function playExcitingTick(number) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            // Frequency increases as we get closer to 0
+            oscillator.frequency.value = 600 + (10 - number) * 100;
+            oscillator.type = 'triangle';
+
+            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+
+            // Add a second harmonic for richness
+            const oscillator2 = audioContext.createOscillator();
+            const gainNode2 = audioContext.createGain();
+
+            oscillator2.connect(gainNode2);
+            gainNode2.connect(audioContext.destination);
+
+            oscillator2.frequency.value = (600 + (10 - number) * 100) * 1.5;
+            oscillator2.type = 'sine';
+
+            gainNode2.gain.setValueAtTime(0.2, audioContext.currentTime);
+            gainNode2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+
+            oscillator2.start(audioContext.currentTime);
+            oscillator2.stop(audioContext.currentTime + 0.2);
+        }
+
         // Function to play celebration sound
         function playCelebration() {
             const oscillator = audioContext.createOscillator();
@@ -363,9 +398,11 @@
                 setTimeout(() => {
                     bigNumber.style.display = 'none';
                 }, 1000);
-            }
 
-            if (totalSeconds <= 60 && seconds !== lastSecond) {
+                // Play exciting sound for last 10 seconds
+                playExcitingTick(totalSeconds);
+                lastSecond = seconds;
+            } else if (totalSeconds <= 60 && seconds !== lastSecond) {
                 playTick();
                 lastSecond = seconds;
             }
