@@ -2,6 +2,8 @@
 
 Personal website - pure HTML & CSS.
 
+🌐 **[https://guicheffer.me](https://guicheffer.me)**
+
 ## How to run
 
 Install dependencies:
@@ -25,4 +27,4 @@ Deployed automatically via GitHub Pages pipeline.
 
 ## License
 
-MIT - see `LICENSE` file.
+MIT - see [LICENSE](./LICENSE) file.
