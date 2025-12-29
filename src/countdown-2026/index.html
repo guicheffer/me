@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Countdown to 2026</title>
     <style>
         * {
@@ -264,7 +265,9 @@
         }
 
         // Countdown logic
-        const targetDate = new Date('2026-01-01T00:00:00').getTime();
+        // Testing: 2 minutes from now
+        const targetDate = new Date().getTime() + (2 * 60 * 1000);
+        // Production: const targetDate = new Date('2026-01-01T00:00:00').getTime();
         let hasReachedZero = false;
         let lastSecond = -1;
 
