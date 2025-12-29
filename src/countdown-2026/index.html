@@ -116,6 +116,9 @@
                          0 0 100px rgba(255, 215, 0, 0.8),
                          5px 5px 15px rgba(0, 0, 0, 0.9);
             z-index: 200;
+        }
+
+        #bigNumber.animate {
             animation: zoomInOut 1s ease-out;
         }
 
@@ -433,16 +436,22 @@
                 if (totalSeconds <= 10 && totalSeconds > 0) {
                     const bigNumber = document.getElementById('bigNumber');
                     bigNumber.textContent = totalSeconds;
+
+                    // Remove animation class first
+                    bigNumber.classList.remove('animate');
+                    bigNumber.style.display = 'none';
+
+                    // Force reflow
+                    void bigNumber.offsetWidth;
+
+                    // Show and add animation class
                     bigNumber.style.display = 'block';
+                    bigNumber.classList.add('animate');
 
-                    // Re-trigger animation
-                    bigNumber.style.animation = 'none';
-                    void bigNumber.offsetWidth; // Force reflow
-                    bigNumber.style.animation = 'zoomInOut 1s ease-out';
-
-                    // Hide after animation
+                    // Hide after animation (keep a bit longer to complete animation)
                     setTimeout(() => {
                         bigNumber.style.display = 'none';
+                        bigNumber.classList.remove('animate');
                     }, 1000);
 
                     // Fade effect on body
