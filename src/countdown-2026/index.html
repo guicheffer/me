@@ -196,6 +196,32 @@
             #welcome {
                 font-size: 48px;
                 padding: 30px 20px;
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #container {
+                padding: 15px;
+            }
+            #countdown {
+                gap: 15px;
+                padding: 20px;
+                flex-direction: column;
+            }
+            .time-value {
+                font-size: 48px;
+                min-width: 80px;
+            }
+            .time-label {
+                font-size: 12px;
+            }
+            #bigNumber {
+                font-size: 120px;
+            }
+            #welcome {
+                font-size: 36px;
+                padding: 20px 15px;
             }
         }
     </style>
