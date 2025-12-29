@@ -237,6 +237,10 @@
 <body>
     <div id="background"></div>
 
+    <div id="audioPrompt" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); padding: 30px 50px; border-radius: 20px; color: #FFD700; font-size: 24px; z-index: 300; text-align: center; cursor: pointer; backdrop-filter: blur(10px);">
+        Click anywhere to enable sound 🔊
+    </div>
+
     <div id="container">
         <div id="bigNumber"></div>
 
@@ -485,21 +489,24 @@
 
         // Resume audio context on user interaction (required by browsers)
         let audioReady = false;
-        document.addEventListener('click', async () => {
-            if (audioContext.state === 'suspended') {
-                await audioContext.resume();
-            }
-            audioReady = true;
-            console.log('Audio context ready!');
-        });
+        const audioPrompt = document.getElementById('audioPrompt');
 
-        // Also try on any user interaction
-        document.addEventListener('touchstart', async () => {
+        async function enableAudio() {
             if (audioContext.state === 'suspended') {
                 await audioContext.resume();
             }
             audioReady = true;
-        });
+            if (audioPrompt) {
+                audioPrompt.style.display = 'none';
+            }
+            console.log('Audio context ready!');
+
+            // Play a test sound
+            playTick();
+        }
+
+        document.addEventListener('click', enableAudio);
+        document.addEventListener('touchstart', enableAudio);
     </script>
 </body>
 </html>
