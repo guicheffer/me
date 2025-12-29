@@ -385,8 +385,8 @@
         }
 
         // Countdown logic
-        // Testing: 2 minutes from now
-        const targetDate = new Date().getTime() + (2 * 60 * 1000);
+        // Testing: 15 seconds from now
+        const targetDate = new Date().getTime() + (15 * 1000);
         // Production: const targetDate = new Date('2026-01-01T00:00:00').getTime();
         let hasReachedZero = false;
         let lastSecond = -1;
@@ -425,35 +425,37 @@
             // Play tick sound during last minute
             const totalSeconds = days * 86400 + hours * 3600 + minutes * 60 + seconds;
 
-            // Show big number in last 10 seconds
-            if (totalSeconds <= 10 && totalSeconds > 0 && seconds !== lastSecond) {
-                const bigNumber = document.getElementById('bigNumber');
-                bigNumber.textContent = totalSeconds;
-                bigNumber.style.display = 'block';
+            // Only trigger on second change
+            if (seconds !== lastSecond) {
+                lastSecond = seconds;
 
-                // Re-trigger animation
-                bigNumber.style.animation = 'none';
-                setTimeout(() => {
+                // Show big number in last 10 seconds
+                if (totalSeconds <= 10 && totalSeconds > 0) {
+                    const bigNumber = document.getElementById('bigNumber');
+                    bigNumber.textContent = totalSeconds;
+                    bigNumber.style.display = 'block';
+
+                    // Re-trigger animation
+                    bigNumber.style.animation = 'none';
+                    void bigNumber.offsetWidth; // Force reflow
                     bigNumber.style.animation = 'zoomInOut 1s ease-out';
-                }, 10);
 
-                // Hide after animation
-                setTimeout(() => {
-                    bigNumber.style.display = 'none';
-                }, 1000);
+                    // Hide after animation
+                    setTimeout(() => {
+                        bigNumber.style.display = 'none';
+                    }, 1000);
 
-                // Fade effect on body
-                document.body.classList.add('fade');
-                setTimeout(() => {
+                    // Fade effect on body
                     document.body.classList.remove('fade');
-                }, 1000);
+                    void document.body.offsetWidth; // Force reflow
+                    document.body.classList.add('fade');
 
-                // Play exciting sound for last 10 seconds
-                playExcitingTick(totalSeconds);
-                lastSecond = seconds;
-            } else if (totalSeconds <= 60 && seconds !== lastSecond) {
-                playTick();
-                lastSecond = seconds;
+                    // Play exciting sound for last 10 seconds
+                    playExcitingTick(totalSeconds);
+                } else if (totalSeconds <= 60) {
+                    // Play normal tick sound for seconds 11-60
+                    playTick();
+                }
             }
         }
 
@@ -462,10 +464,21 @@
         updateCountdown();
 
         // Resume audio context on user interaction (required by browsers)
-        document.addEventListener('click', () => {
+        let audioReady = false;
+        document.addEventListener('click', async () => {
             if (audioContext.state === 'suspended') {
-                audioContext.resume();
+                await audioContext.resume();
             }
+            audioReady = true;
+            console.log('Audio context ready!');
+        });
+
+        // Also try on any user interaction
+        document.addEventListener('touchstart', async () => {
+            if (audioContext.state === 'suspended') {
+                await audioContext.resume();
+            }
+            audioReady = true;
         });
     </script>
 </body>
