@@ -5,3 +5,6 @@ yarn.lock
 
 # Build directory
 .DS_Store
+
+# Environment variables
+.env
