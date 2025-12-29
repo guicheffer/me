@@ -18,6 +18,23 @@
             background: #000;
             color: #fff;
             position: relative;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        body.fade {
+            animation: fadeEffect 1s ease-in-out;
+        }
+
+        @keyframes fadeEffect {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         #background {
@@ -397,6 +414,12 @@
                 // Hide after animation
                 setTimeout(() => {
                     bigNumber.style.display = 'none';
+                }, 1000);
+
+                // Fade effect on body
+                document.body.classList.add('fade');
+                setTimeout(() => {
+                    document.body.classList.remove('fade');
                 }, 1000);
 
                 // Play exciting sound for last 10 seconds
