@@ -88,6 +88,10 @@
 
         #welcome {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 120px;
             font-weight: bold;
             text-transform: uppercase;
@@ -99,15 +103,17 @@
             border-radius: 30px;
             backdrop-filter: blur(10px);
             color: #FFD700;
+            z-index: 100;
+            text-align: center;
         }
 
         @keyframes pulse {
             0%, 100% {
-                transform: scale(1);
+                transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
             }
             50% {
-                transform: scale(1.05);
+                transform: translate(-50%, -50%) scale(1.05);
                 opacity: 0.9;
             }
         }
