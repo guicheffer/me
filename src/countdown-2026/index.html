@@ -443,25 +443,29 @@
 
                 // Show big number in last 10 seconds
                 if (totalSeconds <= 10 && totalSeconds > 0) {
+                    console.log('Showing big number:', totalSeconds);
                     const bigNumber = document.getElementById('bigNumber');
                     bigNumber.textContent = totalSeconds;
 
-                    // Remove animation class first
+                    // Reset state completely
                     bigNumber.classList.remove('animate');
                     bigNumber.style.display = 'none';
+                    bigNumber.style.opacity = '0';
 
-                    // Force reflow
-                    void bigNumber.offsetWidth;
+                    // Use requestAnimationFrame to ensure proper reflow
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            bigNumber.style.display = 'block';
+                            bigNumber.style.opacity = '1';
+                            bigNumber.classList.add('animate');
 
-                    // Show and add animation class
-                    bigNumber.style.display = 'block';
-                    bigNumber.classList.add('animate');
-
-                    // Hide after animation (keep a bit longer to complete animation)
-                    setTimeout(() => {
-                        bigNumber.style.display = 'none';
-                        bigNumber.classList.remove('animate');
-                    }, 1000);
+                            // Hide after animation completes
+                            setTimeout(() => {
+                                bigNumber.style.display = 'none';
+                                bigNumber.classList.remove('animate');
+                            }, 1000);
+                        });
+                    });
 
                     // Fade effect on background and countdown
                     const background = document.getElementById('background');
