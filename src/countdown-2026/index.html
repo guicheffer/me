@@ -35,20 +35,19 @@
         #container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-start;
+            align-items: flex-start;
             height: 100vh;
-            text-align: center;
             position: relative;
             z-index: 1;
-            padding-top: 15vh;
+            padding: 40px;
         }
 
         #countdown {
             display: flex;
             gap: 50px;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
             background: rgba(0, 0, 0, 0.4);
             padding: 40px 60px;
             border-radius: 25px;
@@ -122,7 +121,7 @@
 
         @media (max-width: 768px) {
             #container {
-                padding-top: 10vh;
+                padding: 20px;
             }
             #countdown {
                 gap: 20px;
