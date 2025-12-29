@@ -86,6 +86,37 @@
             display: none;
         }
 
+        #bigNumber {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 300px;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 1),
+                         0 0 100px rgba(255, 215, 0, 0.8),
+                         5px 5px 15px rgba(0, 0, 0, 0.9);
+            z-index: 200;
+            animation: zoomInOut 1s ease-out;
+        }
+
+        @keyframes zoomInOut {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
         #welcome {
             display: none;
             position: fixed;
@@ -142,6 +173,9 @@
                 font-size: 14px;
                 margin-top: 8px;
             }
+            #bigNumber {
+                font-size: 150px;
+            }
             #welcome {
                 font-size: 48px;
                 padding: 30px 20px;
@@ -153,6 +187,8 @@
     <div id="background"></div>
 
     <div id="container">
+        <div id="bigNumber"></div>
+
         <div id="countdown">
             <div class="time-unit">
                 <div class="time-value" id="days">00</div>
@@ -310,6 +346,25 @@
 
             // Play tick sound during last minute
             const totalSeconds = days * 86400 + hours * 3600 + minutes * 60 + seconds;
+
+            // Show big number in last 10 seconds
+            if (totalSeconds <= 10 && totalSeconds > 0 && seconds !== lastSecond) {
+                const bigNumber = document.getElementById('bigNumber');
+                bigNumber.textContent = totalSeconds;
+                bigNumber.style.display = 'block';
+
+                // Re-trigger animation
+                bigNumber.style.animation = 'none';
+                setTimeout(() => {
+                    bigNumber.style.animation = 'zoomInOut 1s ease-out';
+                }, 10);
+
+                // Hide after animation
+                setTimeout(() => {
+                    bigNumber.style.display = 'none';
+                }, 1000);
+            }
+
             if (totalSeconds <= 60 && seconds !== lastSecond) {
                 playTick();
                 lastSecond = seconds;
