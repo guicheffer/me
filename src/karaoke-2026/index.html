@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Karaoke 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('bg-karaoke.png');
+            z-index: -1;
+        }
+
+        #container {
+            min-height: 100vh;
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-size: 24px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        #language-switcher:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.6);
+            transform: scale(1.05);
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                         2px 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+
+        button {
+            padding: 12px 30px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #666, #999);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .people-list {
+            margin-top: 30px;
+        }
+
+        .person-item {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .person-info {
+            flex: 1;
+        }
+
+        .person-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .person-song {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .draw-display {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .main-singer-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
+            padding: 40px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            border: 3px solid #FFD700;
+            animation: fadeInZoom 0.6s ease-out;
+        }
+
+        .backing-vocal-card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            animation: fadeInZoom 0.6s ease-out 0.3s backwards;
+        }
+
+        .role-label {
+            font-size: 20px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .singer-name {
+            font-size: 48px;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                         2px 2px 4px rgba(0, 0, 0, 0.9);
+            margin-bottom: 10px;
+        }
+
+        .song-name {
+            font-size: 28px;
+            color: #fff;
+            font-style: italic;
+        }
+
+        .backing-name {
+            font-size: 36px;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        .progress-indicator {
+            text-align: center;
+            font-size: 18px;
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        @keyframes fadeInZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .results-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .result-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #FFD700;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .result-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #FFD700;
+            min-width: 50px;
+        }
+
+        .result-details {
+            flex: 1;
+        }
+
+        .result-main {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 5px;
+        }
+
+        .result-song {
+            font-size: 16px;
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .result-backing {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #ccc;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            #container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 32px;
+                margin-bottom: 30px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .singer-name {
+                font-size: 32px;
+            }
+
+            .song-name {
+                font-size: 20px;
+            }
+
+            .backing-name {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            #language-switcher {
+                top: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background"></div>
+    <div id="language-switcher">🇧🇷</div>
+
+    <div id="container">
+        <!-- Setup Screen -->
+        <div id="setup-screen" class="screen active">
+            <h1 data-i18n="title">Karaoke 2026</h1>
+
+            <div class="card">
+                <div class="form-group">
+                    <label for="person-name" data-i18n="personName">Name</label>
+                    <input type="text" id="person-name" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label for="song-choice" data-i18n="songChoice">Song</label>
+                    <input type="text" id="song-choice" placeholder="">
+                </div>
+
+                <div class="button-group">
+                    <button id="add-person-btn" data-i18n="addPerson">Add Person</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 data-i18n="participantsList" style="margin-bottom: 20px; font-size: 24px; color: #FFD700;">Participants</h2>
+                <div id="people-list" class="people-list"></div>
+                <div id="empty-state" class="empty-state" data-i18n="emptyState">No participants yet. Add someone to get started!</div>
+            </div>
+
+            <div class="button-group">
+                <button id="start-draw-btn" disabled data-i18n="startDraw">Start Draw</button>
+            </div>
+        </div>
+
+        <!-- Drawing Screen -->
+        <div id="drawing-screen" class="screen">
+            <h1 data-i18n="title">Karaoke 2026</h1>
+
+            <div class="progress-indicator" id="progress-indicator">Draw 1 of 10</div>
+
+            <div class="draw-display">
+                <div class="main-singer-card">
+                    <div class="role-label" data-i18n="mainSinger">Main Singer</div>
+                    <div class="singer-name" id="current-singer">João</div>
+                    <div class="song-name" id="current-song">Bohemian Rhapsody</div>
+                </div>
+
+                <div class="backing-vocal-card">
+                    <div class="role-label" data-i18n="backingVocal">Backing Vocal</div>
+                    <div class="backing-name" id="current-backing">Maria</div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button id="next-draw-btn" data-i18n="nextDraw">Next Draw</button>
+                <button id="view-results-btn" class="btn-secondary" data-i18n="viewResults">View Results</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <h1 data-i18n="resultsTitle">Karaoke Results</h1>
+
+            <div class="results-list" id="results-list"></div>
+
+            <div class="button-group">
+                <button id="new-session-btn" data-i18n="newSession">New Session</button>
+                <button id="back-to-setup-btn" class="btn-secondary" data-i18n="backToSetup">Back to Setup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // i18n System
+        const i18n = {
+            'pt-BR': {
+                title: 'Karaokê 2026',
+                personName: 'Nome',
+                songChoice: 'Música',
+                addPerson: 'Adicionar Pessoa',
+                participantsList: 'Participantes',
+                emptyState: 'Nenhum participante ainda. Adicione alguém para começar!',
+                startDraw: 'Começar Sorteio',
+                mainSinger: 'Cantor Principal',
+                backingVocal: 'Backing Vocal',
+                nextDraw: 'Próximo Sorteio',
+                viewResults: 'Ver Resultados',
+                resultsTitle: 'Resultados do Karaokê',
+                newSession: 'Nova Sessão',
+                backToSetup: 'Voltar para Configuração',
+                delete: 'Excluir',
+                draw: 'Sorteio',
+                of: 'de',
+                backing: 'Backing'
+            },
+            'en-US': {
+                title: 'Karaoke 2026',
+                personName: 'Name',
+                songChoice: 'Song',
+                addPerson: 'Add Person',
+                participantsList: 'Participants',
+                emptyState: 'No participants yet. Add someone to get started!',
+                startDraw: 'Start Draw',
+                mainSinger: 'Main Singer',
+                backingVocal: 'Backing Vocal',
+                nextDraw: 'Next Draw',
+                viewResults: 'View Results',
+                resultsTitle: 'Karaoke Results',
+                newSession: 'New Session',
+                backToSetup: 'Back to Setup',
+                delete: 'Delete',
+                draw: 'Draw',
+                of: 'of',
+                backing: 'Backing'
+            }
+        };
+
+        // State
+        let currentLanguage = localStorage.getItem('karaoke_language') ||
+                             (navigator.language.startsWith('pt') ? 'pt-BR' : 'en-US');
+        let people = JSON.parse(localStorage.getItem('karaoke_people') || '[]');
+        let drawHistory = JSON.parse(localStorage.getItem('karaoke_drawHistory') || '[]');
+        let currentDrawIndex = parseInt(localStorage.getItem('karaoke_currentDrawIndex') || '0');
+        let availableSingers = [];
+        let nextPersonId = people.length > 0 ? Math.max(...people.map(p => p.id)) + 1 : 1;
+
+        // Elements
+        const languageSwitcher = document.getElementById('language-switcher');
+        const personNameInput = document.getElementById('person-name');
+        const songChoiceInput = document.getElementById('song-choice');
+        const addPersonBtn = document.getElementById('add-person-btn');
+        const peopleList = document.getElementById('people-list');
+        const emptyState = document.getElementById('empty-state');
+        const startDrawBtn = document.getElementById('start-draw-btn');
+        const setupScreen = document.getElementById('setup-screen');
+        const drawingScreen = document.getElementById('drawing-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const progressIndicator = document.getElementById('progress-indicator');
+        const currentSinger = document.getElementById('current-singer');
+        const currentSong = document.getElementById('current-song');
+        const currentBacking = document.getElementById('current-backing');
+        const nextDrawBtn = document.getElementById('next-draw-btn');
+        const viewResultsBtn = document.getElementById('view-results-btn');
+        const resultsList = document.getElementById('results-list');
+        const newSessionBtn = document.getElementById('new-session-btn');
+        const backToSetupBtn = document.getElementById('back-to-setup-btn');
+
+        // Initialize
+        updateLanguage();
+        renderPeopleList();
+        checkResumeState();
+
+        // Language Switcher
+        languageSwitcher.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'pt-BR' ? 'en-US' : 'pt-BR';
+            localStorage.setItem('karaoke_language', currentLanguage);
+            updateLanguage();
+        });
+
+        function updateLanguage() {
+            languageSwitcher.textContent = currentLanguage === 'pt-BR' ? '🇧🇷' : '🇺🇸';
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (i18n[currentLanguage][key]) {
+                    element.textContent = i18n[currentLanguage][key];
+                }
+            });
+
+            // Update placeholders
+            personNameInput.placeholder = i18n[currentLanguage].personName;
+            songChoiceInput.placeholder = i18n[currentLanguage].songChoice;
+
+            // Update progress indicator if in drawing mode
+            if (drawHistory.length > 0 && currentDrawIndex < drawHistory.length) {
+                updateProgressIndicator();
+            }
+
+            // Re-render lists to update language
+            renderPeopleList();
+            if (resultsScreen.classList.contains('active')) {
+                renderResults();
+            }
+        }
+
+        // Add Person
+        addPersonBtn.addEventListener('click', addPerson);
+        personNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                songChoiceInput.focus();
+            }
+        });
+        songChoiceInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addPerson();
+            }
+        });
+
+        function addPerson() {
+            const name = personNameInput.value.trim();
+            const song = songChoiceInput.value.trim();
+
+            if (!name || !song) {
+                alert(currentLanguage === 'pt-BR' ?
+                    'Por favor, preencha nome e música!' :
+                    'Please fill in both name and song!');
+                return;
+            }
+
+            people.push({
+                id: nextPersonId++,
+                name: name,
+                song: song
+            });
+
+            savePeople();
+            renderPeopleList();
+
+            personNameInput.value = '';
+            songChoiceInput.value = '';
+            personNameInput.focus();
+        }
+
+        function deletePerson(id) {
+            people = people.filter(p => p.id !== id);
+            savePeople();
+            renderPeopleList();
+        }
+
+        function renderPeopleList() {
+            if (people.length === 0) {
+                peopleList.style.display = 'none';
+                emptyState.style.display = 'block';
+                startDrawBtn.disabled = true;
+            } else {
+                peopleList.style.display = 'block';
+                emptyState.style.display = 'none';
+                startDrawBtn.disabled = people.length < 2;
+
+                peopleList.innerHTML = people.map(person => `
+                    <div class="person-item">
+                        <div class="person-info">
+                            <div class="person-name">${person.name}</div>
+                            <div class="person-song">${person.song}</div>
+                        </div>
+                        <button class="btn-danger" onclick="deletePerson(${person.id})">
+                            ${i18n[currentLanguage].delete}
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function savePeople() {
+            localStorage.setItem('karaoke_people', JSON.stringify(people));
+        }
+
+        // Start Draw
+        startDrawBtn.addEventListener('click', () => {
+            if (people.length < 2) {
+                alert(currentLanguage === 'pt-BR' ?
+                    'Você precisa de pelo menos 2 pessoas!' :
+                    'You need at least 2 people!');
+                return;
+            }
+
+            initializeDrawing();
+            showScreen('drawing-screen');
+            showCurrentDraw();
+        });
+
+        function initializeDrawing() {
+            // Create shuffled list of singers
+            availableSingers = [...people].sort(() => Math.random() - 0.5);
+            drawHistory = [];
+            currentDrawIndex = 0;
+
+            // Generate all draws
+            availableSingers.forEach(singer => {
+                const availableBackingVocals = people.filter(p => p.id !== singer.id);
+                const backing = availableBackingVocals[Math.floor(Math.random() * availableBackingVocals.length)];
+
+                drawHistory.push({
+                    singer: singer,
+                    backing: backing
+                });
+            });
+
+            saveDrawState();
+        }
+
+        function showCurrentDraw() {
+            const draw = drawHistory[currentDrawIndex];
+
+            currentSinger.textContent = draw.singer.name;
+            currentSong.textContent = draw.singer.song;
+            currentBacking.textContent = draw.backing.name;
+
+            updateProgressIndicator();
+
+            // Show/hide buttons
+            if (currentDrawIndex === drawHistory.length - 1) {
+                nextDrawBtn.style.display = 'none';
+                viewResultsBtn.style.display = 'inline-block';
+            } else {
+                nextDrawBtn.style.display = 'inline-block';
+                viewResultsBtn.style.display = 'inline-block';
+            }
+
+            // Trigger animation
+            document.querySelector('.main-singer-card').style.animation = 'none';
+            document.querySelector('.backing-vocal-card').style.animation = 'none';
+            setTimeout(() => {
+                document.querySelector('.main-singer-card').style.animation = 'fadeInZoom 0.6s ease-out';
+                document.querySelector('.backing-vocal-card').style.animation = 'fadeInZoom 0.6s ease-out 0.3s backwards';
+            }, 10);
+        }
+
+        function updateProgressIndicator() {
+            progressIndicator.textContent = `${i18n[currentLanguage].draw} ${currentDrawIndex + 1} ${i18n[currentLanguage].of} ${drawHistory.length}`;
+        }
+
+        nextDrawBtn.addEventListener('click', () => {
+            currentDrawIndex++;
+            saveDrawState();
+            showCurrentDraw();
+        });
+
+        viewResultsBtn.addEventListener('click', () => {
+            showScreen('results-screen');
+            renderResults();
+        });
+
+        function renderResults() {
+            resultsList.innerHTML = drawHistory.map((draw, index) => `
+                <div class="result-item">
+                    <div class="result-number">#${index + 1}</div>
+                    <div class="result-details">
+                        <div class="result-main">${draw.singer.name}</div>
+                        <div class="result-song">${draw.singer.song}</div>
+                        <div class="result-backing">${i18n[currentLanguage].backing}: ${draw.backing.name}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        newSessionBtn.addEventListener('click', () => {
+            if (confirm(currentLanguage === 'pt-BR' ?
+                'Tem certeza? Isso vai limpar todos os dados!' :
+                'Are you sure? This will clear all data!')) {
+                people = [];
+                drawHistory = [];
+                currentDrawIndex = 0;
+                availableSingers = [];
+                savePeople();
+                saveDrawState();
+                renderPeopleList();
+                showScreen('setup-screen');
+            }
+        });
+
+        backToSetupBtn.addEventListener('click', () => {
+            showScreen('setup-screen');
+        });
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function saveDrawState() {
+            localStorage.setItem('karaoke_drawHistory', JSON.stringify(drawHistory));
+            localStorage.setItem('karaoke_currentDrawIndex', currentDrawIndex.toString());
+        }
+
+        function checkResumeState() {
+            if (drawHistory.length > 0 && currentDrawIndex < drawHistory.length) {
+                // Resume drawing
+                showScreen('drawing-screen');
+                showCurrentDraw();
+            }
+        }
+    </script>
+</body>
+</html>
