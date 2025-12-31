@@ -154,6 +154,23 @@
             font-size: 14px;
         }
 
+        .btn-edit {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #999, #666);
+            color: #fff;
+        }
+
+        .person-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
         .people-list {
             margin-top: 30px;
         }
@@ -382,6 +399,7 @@
 
                 <div class="button-group">
                     <button id="add-person-btn" data-i18n="addPerson">Add Person</button>
+                    <button id="cancel-edit-btn" class="btn-cancel" data-i18n="cancelEdit" style="display: none;">Cancel</button>
                 </div>
             </div>
 
@@ -442,6 +460,8 @@
                 personName: 'Nome',
                 songChoice: 'Música',
                 addPerson: 'Adicionar Pessoa',
+                updatePerson: 'Atualizar Pessoa',
+                cancelEdit: 'Cancelar',
                 participantsList: 'Participantes',
                 emptyState: 'Nenhum participante ainda. Adicione alguém para começar!',
                 startDraw: 'Começar Sorteio',
@@ -453,6 +473,7 @@
                 newSession: 'Nova Sessão',
                 backToSetup: 'Voltar para Configuração',
                 delete: 'Excluir',
+                edit: 'Editar',
                 draw: 'Sorteio',
                 of: 'de',
                 backing: 'Backing'
@@ -462,6 +483,8 @@
                 personName: 'Name',
                 songChoice: 'Song',
                 addPerson: 'Add Person',
+                updatePerson: 'Update Person',
+                cancelEdit: 'Cancel',
                 participantsList: 'Participants',
                 emptyState: 'No participants yet. Add someone to get started!',
                 startDraw: 'Start Draw',
@@ -473,6 +496,7 @@
                 newSession: 'New Session',
                 backToSetup: 'Back to Setup',
                 delete: 'Delete',
+                edit: 'Edit',
                 draw: 'Draw',
                 of: 'of',
                 backing: 'Backing'
@@ -487,12 +511,14 @@
         let currentDrawIndex = parseInt(localStorage.getItem('karaoke_currentDrawIndex') || '0');
         let availableSingers = [];
         let nextPersonId = people.length > 0 ? Math.max(...people.map(p => p.id)) + 1 : 1;
+        let editingPersonId = null;
 
         // Elements
         const languageSwitcher = document.getElementById('language-switcher');
         const personNameInput = document.getElementById('person-name');
         const songChoiceInput = document.getElementById('song-choice');
         const addPersonBtn = document.getElementById('add-person-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
         const peopleList = document.getElementById('people-list');
         const emptyState = document.getElementById('empty-state');
         const startDrawBtn = document.getElementById('start-draw-btn');
@@ -535,6 +561,11 @@
             personNameInput.placeholder = i18n[currentLanguage].personName;
             songChoiceInput.placeholder = i18n[currentLanguage].songChoice;
 
+            // Update button text based on edit mode
+            if (editingPersonId !== null) {
+                addPersonBtn.textContent = i18n[currentLanguage].updatePerson;
+            }
+
             // Update progress indicator if in drawing mode
             if (drawHistory.length > 0 && currentDrawIndex < drawHistory.length) {
                 updateProgressIndicator();
@@ -571,25 +602,64 @@
                 return;
             }
 
-            people.push({
-                id: nextPersonId++,
-                name: name,
-                song: song
-            });
+            if (editingPersonId !== null) {
+                // Update existing person
+                const person = people.find(p => p.id === editingPersonId);
+                if (person) {
+                    person.name = name;
+                    person.song = song;
+                }
+                cancelEdit();
+            } else {
+                // Add new person
+                people.push({
+                    id: nextPersonId++,
+                    name: name,
+                    song: song
+                });
+
+                personNameInput.value = '';
+                songChoiceInput.value = '';
+                personNameInput.focus();
+            }
 
             savePeople();
             renderPeopleList();
-
-            personNameInput.value = '';
-            songChoiceInput.value = '';
-            personNameInput.focus();
         }
 
         function deletePerson(id) {
+            if (editingPersonId === id) {
+                cancelEdit();
+            }
             people = people.filter(p => p.id !== id);
             savePeople();
             renderPeopleList();
         }
+
+        function editPerson(id) {
+            const person = people.find(p => p.id === id);
+            if (person) {
+                editingPersonId = id;
+                personNameInput.value = person.name;
+                songChoiceInput.value = person.song;
+                addPersonBtn.setAttribute('data-i18n', 'updatePerson');
+                addPersonBtn.textContent = i18n[currentLanguage].updatePerson;
+                cancelEditBtn.style.display = 'inline-block';
+                personNameInput.focus();
+            }
+        }
+
+        function cancelEdit() {
+            editingPersonId = null;
+            personNameInput.value = '';
+            songChoiceInput.value = '';
+            addPersonBtn.setAttribute('data-i18n', 'addPerson');
+            addPersonBtn.textContent = i18n[currentLanguage].addPerson;
+            cancelEditBtn.style.display = 'none';
+            personNameInput.focus();
+        }
+
+        cancelEditBtn.addEventListener('click', cancelEdit);
 
         function renderPeopleList() {
             if (people.length === 0) {
@@ -607,9 +677,14 @@
                             <div class="person-name">${person.name}</div>
                             <div class="person-song">${person.song}</div>
                         </div>
-                        <button class="btn-danger" onclick="deletePerson(${person.id})">
-                            ${i18n[currentLanguage].delete}
-                        </button>
+                        <div class="person-item-actions">
+                            <button class="btn-edit" onclick="editPerson(${person.id})">
+                                ${i18n[currentLanguage].edit}
+                            </button>
+                            <button class="btn-danger" onclick="deletePerson(${person.id})">
+                                ${i18n[currentLanguage].delete}
+                            </button>
+                        </div>
                     </div>
                 `).join('');
             }
@@ -626,6 +701,11 @@
                     'Você precisa de pelo menos 2 pessoas!' :
                     'You need at least 2 people!');
                 return;
+            }
+
+            // Cancel edit mode if active
+            if (editingPersonId !== null) {
+                cancelEdit();
             }
 
             initializeDrawing();
