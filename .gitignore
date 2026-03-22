@@ -4,6 +4,7 @@ node_modules
 yarn.lock
 
 # Build directory
+dist/
 .DS_Store
 
 # Environment variables
