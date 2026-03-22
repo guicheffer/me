@@ -8,23 +8,25 @@
 
 /* ── Dark mode (default) ───────────────── */
 :root {
-  --bg: #07070e;
-  --sidebar-bg: #0a0915;
-  --grad-a: #07070e;
-  --grad-b: #190840;
-  --grad-c: #0e0622;
-  --grad-d: #07070e;
+  --bg: #05050d;
+  --sidebar-bg: #09091a;
+  /* gradient stops: vivid dark purple + near-black */
+  --grad-a: #05050d;
+  --grad-b: #2e0d6e;
+  --grad-c: #05050d;
+  --grad-d: #1a0545;
   --purple: #9333ea;
   --purple-light: #a855f7;
   --purple-muted: rgba(147, 51, 234, 0.14);
-  --purple-border: rgba(147, 51, 234, 0.26);
-  --purple-glow: rgba(147, 51, 234, 0.42);
-  --text: #f0eeff;
-  --text-muted: #9ca3af;
-  --text-dim: #4b5563;
+  --purple-border: rgba(147, 51, 234, 0.28);
+  --purple-glow: rgba(147, 51, 234, 0.45);
+  --text: #f2f0ff;
+  --text-muted: #a09cc0;
+  --text-dim: #4b4870;
   --card-bg: rgba(147, 51, 234, 0.1);
-  --card-border: rgba(147, 51, 234, 0.22);
-  --divider: rgba(255, 255, 255, 0.07);
+  --card-border: rgba(147, 51, 234, 0.24);
+  --divider: rgba(255, 255, 255, 0.08);
+  --focus-ring: #a855f7;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --sidebar-width: 260px;
@@ -32,25 +34,54 @@
   --transition: 0.22s ease;
 }
 
-/* ── Light mode overrides ──────────────── */
+/* ── Light mode ────────────────────────── */
 [data-theme="light"] {
-  --bg: #faf7ff;
-  --sidebar-bg: #f0ebff;
-  --grad-a: #faf7ff;
-  --grad-b: #e9d9fe;
-  --grad-c: #f3ecff;
-  --grad-d: #faf7ff;
-  --purple: #7c3aed;
-  --purple-light: #6d28d9;
-  --purple-muted: rgba(124, 58, 237, 0.08);
-  --purple-border: rgba(124, 58, 237, 0.2);
-  --purple-glow: rgba(124, 58, 237, 0.28);
-  --text: #1e1b4b;
-  --text-muted: #4c4a6e;
+  --bg: #f5f0ff;
+  --sidebar-bg: #ede5ff;
+  /* gradient stops: soft violet + white */
+  --grad-a: #f5f0ff;
+  --grad-b: #d8c5ff;
+  --grad-c: #f5f0ff;
+  --grad-d: #e8d8ff;
+  --purple: #6d28d9;
+  --purple-light: #7c3aed;
+  --purple-muted: rgba(109, 40, 217, 0.09);
+  --purple-border: rgba(109, 40, 217, 0.22);
+  --purple-glow: rgba(109, 40, 217, 0.25);
+  --text: #1c1541;
+  --text-muted: #4a4580;
   --text-dim: #9ca3af;
-  --card-bg: rgba(124, 58, 237, 0.07);
-  --card-border: rgba(124, 58, 237, 0.18);
+  --card-bg: rgba(109, 40, 217, 0.07);
+  --card-border: rgba(109, 40, 217, 0.2);
   --divider: rgba(0, 0, 0, 0.08);
+  --focus-ring: #6d28d9;
+}
+
+/* ── Reduced motion / performance off ──── */
+/* In-page perf toggle */
+[data-reduce-motion="true"] *,
+[data-reduce-motion="true"] *::before,
+[data-reduce-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Respect OS-level preference too */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Also hide the custom cursor when animations are off */
+[data-reduce-motion="true"] .cursor,
+[data-reduce-motion="true"] .cursor-glow {
+  display: none !important;
 }
 
 /* ── Reset ─────────────────────────────── */
@@ -66,6 +97,26 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Skip-nav (a11y) ───────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  background: var(--purple);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-weight: 600;
+  font-size: 0.875rem;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 /* ── Animated gradient background ─────── */
 body {
   font-family: var(--font-body);
@@ -79,7 +130,7 @@ body {
   position: relative;
 }
 
-/* The moving gradient layer sits behind everything */
+/* The moving gradient sits behind everything */
 body::before {
   content: '';
   position: fixed;
@@ -93,7 +144,7 @@ body::before {
     var(--grad-d)
   );
   background-size: 400% 400%;
-  animation: gradient-flow 22s ease infinite;
+  animation: gradient-flow 10s ease infinite;
   pointer-events: none;
 }
 
@@ -101,6 +152,49 @@ body::before {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+/* ── Custom cursor (desktop only) ─────── */
+/* Only when pointer is fine (mouse, not touch) */
+@media (hover: hover) and (pointer: fine) {
+  body:not([data-reduce-motion="true"]) {
+    cursor: none;
+  }
+}
+
+.cursor,
+.cursor-glow {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  display: none; /* shown by JS on mouse devices */
+}
+
+.cursor {
+  width: 8px;
+  height: 8px;
+  background: var(--purple-light);
+  transition: width 0.15s ease, height 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+  z-index: 10000;
+}
+
+.cursor.hovering {
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: 2px solid var(--purple-light);
+  opacity: 0.7;
+}
+
+.cursor-glow {
+  width: 48px;
+  height: 48px;
+  background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+  filter: blur(10px);
+  opacity: 0.6;
+  transition: opacity 0.3s;
 }
 
 /* ── Container ─────────────────────────── */
@@ -123,6 +217,13 @@ a:hover {
   color: var(--purple);
 }
 
+/* ── Focus styles (a11y) ───────────────── */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 /* ── Sidebar ───────────────────────────── */
 aside {
   background: var(--sidebar-bg);
@@ -132,42 +233,66 @@ aside {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* avatar+nav centered, toggle at bottom */
+  justify-content: space-between;
   position: fixed;
   height: 100%;
   left: 0;
   top: 0;
   transition: transform var(--transition);
   z-index: 100;
-  box-shadow: 2px 0 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 0 30px rgba(0, 0, 0, 0.25);
 }
 
 aside.hidden {
   transform: translateX(-100%);
 }
 
-/* inner wrapper centers avatar + nav vertically */
+/* vertically centers avatar + nav */
 .sidebar-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  flex: 1;
+  justify-content: center;
 }
 
 /* ── Avatar ────────────────────────────── */
 .profile-pic {
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
+/* bigger spinning gradient ring */
 .profile-pic::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -7px;
   border-radius: 50%;
-  background: conic-gradient(var(--purple) 0deg, transparent 180deg, var(--purple-light) 360deg);
-  animation: ring-spin 7s linear infinite;
-  opacity: 0.7;
+  background: conic-gradient(
+    var(--purple) 0deg,
+    transparent 140deg,
+    var(--purple-light) 260deg,
+    var(--purple) 360deg
+  );
+  animation: ring-spin 6s linear infinite;
+  opacity: 0.8;
+}
+
+/* blurred outer glow ring */
+.profile-pic::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--purple-glow) 0deg,
+    transparent 180deg,
+    var(--purple-glow) 360deg
+  );
+  filter: blur(8px);
+  animation: ring-spin 6s linear infinite reverse;
+  opacity: 0.4;
 }
 
 .profile-pic img {
@@ -185,9 +310,10 @@ aside.hidden {
 
 .profile-pic img:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 28px var(--purple-glow);
+  box-shadow: 0 0 32px var(--purple-glow);
 }
 
+/* bounce class reset via JS */
 .profile-pic img.bounce {
   animation: bounce 0.5s ease;
 }
@@ -198,8 +324,8 @@ aside.hidden {
 
 @keyframes bounce {
   0%, 100% { transform: scale(1); }
-  30%       { transform: scale(1.14); }
-  60%       { transform: scale(0.94); }
+  30%       { transform: scale(1.12); }
+  65%       { transform: scale(0.95); }
 }
 
 /* ── Nav ───────────────────────────────── */
@@ -250,37 +376,54 @@ nav ul li a:hover {
 }
 
 nav ul li a:hover::before,
-nav ul li a.active::before {
+nav ul li a[aria-current="page"]::before {
   transform: scaleY(1);
 }
 
-nav ul li a.active {
+nav ul li a[aria-current="page"] {
   color: var(--text);
   background: var(--purple-muted);
   border-color: var(--purple-border);
 }
 
-/* ── Theme toggle ──────────────────────── */
-.theme-toggle {
+/* ── Sidebar footer (toggles) ──────────── */
+.sidebar-footer {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   color: var(--text-muted);
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: all var(--transition);
   flex-shrink: 0;
 }
 
-.theme-toggle:hover {
+.icon-btn:hover {
   border-color: var(--purple);
-  color: var(--purple);
-  box-shadow: 0 0 14px var(--purple-glow);
+  color: var(--purple-light);
+  box-shadow: 0 0 12px var(--purple-glow);
+}
+
+.icon-btn[aria-pressed="true"] {
+  border-color: var(--purple);
+  color: var(--purple-light);
+  background: var(--purple-muted);
+}
+
+/* perf toggle off = dimmed */
+.icon-btn.perf-off {
+  opacity: 0.45;
 }
 
 /* ── Main ──────────────────────────────── */
@@ -291,7 +434,7 @@ main {
   max-width: calc(100% - var(--sidebar-width));
   display: flex;
   flex-direction: column;
-  justify-content: center; /* vertically center content on desktop */
+  justify-content: center;
   min-height: 100vh;
 }
 
@@ -299,25 +442,23 @@ main {
 .page-section {
   display: none;
   flex-direction: column;
-  max-width: 660px; /* keeps content from sprawling too wide */
+  max-width: 660px;
 }
 
-/* entering = display flex but opacity 0 (initial state for transition) */
 .page-section.entering {
   display: flex;
   opacity: 0;
   transform: translateY(12px);
 }
 
-/* active = visible with transition */
 .page-section.active {
   display: flex;
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.38s ease, transform 0.38s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-/* ── Header (mobile toggle) ────────────── */
+/* ── Header (mobile toggle only) ──────── */
 header {
   display: none;
   margin-bottom: 24px;
@@ -351,7 +492,13 @@ header {
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  background: linear-gradient(135deg, var(--text) 0%, var(--purple-light) 45%, #c084fc 70%, var(--text) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--text) 0%,
+    var(--purple-light) 45%,
+    #c084fc 68%,
+    var(--text) 100%
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -517,7 +664,7 @@ ul:not(.skills).icons-list {
   transform: translateX(-50%) scale(1);
 }
 
-/* ── Fade-up entrance animations ────────── */
+/* ── Fade-up entrance ──────────────────── */
 .fade-up {
   opacity: 0;
   transform: translateY(14px);
@@ -544,7 +691,7 @@ ul:not(.skills).icons-list {
   display: block;
 }
 
-/* ── Skills page headings ──────────────── */
+/* ── Skills headings ───────────────────── */
 h1 {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 4vw, 2.6rem);
@@ -561,7 +708,7 @@ h2 {
   letter-spacing: 0.01em;
 }
 
-/* ── Skills icon grid ──────────────────── */
+/* ── Skills icon list ──────────────────── */
 ul.skills {
   margin-left: 20px;
   margin-top: 14px;
@@ -597,42 +744,33 @@ ul li {
   margin: 0;
 }
 
+/* all icons in the skills row — same size regardless of type */
 .icons-list.skills .list-inline-item i,
-.icons-list.skills .list-inline-item svg {
+.icons-list.skills .list-inline-item .skill-svg {
   font-size: 2rem;
   width: 2rem;
   height: 2rem;
   color: var(--text-muted);
-  transition: color var(--transition), transform var(--transition);
   display: block;
+  transition: color var(--transition), transform var(--transition);
 }
 
 .icons-list.skills .list-inline-item:hover i,
-.icons-list.skills .list-inline-item:hover svg {
+.icons-list.skills .list-inline-item:hover .skill-svg {
   color: var(--purple);
   transform: scale(1.2) translateY(-2px);
 }
 
-/* "of course" label between icons */
+/* "of course" separator */
+.skill-separator {
+  display: inline-flex;
+  align-items: center;
+}
+
 .skill-separator small {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-dim);
-  line-height: 2rem;
-  vertical-align: middle;
-}
-
-/* AI brand icons extra styling */
-.ai-icon i,
-.ai-icon svg {
-  opacity: 0.75;
-  transition: opacity var(--transition), color var(--transition), transform var(--transition) !important;
-}
-
-.ai-icon:hover i,
-.ai-icon:hover svg {
-  opacity: 1;
-  color: var(--purple) !important;
-  transform: scale(1.2) translateY(-2px) !important;
+  line-height: 1;
 }
 
 /* ── Misc ──────────────────────────────── */
@@ -696,5 +834,11 @@ hr {
 
   .icons-list {
     gap: 7px;
+  }
+
+  /* hide custom cursor on touch */
+  .cursor,
+  .cursor-glow {
+    display: none !important;
   }
 }
