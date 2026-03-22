@@ -426,6 +426,8 @@ nav ul li a[aria-current="page"] {
   display: flex;
   gap: 8px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 110; /* sit above any possible overlay */
 }
 
 .icon-btn {
@@ -442,6 +444,11 @@ nav ul li a[aria-current="page"] {
   font-size: 0.9rem;
   transition: all var(--transition);
   flex-shrink: 0;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 1;
 }
 
 .icon-btn:hover {
@@ -878,21 +885,29 @@ hr {
     position: fixed;
     width: var(--sidebar-width);
     height: 100%;
-    /* slide in from the right on mobile */
     left: auto;
     right: 0;
     transform: translateX(100%);
     border-right: none;
-    border-left: 1px solid var(--purple-border);
-    box-shadow: -2px 0 30px rgba(0, 0, 0, 0.25);
+    border-left: 2px solid var(--purple);
+    /* stronger shadow + purple glow for mobile prominence */
+    box-shadow:
+      -6px 0 40px rgba(0, 0, 0, 0.55),
+      -2px 0 24px var(--purple-glow);
   }
 
   aside.show {
     transform: translateX(0);
   }
 
+  /* toggle floats top-right, beside the title, no layout space consumed */
   header {
     display: block;
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 101;
+    margin: 0;
   }
 
   .menu-toggle {
