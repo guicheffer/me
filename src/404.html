@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -32,46 +32,76 @@
   <script defer src="/script.js"></script>
 </head>
 <body>
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
   <div class="container">
-    <aside id="sidebar">
-      <div class="profile-pic">
-        <img src="/assets/images/me-big-main-rounded.png" alt="João Guilherme">
+    <aside id="sidebar" aria-label="Site navigation">
+      <div class="sidebar-inner">
+        <div class="profile-pic">
+          <img
+            src="/assets/images/me-big-main-rounded.png"
+            alt="João Guilherme — click to go home"
+            width="120"
+            height="120"
+          >
+        </div>
+        <nav aria-label="Primary">
+          <ul role="list">
+            <li>
+              <a href="/" data-section="about" aria-current="false">about me</a>
+            </li>
+            <li>
+              <a href="/skills" data-section="skills" aria-current="false">skills</a>
+            </li>
+            <li>
+              <a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog</a>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <nav>
-        <ul>
-          <li><a title="about me" href="/">about me</a></li>
-          <li><a title="see my skills" href="/skills">skills</a></li>
-          <li><a title="medium" class="active" target="_blank" href="https://medium.com/@guicheffer">blog</a></li>
-        </ul>
-      </nav>
+
+      <div class="sidebar-footer">
+        <button
+          id="theme-toggle"
+          class="icon-btn"
+          aria-label="Switch to light mode"
+          aria-pressed="false"
+          title="Toggle colour theme"
+        >
+          <i class="fa-solid fa-sun" id="theme-icon" aria-hidden="true"></i>
+        </button>
+        <button
+          id="perf-toggle"
+          class="icon-btn"
+          aria-label="Disable animations"
+          aria-pressed="true"
+          title="Toggle animations"
+        >
+          <i class="fa-solid fa-bolt" id="perf-icon" aria-hidden="true"></i>
+        </button>
+      </div>
     </aside>
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <header>
-        <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+        <button
+          class="menu-toggle"
+          id="menu-toggle"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="sidebar"
+        >&#9776;</button>
       </header>
 
-      <h1>Oops! Page Not Found</h1>
-      <p>Sorry, it seems like the page you're looking for doesn't exist.</p>
-      <p>But don't worry, you can always go back to <a href="/">the home page</a> or check out my <a href="/skills">skills</a>.</p>
-
-      <br/>
-
-      <div class="error-illustration">
-        <i class="fas fa-ghost fa-10x" style="color:#663399;"></i>
-      </div>
-
-      <br/>
-      <br/>
-      <hr/>
-      <br/>
-
-      <h2>Here are some helpful links:</h2>
-      <ul class="skills">
-        <li><a href="/">Go to Home</a></li>
-        <li><a href="/skills">See My Skills</a></li>
-        <li><a href="mailto:hi@guicheffer.me">Contact Me</a></li>
-      </ul>
+      <section class="not-found" aria-label="Page not found">
+        <span class="not-found-code title" aria-hidden="true">404</span>
+        <h1 class="not-found-title">Lost in space.</h1>
+        <p class="not-found-desc">This page doesn't exist — but I do.<br>Head back home?</p>
+        <a href="/" class="btn-home">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> back to homepage
+        </a>
+      </section>
     </main>
   </div>
 </body>
