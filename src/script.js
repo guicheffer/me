@@ -229,7 +229,7 @@
   }
 
   /* ── Custom cursor ───────────────────────────────────────── */
-  // Only on devices with a fine pointer (mouse), and not in reduced-motion mode
+  // Only on mouse devices (fine pointer). Mobile/touch: native cursor.
   const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   if (hasFinePointer) {
@@ -242,18 +242,15 @@
     document.body.appendChild(cursorGlow);
     document.body.appendChild(cursor);
 
-    // Only show when animations are on
-    if (html.getAttribute('data-reduce-motion') !== 'true') {
-      cursor.style.display     = 'block';
-      cursorGlow.style.display = 'block';
-    }
-
-    // Re-check when perf toggle changes
-    perfToggle?.addEventListener('click', () => {
+    function syncCursorVisibility() {
       const off = html.getAttribute('data-reduce-motion') === 'true';
       cursor.style.display     = off ? 'none' : 'block';
       cursorGlow.style.display = off ? 'none' : 'block';
-    });
+    }
+
+    syncCursorVisibility();
+    // Re-check whenever the perf toggle is clicked
+    perfToggle?.addEventListener('click', syncCursorVisibility);
 
     let mouseX = 0, mouseY = 0;
     let glowX = 0, glowY = 0;
@@ -264,20 +261,14 @@
       mouseY = e.clientY;
       cursor.style.left = mouseX + 'px';
       cursor.style.top  = mouseY + 'px';
-
-      if (!rafRunning) {
-        rafRunning = true;
-        animateGlow();
-      }
+      if (!rafRunning) { rafRunning = true; animateGlow(); }
     });
 
-    // Smooth glow follows mouse with lerp
     function animateGlow() {
       glowX += (mouseX - glowX) * 0.09;
       glowY += (mouseY - glowY) * 0.09;
       cursorGlow.style.left = glowX + 'px';
       cursorGlow.style.top  = glowY + 'px';
-
       if (Math.abs(mouseX - glowX) > 0.1 || Math.abs(mouseY - glowY) > 0.1) {
         requestAnimationFrame(animateGlow);
       } else {
@@ -285,11 +276,42 @@
       }
     }
 
-    // Expand cursor on hoverable elements
-    const hoverEls = document.querySelectorAll('a, button, [role="button"]');
-    hoverEls.forEach((el) => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-    });
+    // Ring expands on hover over links / buttons — add to existing + future elements
+    function attachHoverCursor(root) {
+      root.querySelectorAll('a, button, [role="button"]').forEach((el) => {
+        if (el._cursorBound) return;
+        el._cursorBound = true;
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+      });
+    }
+
+    attachHoverCursor(document);
   }
+
+  /* ── Click ripple (sound-wave rings) ────────────────────── */
+  document.addEventListener('click', (e) => {
+    if (html.getAttribute('data-reduce-motion') === 'true') return;
+
+    const ripple = document.createElement('div');
+    ripple.className  = 'click-ripple';
+    ripple.style.left = e.clientX + 'px';
+    ripple.style.top  = e.clientY + 'px';
+    document.body.appendChild(ripple);
+
+    const RINGS = 3;
+    let done = 0;
+
+    for (let i = 0; i < RINGS; i++) {
+      const ring = document.createElement('div');
+      ring.className = 'click-ring';
+      // each ring starts slightly after the previous → wave feel
+      ring.style.animationDelay = `${i * 130}ms`;
+      ring.addEventListener('animationend', () => {
+        done++;
+        if (done === RINGS) ripple.remove();
+      });
+      ripple.appendChild(ring);
+    }
+  });
 })();

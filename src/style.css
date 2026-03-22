@@ -155,11 +155,31 @@ body::before {
 }
 
 /* ── Custom cursor (desktop only) ─────── */
-/* Only when pointer is fine (mouse, not touch) */
+/* Hide native cursor on all interactive elements when using custom cursor */
 @media (hover: hover) and (pointer: fine) {
-  body:not([data-reduce-motion="true"]) {
+  html:not([data-reduce-motion="true"]) body,
+  html:not([data-reduce-motion="true"]) a,
+  html:not([data-reduce-motion="true"]) button,
+  html:not([data-reduce-motion="true"]) [role="button"],
+  html:not([data-reduce-motion="true"]) input,
+  html:not([data-reduce-motion="true"]) label,
+  html:not([data-reduce-motion="true"]) select {
     cursor: none;
   }
+}
+
+/* Restore native cursors when reduce-motion is on */
+[data-reduce-motion="true"] a,
+[data-reduce-motion="true"] button,
+[data-reduce-motion="true"] [role="button"],
+[data-reduce-motion="true"] input,
+[data-reduce-motion="true"] label,
+[data-reduce-motion="true"] select {
+  cursor: pointer;
+}
+
+[data-reduce-motion="true"] body {
+  cursor: auto;
 }
 
 .cursor,
@@ -677,14 +697,13 @@ ul:not(.skills).icons-list {
 }
 
 /* ── Mobile sidebar overlay ────────────── */
+/* No backdrop blur — just a dark tint so the sidebar contrast is clear */
 .sidebar-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.45);
   z-index: 99;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
 }
 
 .sidebar-overlay.show {
@@ -785,6 +804,32 @@ hr {
   margin: 8px 0;
 }
 
+/* ── Click ripple (sound-wave effect) ─── */
+.click-ripple {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9996;
+}
+
+.click-ring {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--purple-light);
+  box-shadow: 0 0 8px var(--purple-glow);
+  opacity: 0;
+  animation: ring-expand 0.75s cubic-bezier(0.1, 0.4, 0.4, 1) forwards;
+}
+
+@keyframes ring-expand {
+  0%   { transform: scale(0);  opacity: 0.85; }
+  60%  { opacity: 0.3; }
+  100% { transform: scale(9);  opacity: 0; }
+}
+
 /* ── Responsive ────────────────────────── */
 @media (max-width: 768px) {
   body {
@@ -801,7 +846,13 @@ hr {
     position: fixed;
     width: var(--sidebar-width);
     height: 100%;
-    transform: translateX(-100%);
+    /* slide in from the right on mobile */
+    left: auto;
+    right: 0;
+    transform: translateX(100%);
+    border-right: none;
+    border-left: 1px solid var(--purple-border);
+    box-shadow: -2px 0 30px rgba(0, 0, 0, 0.25);
   }
 
   aside.show {
