@@ -615,10 +615,17 @@ ul:not(.skills).icons-list {
 p > i.fa-solid,
 p > i.fa-regular,
 li > i.fa-solid {
-  color: var(--purple);
+  /* white in dark mode; overridden to purple in light mode below */
+  color: var(--text);
   margin-right: 4px;
   font-size: 0.85em;
   vertical-align: baseline;
+}
+
+[data-theme="light"] p > i.fa-solid,
+[data-theme="light"] p > i.fa-regular,
+[data-theme="light"] li > i.fa-solid {
+  color: var(--purple);
 }
 
 /* ── CV links ──────────────────────────── */
@@ -791,9 +798,9 @@ ul li {
 /* all icons in the skills row — same size regardless of type */
 .icons-list.skills .list-inline-item i,
 .icons-list.skills .list-inline-item .skill-svg {
-  font-size: 2rem;
-  width: 2rem;
-  height: 2rem;
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   color: var(--text-muted);
   display: block;
   transition: color var(--transition), transform var(--transition);

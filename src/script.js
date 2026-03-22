@@ -317,24 +317,52 @@
   // Single click
   document.addEventListener('click', (e) => spawnRipple(e.clientX, e.clientY));
 
-  // Hold: keep spawning ripples at current cursor position while pressed
-  let holdTimer = null;
+  // Hold + move: ripples trace the mouse path like sound waves drawing a trail.
+  // When idle (no movement), pulses at same spot every ~420ms.
+  const TRAIL_DIST = 24; // px between ripples while moving
+
+  let isHolding  = false;
   let holdX = 0, holdY = 0;
+  let trailX = 0, trailY = 0; // last position where a trail ripple was emitted
+  let idleTimer = null;
 
   document.addEventListener('mousedown', (e) => {
-    holdX = e.clientX;
-    holdY = e.clientY;
-    // Start continuous ripples after a brief initial delay
-    holdTimer = setInterval(() => spawnRipple(holdX, holdY), 380);
+    isHolding = true;
+    holdX = trailX = e.clientX;
+    holdY = trailY = e.clientY;
+    // Idle pulse: fires only when the mouse hasn't moved enough for trail
+    idleTimer = setInterval(() => {
+      if (isHolding) spawnRipple(holdX, holdY);
+    }, 420);
   });
 
-  // Update hold position as mouse moves while pressed
   document.addEventListener('mousemove', (e) => {
-    if (holdTimer) { holdX = e.clientX; holdY = e.clientY; }
+    holdX = e.clientX;
+    holdY = e.clientY;
+
+    if (!isHolding) return;
+
+    // Emit a ripple every TRAIL_DIST pixels of movement
+    const dx   = holdX - trailX;
+    const dy   = holdY - trailY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist >= TRAIL_DIST) {
+      spawnRipple(holdX, holdY);
+      trailX = holdX;
+      trailY = holdY;
+      // Reset idle timer so it doesn't double-fire right after a trail ripple
+      clearInterval(idleTimer);
+      idleTimer = setInterval(() => {
+        if (isHolding) spawnRipple(holdX, holdY);
+      }, 420);
+    }
   });
 
   function stopHold() {
-    if (holdTimer) { clearInterval(holdTimer); holdTimer = null; }
+    isHolding = false;
+    clearInterval(idleTimer);
+    idleTimer = null;
   }
 
   document.addEventListener('mouseup', stopHold);
