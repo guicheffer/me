@@ -97,6 +97,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── No text selection / highlight ─────── */
+/* Custom cursor breaks with native text cursor; disable globally */
+body,
+body * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Re-enable selection only in inputs/textareas if ever added */
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 /* ── Skip-nav (a11y) ───────────────────── */
 .skip-link {
   position: absolute;
@@ -594,6 +609,16 @@ ul:not(.skills).icons-list {
 
 .icons-list li a i {
   font-size: 0.95rem;
+}
+
+/* ── Inline icon in text (replaces emojis) */
+p > i.fa-solid,
+p > i.fa-regular,
+li > i.fa-solid {
+  color: var(--purple);
+  margin-right: 4px;
+  font-size: 0.85em;
+  vertical-align: baseline;
 }
 
 /* ── CV links ──────────────────────────── */

@@ -265,8 +265,8 @@
     });
 
     function animateGlow() {
-      glowX += (mouseX - glowX) * 0.09;
-      glowY += (mouseY - glowY) * 0.09;
+      glowX += (mouseX - glowX) * 0.2;
+      glowY += (mouseY - glowY) * 0.2;
       cursorGlow.style.left = glowX + 'px';
       cursorGlow.style.top  = glowY + 'px';
       if (Math.abs(mouseX - glowX) > 0.1 || Math.abs(mouseY - glowY) > 0.1) {
@@ -289,14 +289,14 @@
     attachHoverCursor(document);
   }
 
-  /* ── Click ripple (sound-wave rings) ────────────────────── */
-  document.addEventListener('click', (e) => {
+  /* ── Click / hold ripple (sound-wave rings) ─────────────── */
+  function spawnRipple(x, y) {
     if (html.getAttribute('data-reduce-motion') === 'true') return;
 
     const ripple = document.createElement('div');
     ripple.className  = 'click-ripple';
-    ripple.style.left = e.clientX + 'px';
-    ripple.style.top  = e.clientY + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top  = y + 'px';
     document.body.appendChild(ripple);
 
     const RINGS = 3;
@@ -305,7 +305,6 @@
     for (let i = 0; i < RINGS; i++) {
       const ring = document.createElement('div');
       ring.className = 'click-ring';
-      // each ring starts slightly after the previous → wave feel
       ring.style.animationDelay = `${i * 130}ms`;
       ring.addEventListener('animationend', () => {
         done++;
@@ -313,5 +312,31 @@
       });
       ripple.appendChild(ring);
     }
+  }
+
+  // Single click
+  document.addEventListener('click', (e) => spawnRipple(e.clientX, e.clientY));
+
+  // Hold: keep spawning ripples at current cursor position while pressed
+  let holdTimer = null;
+  let holdX = 0, holdY = 0;
+
+  document.addEventListener('mousedown', (e) => {
+    holdX = e.clientX;
+    holdY = e.clientY;
+    // Start continuous ripples after a brief initial delay
+    holdTimer = setInterval(() => spawnRipple(holdX, holdY), 380);
   });
+
+  // Update hold position as mouse moves while pressed
+  document.addEventListener('mousemove', (e) => {
+    if (holdTimer) { holdX = e.clientX; holdY = e.clientY; }
+  });
+
+  function stopHold() {
+    if (holdTimer) { clearInterval(holdTimer); holdTimer = null; }
+  }
+
+  document.addEventListener('mouseup', stopHold);
+  document.addEventListener('mouseleave', stopHold);
 })();
