@@ -238,8 +238,8 @@ body::before {
   width: 100%;
   max-width: 1200px;
   min-height: 100vh;
-  position: relative;
-  z-index: 1;
+  /* no z-index here — prevents container stacking context from
+     painting main on top of the fixed sidebar */
 }
 
 /* ── Base links ────────────────────────── */
@@ -274,8 +274,12 @@ aside {
   left: 0;
   top: 0;
   transition: transform var(--transition);
-  z-index: 100;
+  z-index: 200; /* well above overlay (99) and any stacking context */
   box-shadow: 2px 0 30px rgba(0, 0, 0, 0.25);
+  /* iOS Safari: forces composite layer so tap hit-areas update after transform */
+  will-change: transform;
+  pointer-events: auto;
+  isolation: isolate;
 }
 
 aside.hidden {
