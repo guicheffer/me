@@ -319,7 +319,7 @@
 
   // Hold + move: ripples trace the mouse path like sound waves drawing a trail.
   // When idle (no movement), pulses at same spot every ~420ms.
-  const TRAIL_DIST = 24; // px between ripples while moving
+  const TRAIL_DIST = 42; // px between ripples while moving
 
   let isHolding  = false;
   let holdX = 0, holdY = 0;
@@ -333,7 +333,7 @@
     // Idle pulse: fires only when the mouse hasn't moved enough for trail
     idleTimer = setInterval(() => {
       if (isHolding) spawnRipple(holdX, holdY);
-    }, 420);
+    }, 650);
   });
 
   document.addEventListener('mousemove', (e) => {
@@ -355,7 +355,7 @@
       clearInterval(idleTimer);
       idleTimer = setInterval(() => {
         if (isHolding) spawnRipple(holdX, holdY);
-      }, 420);
+      }, 650);
     }
   });
 
