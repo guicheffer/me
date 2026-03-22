@@ -6,23 +6,51 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
 
-/* ── Variables ─────────────────────────── */
+/* ── Dark mode (default) ───────────────── */
 :root {
-  --bg: #080810;
-  --sidebar-bg: #0b0b16;
-  --purple: #8b5cf6;
-  --purple-light: #a78bfa;
-  --purple-muted: rgba(139, 92, 246, 0.12);
-  --purple-border: rgba(139, 92, 246, 0.22);
-  --purple-glow: rgba(139, 92, 246, 0.35);
-  --text: #e2e8f0;
-  --text-muted: #94a3b8;
-  --text-dim: #475569;
+  --bg: #07070e;
+  --sidebar-bg: #0a0915;
+  --grad-a: #07070e;
+  --grad-b: #190840;
+  --grad-c: #0e0622;
+  --grad-d: #07070e;
+  --purple: #9333ea;
+  --purple-light: #a855f7;
+  --purple-muted: rgba(147, 51, 234, 0.14);
+  --purple-border: rgba(147, 51, 234, 0.26);
+  --purple-glow: rgba(147, 51, 234, 0.42);
+  --text: #f0eeff;
+  --text-muted: #9ca3af;
+  --text-dim: #4b5563;
+  --card-bg: rgba(147, 51, 234, 0.1);
+  --card-border: rgba(147, 51, 234, 0.22);
+  --divider: rgba(255, 255, 255, 0.07);
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --sidebar-width: 260px;
   --radius: 10px;
   --transition: 0.22s ease;
+}
+
+/* ── Light mode overrides ──────────────── */
+[data-theme="light"] {
+  --bg: #faf7ff;
+  --sidebar-bg: #f0ebff;
+  --grad-a: #faf7ff;
+  --grad-b: #e9d9fe;
+  --grad-c: #f3ecff;
+  --grad-d: #faf7ff;
+  --purple: #7c3aed;
+  --purple-light: #6d28d9;
+  --purple-muted: rgba(124, 58, 237, 0.08);
+  --purple-border: rgba(124, 58, 237, 0.2);
+  --purple-glow: rgba(124, 58, 237, 0.28);
+  --text: #1e1b4b;
+  --text-muted: #4c4a6e;
+  --text-dim: #9ca3af;
+  --card-bg: rgba(124, 58, 237, 0.07);
+  --card-border: rgba(124, 58, 237, 0.18);
+  --divider: rgba(0, 0, 0, 0.08);
 }
 
 /* ── Reset ─────────────────────────────── */
@@ -34,11 +62,11 @@
   box-sizing: border-box;
 }
 
-/* ── Base ──────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
 
+/* ── Animated gradient background ─────── */
 body {
   font-family: var(--font-body);
   background-color: var(--bg);
@@ -48,6 +76,31 @@ body {
   align-items: center;
   min-height: 100vh;
   line-height: 1.6;
+  position: relative;
+}
+
+/* The moving gradient layer sits behind everything */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(
+    -45deg,
+    var(--grad-a),
+    var(--grad-b),
+    var(--grad-c),
+    var(--grad-d)
+  );
+  background-size: 400% 400%;
+  animation: gradient-flow 22s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes gradient-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ── Container ─────────────────────────── */
@@ -56,9 +109,11 @@ body {
   width: 100%;
   max-width: 1200px;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
-/* ── Links (base) ──────────────────────── */
+/* ── Base links ────────────────────────── */
 a {
   color: var(--purple-light);
   text-decoration: none;
@@ -73,30 +128,38 @@ aside {
   background: var(--sidebar-bg);
   border-right: 1px solid var(--purple-border);
   width: var(--sidebar-width);
-  padding: 36px 20px;
+  padding: 32px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between; /* avatar+nav centered, toggle at bottom */
   position: fixed;
   height: 100%;
   left: 0;
   top: 0;
   transition: transform var(--transition);
   z-index: 100;
-  box-shadow: 2px 0 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 0 30px rgba(0, 0, 0, 0.3);
 }
 
 aside.hidden {
   transform: translateX(-100%);
 }
 
+/* inner wrapper centers avatar + nav vertically */
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 /* ── Avatar ────────────────────────────── */
 .profile-pic {
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-/* spinning gradient ring */
 .profile-pic::before {
   content: '';
   position: absolute;
@@ -104,7 +167,7 @@ aside.hidden {
   border-radius: 50%;
   background: conic-gradient(var(--purple) 0deg, transparent 180deg, var(--purple-light) 360deg);
   animation: ring-spin 7s linear infinite;
-  opacity: 0.65;
+  opacity: 0.7;
 }
 
 .profile-pic img {
@@ -125,7 +188,6 @@ aside.hidden {
   box-shadow: 0 0 28px var(--purple-glow);
 }
 
-/* click bounce easter egg */
 .profile-pic img.bounce {
   animation: bounce 0.5s ease;
 }
@@ -147,7 +209,7 @@ nav {
 
 nav ul {
   list-style: none;
-  margin-top: 24px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -168,7 +230,6 @@ nav ul li a {
   overflow: hidden;
 }
 
-/* left accent bar */
 nav ul li a::before {
   content: '';
   position: absolute;
@@ -194,9 +255,32 @@ nav ul li a.active::before {
 }
 
 nav ul li a.active {
-  color: #fff;
+  color: var(--text);
   background: var(--purple-muted);
   border-color: var(--purple-border);
+}
+
+/* ── Theme toggle ──────────────────────── */
+.theme-toggle {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+  box-shadow: 0 0 14px var(--purple-glow);
 }
 
 /* ── Main ──────────────────────────────── */
@@ -207,6 +291,30 @@ main {
   max-width: calc(100% - var(--sidebar-width));
   display: flex;
   flex-direction: column;
+  justify-content: center; /* vertically center content on desktop */
+  min-height: 100vh;
+}
+
+/* ── SPA page sections ─────────────────── */
+.page-section {
+  display: none;
+  flex-direction: column;
+  max-width: 660px; /* keeps content from sprawling too wide */
+}
+
+/* entering = display flex but opacity 0 (initial state for transition) */
+.page-section.entering {
+  display: flex;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* active = visible with transition */
+.page-section.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.38s ease, transform 0.38s ease;
 }
 
 /* ── Header (mobile toggle) ────────────── */
@@ -218,8 +326,8 @@ header {
 .menu-toggle {
   display: none;
   font-size: 1.2rem;
-  background: var(--purple-muted);
-  border: 1px solid var(--purple-border);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   color: var(--text);
   cursor: pointer;
   padding: 7px 14px;
@@ -231,7 +339,7 @@ header {
 }
 
 .menu-toggle:hover {
-  background: rgba(139, 92, 246, 0.22);
+  background: var(--purple-muted);
   border-color: var(--purple);
 }
 
@@ -243,7 +351,7 @@ header {
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 40%, #c4b5fd 65%, #ffffff 100%);
+  background: linear-gradient(135deg, var(--text) 0%, var(--purple-light) 45%, #c084fc 70%, var(--text) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -262,7 +370,6 @@ p {
   font-size: 0.975rem;
   color: var(--text-muted);
   line-height: 1.75;
-  max-width: 58ch;
 }
 
 p a {
@@ -272,7 +379,7 @@ p a {
 }
 
 p a:hover {
-  color: #fff;
+  color: var(--purple);
   border-bottom-color: var(--purple);
 }
 
@@ -282,12 +389,12 @@ p a:hover {
   flex-wrap: wrap;
   gap: 9px;
   list-style: none;
-  margin-top: 28px;
+  margin-top: 26px;
   padding: 0;
 }
 
 ul:not(.skills).icons-list {
-  margin-top: 28px;
+  margin-top: 26px;
 }
 
 .icons-list li {
@@ -301,8 +408,8 @@ ul:not(.skills).icons-list {
   gap: 7px;
   padding: 8px 14px;
   border-radius: var(--radius);
-  border: 1px solid var(--purple-border);
-  background: var(--purple-muted);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
   color: var(--text-muted);
   font-size: 0.85rem;
   font-weight: 500;
@@ -311,11 +418,11 @@ ul:not(.skills).icons-list {
 }
 
 .icons-list li a:hover {
-  color: #fff;
+  color: var(--text);
   border-color: var(--purple);
-  background: rgba(139, 92, 246, 0.22);
+  background: var(--purple-muted);
   transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 6px 18px var(--purple-glow);
 }
 
 .icons-list li a i {
@@ -324,9 +431,9 @@ ul:not(.skills).icons-list {
 
 /* ── CV links ──────────────────────────── */
 .cv-links {
-  margin-top: 36px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin-top: 32px;
+  padding-top: 26px;
+  border-top: 1px solid var(--divider);
 }
 
 .cv-links p {
@@ -335,19 +442,19 @@ ul:not(.skills).icons-list {
 
 /* ── Open-source section ───────────────── */
 .projects-section {
-  margin-top: 36px;
-  padding-top: 28px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  margin-top: 32px;
+  padding-top: 26px;
+  border-top: 1px solid var(--divider);
 }
 
 .projects-section h3 {
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--text-dim);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .projects-list {
@@ -365,8 +472,8 @@ ul:not(.skills).icons-list {
   gap: 7px;
   padding: 8px 14px;
   border-radius: var(--radius);
-  border: 1px solid var(--purple-border);
-  background: var(--purple-muted);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
   color: var(--text-muted);
   font-size: 0.85rem;
   font-weight: 500;
@@ -375,11 +482,11 @@ ul:not(.skills).icons-list {
 }
 
 .projects-list li a:hover {
-  color: #fff;
+  color: var(--text);
   border-color: var(--purple);
-  background: rgba(139, 92, 246, 0.22);
+  background: var(--purple-muted);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 6px 18px var(--purple-glow);
 }
 
 /* ── Tooltip (email copy) ──────────────── */
@@ -392,8 +499,8 @@ ul:not(.skills).icons-list {
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) scale(0.85);
-  background: #1e1b4b;
-  color: #a78bfa;
+  background: var(--sidebar-bg);
+  color: var(--purple-light);
   font-size: 0.72rem;
   padding: 4px 10px;
   border-radius: 6px;
@@ -401,7 +508,7 @@ ul:not(.skills).icons-list {
   opacity: 0;
   pointer-events: none;
   transition: all 0.18s ease;
-  border: 1px solid var(--purple-border);
+  border: 1px solid var(--card-border);
   font-weight: 500;
 }
 
@@ -413,8 +520,8 @@ ul:not(.skills).icons-list {
 /* ── Fade-up entrance animations ────────── */
 .fade-up {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(14px);
+  transition: opacity 0.48s ease, transform 0.48s ease;
 }
 
 .fade-up.visible {
@@ -437,20 +544,24 @@ ul:not(.skills).icons-list {
   display: block;
 }
 
-/* ── Skills page ───────────────────────── */
+/* ── Skills page headings ──────────────── */
 h1 {
-  font-size: 3rem;
-  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--text);
+  font-weight: 700;
 }
 
 h2 {
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--text);
-  margin-top: 32px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-top: 28px;
   font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
+/* ── Skills icon grid ──────────────────── */
 ul.skills {
   margin-left: 20px;
   margin-top: 14px;
@@ -476,9 +587,9 @@ ul li {
   font-size: 1rem;
 }
 
-/* large icons on skills page */
 .icons-list.skills {
-  gap: 12px;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 .icons-list.skills .list-inline-item {
@@ -486,17 +597,42 @@ ul li {
   margin: 0;
 }
 
-.icons-list.skills .list-inline-item i {
+.icons-list.skills .list-inline-item i,
+.icons-list.skills .list-inline-item svg {
   font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
   color: var(--text-muted);
   transition: color var(--transition), transform var(--transition);
   display: block;
-  padding: 4px;
 }
 
-.icons-list.skills .list-inline-item:hover i {
+.icons-list.skills .list-inline-item:hover i,
+.icons-list.skills .list-inline-item:hover svg {
   color: var(--purple);
   transform: scale(1.2) translateY(-2px);
+}
+
+/* "of course" label between icons */
+.skill-separator small {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 2rem;
+  vertical-align: middle;
+}
+
+/* AI brand icons extra styling */
+.ai-icon i,
+.ai-icon svg {
+  opacity: 0.75;
+  transition: opacity var(--transition), color var(--transition), transform var(--transition) !important;
+}
+
+.ai-icon:hover i,
+.ai-icon:hover svg {
+  opacity: 1;
+  color: var(--purple) !important;
+  transform: scale(1.2) translateY(-2px) !important;
 }
 
 /* ── Misc ──────────────────────────────── */
@@ -507,7 +643,7 @@ ul li {
 
 hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid var(--divider);
   margin: 8px 0;
 }
 
@@ -546,6 +682,12 @@ hr {
     margin-left: 0;
     max-width: 100%;
     padding: 28px 22px 48px;
+    justify-content: flex-start;
+    min-height: unset;
+  }
+
+  .page-section {
+    max-width: 100%;
   }
 
   .title {
@@ -554,9 +696,5 @@ hr {
 
   .icons-list {
     gap: 7px;
-  }
-
-  p {
-    max-width: 100%;
   }
 }

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#8b5cf6">
+    <meta name="theme-color" content="#9333ea">
     <script src="https://kit.fontawesome.com/8f33886f78.js" crossorigin="anonymous"></script>
 
     <title>guicheffer.me – João Gui.Cheffer Prado's personal website</title>
@@ -24,22 +24,29 @@
     <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-ZD8LXGMM14');</script>
 
     <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/style.css">
     <script defer src="/script.js"></script>
   </head>
 <body>
     <div class="container">
         <aside id="sidebar">
-            <div class="profile-pic">
-                <img src="/assets/images/me-big-main-rounded.png" alt="João Guilherme">
+            <div class="sidebar-inner">
+                <div class="profile-pic">
+                    <img src="/assets/images/me-big-main-rounded.png" alt="João Guilherme">
+                </div>
+                <nav>
+                    <ul>
+                        <li><a title="about me" href="/" data-section="about" class="active">about me</a></li>
+                        <li><a title="see my skills" href="/skills" data-section="skills">skills</a></li>
+                        <li><a title="medium" target="_blank" href="https://medium.com/@guicheffer">blog</a></li>
+                    </ul>
+                </nav>
             </div>
-            <nav>
-                <ul>
-                    <li><a title="about me" href="/" class="active">about me</a></li>
-                    <li><a title="see my skills" href="/skills">skills</a></li>
-                    <li><a title="medium" target="_blank" href="https://medium.com/@guicheffer">blog</a></li>
-                </ul>
-            </nav>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle colour theme">
+                <i class="fa-solid fa-moon" id="theme-icon"></i>
+            </button>
         </aside>
 
         <main>
@@ -47,58 +54,106 @@
                 <button class="menu-toggle" id="menu-toggle">&#9776;</button>
             </header>
 
-            <h1 class="title fade-up">João Gui.<span>Cheffer Prado</span></h1>
+            <!-- ── About section ──────────────────────── -->
+            <section id="section-about" class="page-section active">
+                <h1 class="title fade-up">João Gui.<span>Cheffer Prado</span></h1>
 
-            <p class="fade-up">Berlin, Germany • <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a></p>
-            <p class="fade-up">I'm a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank">HelloFresh</a>, passionate about JavaScript, constantly exploring new tech trends, and a fan of chocolates. I specialize in building complex frontend applications and thrive on creating better user experiences.</p>
+                <p class="fade-up">Berlin, Germany • <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a></p>
+                <p class="fade-up">I'm a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank">HelloFresh</a>, passionate about JavaScript, constantly exploring new tech trends, and a fan of chocolates. I specialize in building complex frontend applications and thrive on creating better user experiences.</p>
 
-            <ul class="icons-list fade-up">
-                <li>
-                  <a href="https://github.com/guicheffer" target="_blank" rel="noopener noreferrer">
-                    <i class="fa fa-github"></i> Github
-                  </a>
-                </li>
-                <li>
-                  <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">
-                    <i class="fa fa-linkedin"></i> Linkedin
-                  </a>
-                </li>
-                <li>
-                  <a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer">
-                    <i class="fa fa-medium"></i> Medium
-                  </a>
-                </li>
-                <li>
-                  <a href="https://codepen.io/guicheffer/" target="_blank" rel="noopener noreferrer">
-                    <i class="fa fa-codepen"></i> Codepen
-                  </a>
-                </li>
-                <li>
-                  <a href="https://gitlab.com/guicheffer" target="_blank" rel="noopener noreferrer">
-                    <i class="fa fa-gitlab"></i> GitLab
-                  </a>
-                </li>
-            </ul>
+                <ul class="icons-list fade-up">
+                    <li>
+                      <a href="https://github.com/guicheffer" target="_blank" rel="noopener noreferrer">
+                        <i class="fa fa-github"></i> Github
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa fa-linkedin"></i> Linkedin
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer">
+                        <i class="fa fa-medium"></i> Medium
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://codepen.io/guicheffer/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa fa-codepen"></i> Codepen
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://gitlab.com/guicheffer" target="_blank" rel="noopener noreferrer">
+                        <i class="fa fa-gitlab"></i> GitLab
+                      </a>
+                    </li>
+                </ul>
 
-            <section class="cv-links fade-up">
-                <p>📞 Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer"> here</a>. </p>
-                <p>✨ Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf"> .pdf</a>. </p>
-                <p>💌 Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank">on LinkedIn</a>! </p>
+                <section class="cv-links fade-up">
+                    <p>📞 Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer"> here</a>. </p>
+                    <p>✨ Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf"> .pdf</a>. </p>
+                    <p>💌 Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank">on LinkedIn</a>! </p>
+                </section>
+
+                <section class="projects-section fade-up">
+                    <h3>latest open source stuff</h3>
+                    <ul class="projects-list">
+                        <li>
+                            <a href="https://devor.ch" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-code-branch"></i> devorch
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://usevox.app" target="_blank" rel="noopener noreferrer">
+                                <i class="fa fa-microphone"></i> vox
+                            </a>
+                        </li>
+                    </ul>
+                </section>
             </section>
 
-            <section class="projects-section fade-up">
-                <h3>open source</h3>
-                <ul class="projects-list">
-                    <li>
-                        <a href="https://github.com/guicheffer/devorch" target="_blank" rel="noopener noreferrer">
-                            <i class="fa fa-code-branch"></i> devorch
-                        </a>
+            <!-- ── Skills section ─────────────────────── -->
+            <section id="section-skills" class="page-section">
+                <h1 class="fade-up">✨ Some of my skills</h1>
+
+                <h2 class="fade-up">Programming Languages &amp; Tools:</h2>
+
+                <ul class="icons-list skills fade-up">
+                    <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-react"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-vuejs"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-html5"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-sass"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-npm"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-yarn"></i></li>
+                    <li class="list-inline-item skill-separator"><small>, &amp; of course: </small></li>
+                    <li class="list-inline-item"><i class="fab fa-stack-overflow"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-google"></i></li>
+                    <!-- the real tools 🤫 -->
+                    <li class="list-inline-item ai-icon" title="Claude Code">
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Claude Code">
+                            <path d="M27.96 6L42 42H33.6L30.24 33H17.76L14.4 42H6L20.04 6H27.96ZM24 15.6L19.68 27H28.32L24 15.6Z" fill="currentColor"/>
+                        </svg>
                     </li>
-                    <li>
-                        <a href="https://github.com/app-vox/vox" target="_blank" rel="noopener noreferrer">
-                            <i class="fa fa-microphone"></i> vox
-                        </a>
+                    <li class="list-inline-item ai-icon" title="ChatGPT / OpenAI">
+                        <i class="fa-brands fa-openai"></i>
                     </li>
+                </ul>
+
+                <hr style="margin: 24px 0;">
+
+                <h2 class="fade-up">💻 How?</h2>
+                <ul class="skills fade-up">
+                    <li>People-driven</li>
+                    <li>Team Leader</li>
+                    <li>Mobile-First, Responsive Design</li>
+                    <li>Agile Development &amp; Scrum-ish</li>
+                    <li>Cross Browser Testing &amp; Debugging</li>
+                    <li>Cross-Functional Teams</li>
+                    <li>Love hiring 😊</li>
                 </ul>
             </section>
         </main>

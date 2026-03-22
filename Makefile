@@ -1,4 +1,4 @@
-.PHONY: start dev build
+.PHONY: start dev stop build
 
 # Load environment variables from .env if it exists
 ifneq (,$(wildcard ./.env))
@@ -19,6 +19,11 @@ dev:
 	@echo "Opening http://localhost:$(PORT)..."
 	@open http://localhost:$(PORT) &
 	@npx http-serve ./src -p $(PORT) -P ./src/404.html
+
+# Stop any running local dev server on PORT
+stop:
+	@echo "Stopping http-serve on port $(PORT)..."
+	@lsof -ti tcp:$(PORT) | xargs kill -9 2>/dev/null || echo "Nothing running on port $(PORT)"
 
 # Build minified production output into dist/
 # Minifies all HTML, CSS, and JS from src/ into dist/
