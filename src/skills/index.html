@@ -46,10 +46,10 @@
                 <nav aria-label="Primary">
                     <ul role="list">
                         <li>
-                            <a href="/" data-section="about" aria-current="false">about me</a>
+                            <a href="/" data-section="about" aria-current="false" data-i18n="nav.about">about me</a>
                         </li>
                         <li>
-                            <a href="/skills" data-section="skills" aria-current="page">skills</a>
+                            <a href="/skills" data-section="skills" aria-current="page" data-i18n="nav.skills">skills</a>
                         </li>
                         <li>
                             <a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog</a>
@@ -65,6 +65,24 @@
                 <button id="perf-toggle" class="icon-btn" aria-label="Disable animations" aria-pressed="true" title="Toggle animations">
                     <i class="fa-solid fa-bolt" id="perf-icon" aria-hidden="true"></i>
                 </button>
+                <div class="lang-picker" id="lang-picker">
+                    <button
+                        id="lang-toggle"
+                        class="icon-btn"
+                        aria-label="Change language"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                        title="Change language"
+                    >
+                        <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown" role="listbox" aria-label="Select language">
+                        <button role="option" data-lang="pt" class="lang-option" aria-selected="false">🇧🇷 PT</button>
+                        <button role="option" data-lang="en" class="lang-option" aria-selected="false">🇬🇧 EN</button>
+                        <button role="option" data-lang="de" class="lang-option" aria-selected="false">🇩🇪 DE</button>
+                        <button role="option" data-lang="es" class="lang-option" aria-selected="false">🇪🇸 ES</button>
+                    </div>
+                </div>
             </div>
         </aside>
 
@@ -78,7 +96,7 @@
                 <h1 class="title fade-up">João Gui.<span>Cheffer Prado</span></h1>
 
                 <p class="fade-up">Berlin, Germany • <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a></p>
-                <p class="fade-up">I'm a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, passionate about JavaScript, constantly exploring new tech trends, and a fan of chocolates. I specialize in building complex frontend applications and thrive on creating better user experiences.</p>
+                <p class="fade-up" data-i18n-html="about.bio">I'm a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, passionate about JavaScript, constantly exploring new tech trends, and a fan of chocolates. I specialize in building complex frontend applications and thrive on creating better user experiences.</p>
 
                 <ul class="icons-list fade-up" aria-label="Social profiles">
                     <li><a href="https://github.com/guicheffer" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><i class="fa fa-github" aria-hidden="true"></i> Github</a></li>
@@ -89,13 +107,13 @@
                 </ul>
 
                 <section class="cv-links fade-up" aria-label="Contact and CV">
-                    <p><i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>. </p>
-                    <p><i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>. </p>
-                    <p><i class="fa-solid fa-envelope" aria-hidden="true"></i> Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>! </p>
+                    <p data-i18n-html="cv.chat"><i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>. </p>
+                    <p data-i18n-html="cv.cv"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>. </p>
+                    <p data-i18n-html="cv.cover"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>! </p>
                 </section>
 
                 <section class="projects-section fade-up" aria-label="Open source projects">
-                    <h3>latest open source stuff</h3>
+                    <h3 data-i18n="about.opensource">latest open source stuff</h3>
                     <ul class="projects-list" role="list">
                         <li><a href="https://devor.ch" target="_blank" rel="noopener noreferrer" aria-label="devorch — open source project"><i class="fa fa-code-branch" aria-hidden="true"></i> devorch</a></li>
                         <li><a href="https://usevox.app" target="_blank" rel="noopener noreferrer" aria-label="vox — open source project"><i class="fa fa-microphone" aria-hidden="true"></i> vox</a></li>
@@ -106,9 +124,9 @@
             <!-- ── Skills section ─────────────────────── -->
             <section id="section-skills" class="page-section" aria-label="Skills">
                 <span class="title title--sm fade-up" aria-hidden="true">João Gui.<span>Cheffer Prado</span></span>
-                <h1 class="skills-h1 fade-up"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Some of my skills</h1>
+                <h1 class="skills-h1 fade-up"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span data-i18n="skills.title"> Some of my skills</span></h1>
 
-                <h2 class="fade-up">Programming Languages &amp; Tools:</h2>
+                <h2 class="fade-up" data-i18n="skills.lang">Programming Languages &amp; Tools:</h2>
 
                 <ul class="icons-list skills fade-up" aria-label="Programming tools and languages">
                     <li class="list-inline-item"><i class="fab fa-node-js" title="Node.js" aria-label="Node.js"></i></li>
@@ -139,15 +157,15 @@
 
                 <hr style="margin: 24px 0;">
 
-                <h2 class="fade-up">💻 How?</h2>
+                <h2 class="fade-up" data-i18n="skills.how">💻 How?</h2>
                 <ul class="skills fade-up">
-                    <li>People-driven</li>
-                    <li>Team Leader</li>
-                    <li>Mobile-First, Responsive Design</li>
-                    <li>Agile Development &amp; Scrum-ish</li>
-                    <li>Cross Browser Testing &amp; Debugging</li>
-                    <li>Cross-Functional Teams</li>
-                    <li>Love hiring <i class="fa-solid fa-heart" aria-hidden="true"></i></li>
+                    <li data-i18n="skills.people">People-driven</li>
+                    <li data-i18n="skills.leader">Team Leader</li>
+                    <li data-i18n="skills.mobile">Mobile-First, Responsive Design</li>
+                    <li data-i18n="skills.agile">Agile Development &amp; Scrum-ish</li>
+                    <li data-i18n="skills.testing">Cross Browser Testing &amp; Debugging</li>
+                    <li data-i18n="skills.teams">Cross-Functional Teams</li>
+                    <li data-i18n-html="skills.hiring">Love hiring <i class="fa-solid fa-heart" aria-hidden="true"></i></li>
                 </ul>
             </section>
         </main>

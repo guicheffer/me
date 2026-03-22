@@ -890,6 +890,62 @@ hr {
   100% { transform: scale(9);  opacity: 0; }
 }
 
+/* ── Language picker ──────────────────── */
+.lang-picker {
+  position: relative;
+}
+
+.lang-dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--sidebar-bg);
+  border: 1px solid var(--purple-border);
+  border-radius: var(--radius);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 84px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 300;
+}
+
+.lang-dropdown.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.lang-option {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.lang-option:hover {
+  background: var(--purple-muted);
+  color: var(--text);
+}
+
+.lang-option.active {
+  color: var(--purple-light);
+  background: var(--purple-muted);
+}
+
 /* ── Responsive ────────────────────────── */
 @media (max-width: 768px) {
   body {

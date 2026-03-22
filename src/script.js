@@ -5,6 +5,10 @@
 (() => {
   const html = document.documentElement;
 
+  // attachHoverCursor is defined in the cursor section below;
+  // declared here so the i18n section (at the bottom) can call it.
+  let attachHoverCursor = null;
+
   /* ── Theme (light / dark) ───────────────────────────────── */
   const themeToggle = document.getElementById('theme-toggle');
   const themeIcon   = document.getElementById('theme-icon');
@@ -277,14 +281,14 @@
     }
 
     // Ring expands on hover over links / buttons — add to existing + future elements
-    function attachHoverCursor(root) {
+    attachHoverCursor = function(root) {
       root.querySelectorAll('a, button, [role="button"]').forEach((el) => {
         if (el._cursorBound) return;
         el._cursorBound = true;
         el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
       });
-    }
+    };
 
     attachHoverCursor(document);
   }
@@ -367,4 +371,171 @@
 
   document.addEventListener('mouseup', stopHold);
   document.addEventListener('mouseleave', stopHold);
+
+  /* ── i18n ────────────────────────────────────────────────── */
+  const TRANSLATIONS = {
+    en: {
+      'nav.about':        'about me',
+      'nav.skills':       'skills',
+      'about.bio':        'I\'m a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, passionate about JavaScript, constantly exploring new tech trends, and a fan of chocolates. I specialize in building complex frontend applications and thrive on creating better user experiences.',
+      'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>.',
+      'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
+      'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>!',
+      'about.opensource': 'latest open source stuff',
+      'skills.title':     ' Some of my skills',
+      'skills.lang':      'Programming Languages & Tools:',
+      'skills.how':       '💻 How?',
+      'skills.people':    'People-driven',
+      'skills.leader':    'Team Leader',
+      'skills.mobile':    'Mobile-First, Responsive Design',
+      'skills.agile':     'Agile Development & Scrum-ish',
+      'skills.testing':   'Cross Browser Testing & Debugging',
+      'skills.teams':     'Cross-Functional Teams',
+      'skills.hiring':    'Love hiring <i class="fa-solid fa-heart" aria-hidden="true"></i>',
+      'tooltip.copied':   'copied!',
+    },
+    pt: {
+      'nav.about':        'sobre mim',
+      'nav.skills':       'habilidades',
+      'about.bio':        'Sou Staff Software Engineer na <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, apaixonado por JavaScript, sempre explorando novas tendências tecnológicas e fã de chocolates. Especializo-me em construir aplicações frontend complexas e adoro criar melhores experiências para o usuário.',
+      'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Quer conversar? Agende uma call <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> aqui</a>.',
+      'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Precisa do meu CV? Veja no <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> ou baixe em <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
+      'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Precisa de uma carta de apresentação? Me chame <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">no LinkedIn</a>!',
+      'about.opensource': 'projetos open source recentes',
+      'skills.title':     ' Algumas das minhas habilidades',
+      'skills.lang':      'Linguagens de Programação & Ferramentas:',
+      'skills.how':       '💻 Como?',
+      'skills.people':    'Foco em pessoas',
+      'skills.leader':    'Líder de equipe',
+      'skills.mobile':    'Mobile-First, Design Responsivo',
+      'skills.agile':     'Desenvolvimento Ágil & Scrum-ish',
+      'skills.testing':   'Testes Cross Browser & Debugging',
+      'skills.teams':     'Times Multifuncionais',
+      'skills.hiring':    'Adoro contratar <i class="fa-solid fa-heart" aria-hidden="true"></i>',
+      'tooltip.copied':   'copiado!',
+    },
+    de: {
+      'nav.about':        'über mich',
+      'nav.skills':       'fähigkeiten',
+      'about.bio':        'Ich bin Staff Software Engineer bei <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, leidenschaftlich für JavaScript, erkunde ständig neue Tech-Trends und bin ein Schokoladenliebhaber. Ich spezialisiere mich auf den Aufbau komplexer Frontend-Anwendungen und liebe es, bessere Nutzererlebnisse zu schaffen.',
+      'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Möchtest du reden? Termin vereinbaren <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> hier</a>.',
+      'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Lebenslauf gewünscht? Ansehen auf <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> oder herunterladen als <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
+      'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Anschreiben gewünscht? Schreib mir <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">auf LinkedIn</a>!',
+      'about.opensource': 'neueste Open-Source-Projekte',
+      'skills.title':     ' Einige meiner Fähigkeiten',
+      'skills.lang':      'Programmiersprachen & Werkzeuge:',
+      'skills.how':       '💻 Wie?',
+      'skills.people':    'Menschenzentriert',
+      'skills.leader':    'Teamleiter',
+      'skills.mobile':    'Mobile-First, Responsives Design',
+      'skills.agile':     'Agile Entwicklung & Scrum-ish',
+      'skills.testing':   'Cross-Browser-Testing & Debugging',
+      'skills.teams':     'Funktionsübergreifende Teams',
+      'skills.hiring':    'Ich liebe es einzustellen <i class="fa-solid fa-heart" aria-hidden="true"></i>',
+      'tooltip.copied':   'kopiert!',
+    },
+    es: {
+      'nav.about':        'sobre mí',
+      'nav.skills':       'habilidades',
+      'about.bio':        'Soy Staff Software Engineer en <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, apasionado por JavaScript, explorando constantemente nuevas tendencias tecnológicas y fanático del chocolate. Me especializo en construir aplicaciones frontend complejas y me encanta crear mejores experiencias de usuario.',
+      'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> ¿Quieres charlar? Programa una llamada <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> aquí</a>.',
+      'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> ¿Necesitas mi CV? Vélo en <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> o descárgalo en <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
+      'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> ¿Buscas una carta de presentación? Escríbeme <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">en LinkedIn</a>!',
+      'about.opensource': 'proyectos open source recientes',
+      'skills.title':     ' Algunas de mis habilidades',
+      'skills.lang':      'Lenguajes de programación & herramientas:',
+      'skills.how':       '💻 ¿Cómo?',
+      'skills.people':    'Orientado a personas',
+      'skills.leader':    'Líder de equipo',
+      'skills.mobile':    'Mobile-First, Diseño Responsivo',
+      'skills.agile':     'Desarrollo Ágil & Scrum-ish',
+      'skills.testing':   'Pruebas Cross Browser & Debugging',
+      'skills.teams':     'Equipos Multifuncionales',
+      'skills.hiring':    'Me encanta contratar <i class="fa-solid fa-heart" aria-hidden="true"></i>',
+      'tooltip.copied':   '¡copiado!',
+    },
+  };
+
+  function detectLang() {
+    const saved = localStorage.getItem('lang');
+    if (saved && TRANSLATIONS[saved]) return saved;
+    const langs = navigator.languages || [navigator.language || 'en'];
+    for (const l of langs) {
+      const code = l.split('-')[0].toLowerCase();
+      if (TRANSLATIONS[code]) return code;
+    }
+    return 'en';
+  }
+
+  function applyLang(lang) {
+    const t = TRANSLATIONS[lang];
+    if (!t) return;
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+      const key = el.dataset.i18nHtml;
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // Update tooltip text
+    const tip = document.querySelector('.tooltip-text');
+    if (tip) tip.textContent = t['tooltip.copied'] || 'copied!';
+
+    // Update active state on lang option buttons
+    document.querySelectorAll('.lang-option').forEach((btn) => {
+      const isActive = btn.dataset.lang === lang;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+
+    // Re-bind cursor hover listeners to any newly created links
+    if (attachHoverCursor) attachHoverCursor(document);
+  }
+
+  // Detect on load and apply
+  applyLang(detectLang());
+
+  // Lang picker toggle
+  const langToggle   = document.getElementById('lang-toggle');
+  const langDropdown = document.getElementById('lang-dropdown');
+  const langPicker   = document.getElementById('lang-picker');
+
+  langToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = langDropdown.classList.contains('open');
+    langDropdown.classList.toggle('open', !isOpen);
+    langToggle.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+  });
+
+  document.querySelectorAll('.lang-option').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      applyLang(btn.dataset.lang);
+      langDropdown.classList.remove('open');
+      langToggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (langPicker && !langPicker.contains(e.target)) {
+      langDropdown?.classList.remove('open');
+      langToggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close dropdown on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && langDropdown?.classList.contains('open')) {
+      langDropdown.classList.remove('open');
+      langToggle?.setAttribute('aria-expanded', 'false');
+      langToggle?.focus();
+    }
+  });
 })();
