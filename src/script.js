@@ -457,8 +457,11 @@
   };
 
   function detectLang() {
-    const saved = localStorage.getItem('lang');
-    if (saved && TRANSLATIONS[saved]) return saved;
+    // Only use saved pref if the user explicitly chose it via the picker.
+    // Otherwise always re-detect from the browser so a system language change
+    // is picked up on next visit.
+    const manual = localStorage.getItem('lang-manual');
+    if (manual && TRANSLATIONS[manual]) return manual;
     const langs = navigator.languages || [navigator.language || 'en'];
     for (const l of langs) {
       const code = l.split('-')[0].toLowerCase();
@@ -467,7 +470,7 @@
     return 'en';
   }
 
-  function applyLang(lang) {
+  function applyLang(lang, persist) {
     const t = TRANSLATIONS[lang];
     if (!t) return;
 
@@ -493,14 +496,16 @@
     });
 
     document.documentElement.lang = lang;
-    localStorage.setItem('lang', lang);
+
+    // Only persist when the user manually picked the language
+    if (persist) localStorage.setItem('lang-manual', lang);
 
     // Re-bind cursor hover listeners to any newly created links
     if (attachHoverCursor) attachHoverCursor(document);
   }
 
-  // Detect on load and apply
-  applyLang(detectLang());
+  // Detect on load and apply (no persist — browser lang changes should be respected)
+  applyLang(detectLang(), false);
 
   // Lang picker toggle
   const langToggle   = document.getElementById('lang-toggle');
@@ -516,7 +521,7 @@
 
   document.querySelectorAll('.lang-option').forEach((btn) => {
     btn.addEventListener('click', () => {
-      applyLang(btn.dataset.lang);
+      applyLang(btn.dataset.lang, true);
       langDropdown.classList.remove('open');
       langToggle?.setAttribute('aria-expanded', 'false');
     });
