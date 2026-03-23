@@ -80,6 +80,24 @@
         >
           <i class="fa-solid fa-bolt" id="perf-icon" aria-hidden="true"></i>
         </button>
+        <div class="lang-picker" id="lang-picker">
+          <button
+            id="lang-toggle"
+            class="icon-btn"
+            aria-label="Change language"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            title="Change language"
+          >
+            <i class="fa-solid fa-globe" aria-hidden="true"></i>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown" role="listbox" aria-label="Select language">
+            <button role="option" data-lang="pt" class="lang-option" aria-selected="false">🇧🇷 PT</button>
+            <button role="option" data-lang="en" class="lang-option" aria-selected="false">🇬🇧 EN</button>
+            <button role="option" data-lang="de" class="lang-option" aria-selected="false">🇩🇪 DE</button>
+            <button role="option" data-lang="es" class="lang-option" aria-selected="false">🇪🇸 ES</button>
+          </div>
+        </div>
       </div>
     </aside>
 
