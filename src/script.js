@@ -457,6 +457,10 @@
   };
 
   function detectLang() {
+    // One-time migration: old script saved auto-detected lang under 'lang' key.
+    // That key is unreliable (was set even for auto-detects), so clear it.
+    localStorage.removeItem('lang');
+
     // Only use saved pref if the user explicitly chose it via the picker.
     // Otherwise always re-detect from the browser so a system language change
     // is picked up on next visit.
