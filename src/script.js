@@ -377,6 +377,9 @@
     en: {
       'nav.about':        'about me',
       'nav.skills':       'skills',
+      '404.title':        'Page not found',
+      '404.desc':         'This page disappeared, but I am still here.',
+      '404.cta':          'take me to about me',
       'about.bio':        'I\'m a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, passionate about JavaScript, constantly exploring new tech trends, and a fan of chocolates. I specialize in building complex frontend applications and thrive on creating better user experiences.',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
@@ -397,6 +400,9 @@
     pt: {
       'nav.about':        'sobre mim',
       'nav.skills':       'habilidades',
+      '404.title':        'Página não encontrada',
+      '404.desc':         'Essa página sumiu, mas eu ainda estou aqui.',
+      '404.cta':          'voltar para sobre mim',
       'about.bio':        'Sou Staff Software Engineer na <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, apaixonado por JavaScript, sempre explorando novas tendências tecnológicas e fã de chocolates. Especializo-me em construir aplicações frontend complexas e adoro criar melhores experiências para o usuário.',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Quer conversar? Agende uma call <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> aqui</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Precisa do meu CV? Veja no <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> ou baixe em <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
@@ -417,6 +423,9 @@
     de: {
       'nav.about':        'über mich',
       'nav.skills':       'fähigkeiten',
+      '404.title':        'Seite nicht gefunden',
+      '404.desc':         'Diese Seite ist verschwunden, aber ich bin noch hier.',
+      '404.cta':          'zurück zu über mich',
       'about.bio':        'Ich bin Staff Software Engineer bei <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, leidenschaftlich für JavaScript, erkunde ständig neue Tech-Trends und bin ein Schokoladenliebhaber. Ich spezialisiere mich auf den Aufbau komplexer Frontend-Anwendungen und liebe es, bessere Nutzererlebnisse zu schaffen.',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Möchtest du reden? Termin vereinbaren <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> hier</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Lebenslauf gewünscht? Ansehen auf <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> oder herunterladen als <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
@@ -437,6 +446,9 @@
     es: {
       'nav.about':        'sobre mí',
       'nav.skills':       'habilidades',
+      '404.title':        'Página no encontrada',
+      '404.desc':         'Esta página desapareció, pero yo sigo aquí.',
+      '404.cta':          'volver a sobre mí',
       'about.bio':        'Soy Staff Software Engineer en <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, apasionado por JavaScript, explorando constantemente nuevas tendencias tecnológicas y fanático del chocolate. Me especializo en construir aplicaciones frontend complejas y me encanta crear mejores experiencias de usuario.',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> ¿Quieres charlar? Programa una llamada <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> aquí</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> ¿Necesitas mi CV? Vélo en <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> o descárgalo en <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',

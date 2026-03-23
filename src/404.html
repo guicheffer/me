@@ -29,7 +29,7 @@
 
   <link rel="icon" type="image/png" href="/assets/images/favicon.png">
   <link rel="stylesheet" href="/style.css">
-  <script defer src="/script.js?v=2"></script>
+  <script defer src="/script.js?v=3"></script>
 </head>
 <body>
   <div class="cursor" aria-hidden="true"></div>
@@ -49,10 +49,10 @@
         <nav aria-label="Primary">
           <ul role="list">
             <li>
-              <a href="/">about me</a>
+              <a href="/" data-i18n="nav.about">about me</a>
             </li>
             <li>
-              <a href="/skills">skills</a>
+              <a href="/skills" data-i18n="nav.skills">skills</a>
             </li>
             <li>
               <a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog</a>
@@ -113,7 +113,7 @@
       </header>
 
       <section class="not-found" aria-label="Page not found">
-        <h1 class="not-found-a11y">Page not found</h1>
+        <h1 class="not-found-a11y" data-i18n="404.title">Page not found</h1>
         <div class="not-found-scene" data-not-found-scene aria-hidden="true">
           <div class="not-found-nebula not-found-nebula--one"></div>
           <div class="not-found-nebula not-found-nebula--two"></div>
@@ -138,9 +138,10 @@
           </div>
         </div>
         <span class="not-found-code" aria-hidden="true">404</span>
-        <p class="not-found-desc">This page disappeared, but I am still here.</p>
+        <p class="not-found-desc" data-i18n="404.desc">This page disappeared, but I am still here.</p>
         <a href="/" class="btn-home btn-home--primary">
-          <i class="fa-solid fa-house" aria-hidden="true"></i> take me to about me
+          <i class="fa-solid fa-house" aria-hidden="true"></i>
+          <span data-i18n="404.cta">take me to about me</span>
         </a>
       </section>
     </main>
