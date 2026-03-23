@@ -547,4 +547,60 @@
       langToggle?.focus();
     }
   });
+
+  /* ── 404 scene parallax ─────────────────────────────────── */
+  const notFoundScene = document.querySelector('[data-not-found-scene]');
+  if (notFoundScene) {
+    const canParallax = window.matchMedia('(hover: hover) and (pointer: fine)');
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let rafId = 0;
+
+    function isMotionReduced() {
+      return html.getAttribute('data-reduce-motion') === 'true';
+    }
+
+    function paintScene() {
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+
+      notFoundScene.style.setProperty('--mx', currentX.toFixed(3));
+      notFoundScene.style.setProperty('--my', currentY.toFixed(3));
+
+      if (Math.abs(targetX - currentX) > 0.002 || Math.abs(targetY - currentY) > 0.002) {
+        rafId = requestAnimationFrame(paintScene);
+      } else {
+        rafId = 0;
+      }
+    }
+
+    function queuePaint() {
+      if (!rafId) rafId = requestAnimationFrame(paintScene);
+    }
+
+    function resetScene() {
+      targetX = 0;
+      targetY = 0;
+      queuePaint();
+    }
+
+    notFoundScene.addEventListener('pointermove', (event) => {
+      if (!canParallax.matches || isMotionReduced()) return;
+
+      const rect = notFoundScene.getBoundingClientRect();
+      const nextX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const nextY = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+
+      targetX = Math.max(-1, Math.min(1, nextX));
+      targetY = Math.max(-1, Math.min(1, nextY));
+      queuePaint();
+    });
+
+    notFoundScene.addEventListener('pointerleave', resetScene);
+    perfToggle?.addEventListener('click', () => {
+      if (isMotionReduced()) resetScene();
+    });
+  }
 })();

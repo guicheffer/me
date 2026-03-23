@@ -113,12 +113,32 @@
       </header>
 
       <section class="not-found" aria-label="Page not found">
-        <div class="not-found-ghost" aria-hidden="true">
-          <i class="fas fa-ghost"></i>
+        <h1 class="not-found-a11y">Page not found</h1>
+        <div class="not-found-scene" data-not-found-scene aria-hidden="true">
+          <div class="not-found-nebula not-found-nebula--one"></div>
+          <div class="not-found-nebula not-found-nebula--two"></div>
+
+          <div class="not-found-ghost">
+            <div class="ghost-aura"></div>
+            <div class="ghost-body">
+              <div class="ghost-shine"></div>
+              <div class="ghost-face">
+                <span class="ghost-eye ghost-eye--left"></span>
+                <span class="ghost-eye ghost-eye--right"></span>
+                <span class="ghost-mouth"></span>
+              </div>
+              <div class="ghost-tail">
+                <span class="ghost-wave ghost-wave--one"></span>
+                <span class="ghost-wave ghost-wave--two"></span>
+                <span class="ghost-wave ghost-wave--three"></span>
+                <span class="ghost-wave ghost-wave--four"></span>
+              </div>
+            </div>
+            <div class="ghost-shadow"></div>
+          </div>
         </div>
         <span class="not-found-code" aria-hidden="true">404</span>
-        <h1 class="not-found-title">Lost in space.</h1>
-        <p class="not-found-desc">Seems like this page ghosted you.<br>But hey — I'm still here.</p>
+        <p class="not-found-desc">This page disappeared, but I am still here.</p>
         <a href="/" class="btn-home btn-home--primary">
           <i class="fa-solid fa-house" aria-hidden="true"></i> take me to about me
         </a>
