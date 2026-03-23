@@ -1022,7 +1022,9 @@ hr {
 .not-found {
   display: flex;
   flex-direction: column;
-  max-width: 560px;
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }
 
 .not-found-ghost {
@@ -1063,10 +1065,8 @@ hr {
   margin-bottom: 32px;
 }
 
-.not-found-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+.main--centered {
+  align-items: center;
 }
 
 .btn-home {
