@@ -1093,12 +1093,25 @@ hr {
 }
 
 .btn-home--primary {
+  background: #fff;
+  border-color: #fff;
+  color: #0f0f13;
+}
+
+.btn-home--primary:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #0f0f13;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="light"] .btn-home--primary {
   background: var(--purple);
   border-color: var(--purple);
   color: #fff;
 }
 
-.btn-home--primary:hover {
+[data-theme="light"] .btn-home--primary:hover {
   background: var(--purple-light);
   border-color: var(--purple-light);
   color: #fff;
