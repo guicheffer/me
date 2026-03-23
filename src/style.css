@@ -482,6 +482,8 @@ main {
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 /* ── SPA page sections ─────────────────── */
