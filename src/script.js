@@ -269,8 +269,8 @@
     });
 
     function animateGlow() {
-      glowX += (mouseX - glowX) * 0.2;
-      glowY += (mouseY - glowY) * 0.2;
+      glowX += (mouseX - glowX) * 0.35;
+      glowY += (mouseY - glowY) * 0.35;
       cursorGlow.style.left = glowX + 'px';
       cursorGlow.style.top  = glowY + 'px';
       if (Math.abs(mouseX - glowX) > 0.1 || Math.abs(mouseY - glowY) > 0.1) {
@@ -559,6 +559,134 @@
       langToggle?.focus();
     }
   });
+
+  /* ── Background globe ────────────────────────────────────── */
+  const globeCanvas = document.getElementById('globe-canvas');
+  if (globeCanvas) {
+    const ctx = globeCanvas.getContext('2d');
+    const POINT_COUNT = 160;
+    const CONNECT_DIST = 0.34;
+    let globeRaf = 0;
+    let rotation = 0;
+
+    const points = [];
+    for (let i = 0; i < POINT_COUNT; i++) {
+      const phi = Math.acos(2 * Math.random() - 1);
+      const theta = Math.random() * Math.PI * 2;
+      points.push({ phi, theta });
+    }
+
+    function resizeGlobe() {
+      const rect = globeCanvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      globeCanvas.width = rect.width * dpr;
+      globeCanvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    resizeGlobe();
+    window.addEventListener('resize', resizeGlobe);
+
+    function project(phi, theta, rot) {
+      const x = Math.sin(phi) * Math.cos(theta + rot);
+      const y = Math.cos(phi);
+      const z = Math.sin(phi) * Math.sin(theta + rot);
+      return { x, y, z };
+    }
+
+    function drawGlobe() {
+      if (html.getAttribute('data-reduce-motion') === 'true') {
+        globeRaf = 0;
+        return;
+      }
+
+      const w = globeCanvas.clientWidth;
+      const h = globeCanvas.clientHeight;
+      const cx = w / 2;
+      const cy = h / 2;
+      const r = Math.min(w, h) * 0.42;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const isDark = html.getAttribute('data-theme') !== 'light';
+      const baseColor = isDark ? '168, 85, 247' : '124, 58, 237';
+
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 1.1);
+      grad.addColorStop(0, `rgba(${baseColor}, 0.7)`);
+      grad.addColorStop(0.4, `rgba(${baseColor}, 0.3)`);
+      grad.addColorStop(0.7, `rgba(${baseColor}, 0.08)`);
+      grad.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 1.1, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      const projected = points.map(p => {
+        const { x, y, z } = project(p.phi, p.theta, rotation);
+        return {
+          sx: cx + x * r,
+          sy: cy + y * r,
+          z,
+        };
+      });
+
+      for (let i = 0; i < projected.length; i++) {
+        for (let j = i + 1; j < projected.length; j++) {
+          const a = projected[i];
+          const b = projected[j];
+          if (a.z < 0 && b.z < 0) continue;
+          const dx = (a.sx - b.sx) / r;
+          const dy = (a.sy - b.sy) / r;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < CONNECT_DIST) {
+            const alpha = (1 - dist / CONNECT_DIST) * Math.min(a.z + 0.5, 1) * Math.min(b.z + 0.5, 1) * 1;
+            if (alpha > 0.01) {
+              ctx.beginPath();
+              ctx.moveTo(a.sx, a.sy);
+              ctx.lineTo(b.sx, b.sy);
+              ctx.strokeStyle = `rgba(${baseColor}, ${alpha})`;
+              ctx.lineWidth = 1.2;
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      for (const p of projected) {
+        if (p.z < -0.1) continue;
+        const alpha = Math.min(1, Math.max(0, (p.z + 0.3) * 1.2));
+        const size = 2.6 + p.z * 1.8;
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${baseColor}, ${alpha})`;
+        ctx.fill();
+      }
+
+      rotation += 0.003;
+      globeRaf = requestAnimationFrame(drawGlobe);
+    }
+
+    function startGlobe() {
+      if (!globeRaf && html.getAttribute('data-reduce-motion') !== 'true') {
+        globeRaf = requestAnimationFrame(drawGlobe);
+      }
+    }
+
+    function stopGlobe() {
+      if (globeRaf) {
+        cancelAnimationFrame(globeRaf);
+        globeRaf = 0;
+      }
+    }
+
+    startGlobe();
+    perfToggle?.addEventListener('click', () => {
+      setTimeout(() => {
+        if (html.getAttribute('data-reduce-motion') === 'true') stopGlobe();
+        else startGlobe();
+      }, 50);
+    });
+  }
 
   /* ── 404 scene parallax ─────────────────────────────────── */
   const notFoundScene = document.querySelector('[data-not-found-scene]');
