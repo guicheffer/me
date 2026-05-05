@@ -1519,9 +1519,13 @@ hr {
 }
 
 /* ── Services list ─────────────────────────── */
+.consulting-services {
+  margin-top: 32px;
+}
+
 .consulting-services h2 {
   margin-top: 0;
-  margin-bottom: 28px;
+  margin-bottom: 16px;
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -1543,17 +1547,19 @@ hr {
   flex-direction: column;
   gap: 14px;
   padding: 22px 20px 20px;
-  border-radius: calc(var(--radius) + 2px);
+  border-radius: 20px;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  transition: border-color 0.1s ease, box-shadow 0.1s ease, transform 0.1s ease;
   cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .consulting-item:hover {
   border-color: var(--purple);
-  box-shadow: 0 8px 28px var(--purple-glow);
-  transform: translateY(-4px);
+  box-shadow: 0 10px 30px var(--purple-glow);
+  transform: translateY(-5px) scale(1.02);
 }
 
 .consulting-icon {
@@ -1568,12 +1574,12 @@ hr {
   justify-content: center;
   color: var(--purple-light);
   font-size: 1rem;
-  transition: box-shadow var(--transition), background var(--transition);
+  transition: box-shadow 0.1s ease, background 0.1s ease;
 }
 
 .consulting-item:hover .consulting-icon {
   background: var(--purple-border);
-  box-shadow: 0 0 16px var(--purple-glow);
+  box-shadow: 0 0 18px var(--purple-glow);
 }
 
 .consulting-item > div {
