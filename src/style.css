@@ -1521,7 +1521,7 @@ hr {
 /* ── Services list ─────────────────────────── */
 .consulting-services h2 {
   margin-top: 0;
-  margin-bottom: 18px;
+  margin-bottom: 28px;
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -1533,32 +1533,33 @@ hr {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
 }
 
 .consulting-item {
   display: flex;
+  flex-direction: column;
   gap: 14px;
-  align-items: flex-start;
-  padding: 16px 18px;
-  border-radius: var(--radius);
+  padding: 22px 20px 20px;
+  border-radius: calc(var(--radius) + 2px);
   border: 1px solid var(--card-border);
   background: var(--card-bg);
   transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  cursor: default;
 }
 
 .consulting-item:hover {
   border-color: var(--purple);
-  box-shadow: 0 4px 20px var(--purple-glow);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 28px var(--purple-glow);
+  transform: translateY(-4px);
 }
 
 .consulting-icon {
   flex-shrink: 0;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--purple-muted);
   border: 1px solid var(--purple-border);
@@ -1566,8 +1567,13 @@ hr {
   align-items: center;
   justify-content: center;
   color: var(--purple-light);
-  font-size: 0.85rem;
-  margin-top: 1px;
+  font-size: 1rem;
+  transition: box-shadow var(--transition), background var(--transition);
+}
+
+.consulting-item:hover .consulting-icon {
+  background: var(--purple-border);
+  box-shadow: 0 0 16px var(--purple-glow);
 }
 
 .consulting-item > div {
@@ -1581,13 +1587,13 @@ hr {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 3px;
+  margin-bottom: 6px;
 }
 
 .consulting-item p {
   margin: 0;
-  font-size: 0.845rem;
-  line-height: 1.6;
+  font-size: 0.835rem;
+  line-height: 1.65;
   color: var(--text-muted);
 }
 
@@ -1610,20 +1616,26 @@ hr {
   50%       { box-shadow: 0 0 24px var(--purple-glow); }
 }
 
+.consulting-contact-strip__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .consulting-contact-strip__text h2 {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text);
-  margin: 0 0 4px;
+  margin: 0;
   letter-spacing: -0.01em;
 }
 
 .consulting-contact-strip__text p {
   margin: 0;
   font-size: 0.8rem;
-  color: var(--text-dim);
-  line-height: 1.3;
+  color: var(--text-muted);
+  line-height: 1.4;
 }
 
 .consulting-contact-strip__actions {
@@ -1694,8 +1706,12 @@ hr {
     justify-content: center;
   }
 
+  .consulting-list {
+    grid-template-columns: 1fr;
+  }
+
   .consulting-item {
-    padding: 14px 14px;
+    padding: 18px 16px 16px;
     gap: 12px;
   }
 }
