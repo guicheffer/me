@@ -1520,12 +1520,13 @@ hr {
 
 /* ── Services list ─────────────────────────── */
 .consulting-services {
-  margin-top: 32px;
+  margin-top: 0;
+  padding-top: 36px;
 }
 
 .consulting-services h2 {
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -1550,7 +1551,7 @@ hr {
   border-radius: 20px;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
-  transition: border-color 0.1s ease, box-shadow 0.1s ease, transform 0.1s ease;
+  transition: border-color 0.1s ease, box-shadow 0.1s ease, transform 0.1s ease !important;
   cursor: default;
   user-select: none;
   -webkit-user-select: none;
@@ -1574,7 +1575,7 @@ hr {
   justify-content: center;
   color: var(--purple-light);
   font-size: 1rem;
-  transition: box-shadow 0.1s ease, background 0.1s ease;
+  transition: box-shadow 0.1s ease, background 0.1s ease !important;
 }
 
 .consulting-item:hover .consulting-icon {
