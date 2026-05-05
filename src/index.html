@@ -169,9 +169,6 @@
                     <p data-i18n-html="cv.chat"><i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>. </p>
                     <p data-i18n-html="cv.cv"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>. </p>
                     <p data-i18n-html="cv.cover"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>! </p>
-                </section>
-
-                <section class="consulting-cta fade-up" aria-label="Consulting offer">
                     <p data-i18n-html="about.consulting"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Need help with AI adoption? <a href="/consulting" data-section="consulting" class="consulting-cta-link">See my consulting services.</a></p>
                 </section>
 
@@ -198,69 +195,66 @@
 
                 <p class="fade-up" data-i18n-html="consulting.intro">I help companies, from startups to enterprises, and individuals looking to grow; move faster and ship with confidence by embedding AI deeply into their engineering and product workflows.</p>
 
-                <div class="consulting-body">
-                    <div class="consulting-main">
-                        <section class="consulting-services" aria-label="Services">
-                            <h2 class="fade-up" data-i18n="consulting.services.title">What I can do for you</h2>
+                <section class="consulting-services" aria-label="Services">
+                    <h2 class="fade-up" data-i18n="consulting.services.title">What I can do for you</h2>
+                    <ul class="consulting-list" role="list">
+                        <li class="consulting-item fade-up">
+                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
+                            <div>
+                                <strong data-i18n="consulting.services.teams.title">Training & AI adoption</strong>
+                                <p data-i18n="consulting.services.teams.desc">Hands-on workshops and 1:1 coaching for teams and individuals. Whether you work at a company or independently, I help you master tools like Claude Code, Claude Desktop, GitHub Copilot, and Codex; so you can exceed your own expectations and ship significantly faster.</p>
+                            </div>
+                        </li>
+                        <li class="consulting-item fade-up">
+                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-code-branch"></i></span>
+                            <div>
+                                <strong data-i18n="consulting.services.sdlc.title">AI-driven development lifecycle</strong>
+                                <p data-i18n="consulting.services.sdlc.desc">From context engineering to AI-augmented code review with Claude Code CLI, I help engineering teams reshape their SDLC to ship faster, with fewer regressions and higher developer confidence.</p>
+                            </div>
+                        </li>
+                        <li class="consulting-item fade-up">
+                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
+                            <div>
+                                <strong data-i18n="consulting.services.tools.title">In-house AI tooling</strong>
+                                <p data-i18n="consulting.services.tools.desc">Design and build internal AI-powered tools using Claude Code, Codex, or Copilot as foundations; automating repetitive tasks, surfacing insights, and accelerating your team without sending data to third-party SaaS.</p>
+                            </div>
+                        </li>
+                        <li class="consulting-item fade-up">
+                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-lightbulb"></i></span>
+                            <div>
+                                <strong data-i18n="consulting.services.strategy.title">AI strategy & enablement</strong>
+                                <p data-i18n="consulting.services.strategy.desc">Not sure where to start? I audit your current workflows, identify the highest-leverage AI opportunities, and give you a concrete, prioritised roadmap; not just a slide deck.</p>
+                            </div>
+                        </li>
+                        <li class="consulting-item fade-up">
+                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+                            <div>
+                                <strong data-i18n="consulting.services.data.title">Data privacy & AI governance</strong>
+                                <p data-i18n="consulting.services.data.desc">Navigate AI adoption with confidence. I help you build guardrails that protect sensitive data, meet compliance requirements, and maintain full ownership of your context.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
 
-                            <ul class="consulting-list" role="list">
-                                <li class="consulting-item fade-up">
-                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
-                                    <div>
-                                        <strong data-i18n="consulting.services.teams.title">Training & AI adoption</strong>
-                                        <p data-i18n="consulting.services.teams.desc">Hands-on workshops and 1:1 coaching for teams and individuals. Whether you work at a company or independently, I help you master tools like Claude Code, Claude Desktop, GitHub Copilot, and Codex; so you can exceed your own expectations and ship significantly faster.</p>
-                                    </div>
-                                </li>
-                                <li class="consulting-item fade-up">
-                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-code-branch"></i></span>
-                                    <div>
-                                        <strong data-i18n="consulting.services.sdlc.title">AI-driven development lifecycle</strong>
-                                        <p data-i18n="consulting.services.sdlc.desc">From context engineering to AI-augmented code review with Claude Code CLI, I help engineering teams reshape their SDLC to ship faster, with fewer regressions and higher developer confidence.</p>
-                                    </div>
-                                </li>
-                                <li class="consulting-item fade-up">
-                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
-                                    <div>
-                                        <strong data-i18n="consulting.services.tools.title">In-house AI tooling</strong>
-                                        <p data-i18n="consulting.services.tools.desc">Design and build internal AI-powered tools using Claude Code, Codex, or Copilot as foundations; automating repetitive tasks, surfacing insights, and accelerating your team without sending data to third-party SaaS.</p>
-                                    </div>
-                                </li>
-                                <li class="consulting-item fade-up">
-                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-lightbulb"></i></span>
-                                    <div>
-                                        <strong data-i18n="consulting.services.strategy.title">AI strategy & enablement</strong>
-                                        <p data-i18n="consulting.services.strategy.desc">Not sure where to start? I audit your current workflows, identify the highest-leverage AI opportunities, and give you a concrete, prioritised roadmap; not just a slide deck.</p>
-                                    </div>
-                                </li>
-                                <li class="consulting-item fade-up">
-                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
-                                    <div>
-                                        <strong data-i18n="consulting.services.data.title">Data privacy & AI governance</strong>
-                                        <p data-i18n="consulting.services.data.desc">Navigate AI adoption with confidence. I help you build guardrails that protect sensitive data, meet compliance requirements, and maintain full ownership of your context.</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </section>
+                <div class="consulting-contact-strip fade-up" aria-label="Get in touch">
+                    <div class="consulting-contact-strip__text">
+                        <h2 data-i18n="consulting.contact.title">Let's talk</h2>
+                        <p data-i18n="consulting.contact.sub">Free intro call. No pitch deck.</p>
                     </div>
-
-                    <aside class="consulting-contact-card fade-up" aria-label="Get in touch">
-                        <h3 data-i18n="consulting.contact.title">Let's talk</h3>
-                        <p class="consulting-contact-sub" data-i18n="consulting.contact.sub">No commitment. No pitch deck.</p>
-                        <div class="consulting-contact-actions">
-                            <a class="consulting-contact-btn consulting-contact-btn--primary" href="https://calendly.com/guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Book a free call on Calendly">
-                                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-                                <span data-i18n="consulting.contact.cta.calendly">Book a free 30-min call</span>
-                            </a>
-                            <a class="consulting-contact-btn" href="mailto:hi@guicheffer.me" aria-label="Send an email">
-                                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                                <span>hi@guicheffer.me</span>
-                            </a>
-                            <a class="consulting-contact-btn" href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-                                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-                                <span data-i18n="consulting.contact.cta.linkedin">Message on LinkedIn</span>
-                            </a>
-                        </div>
-                    </aside>
+                    <div class="consulting-contact-strip__actions">
+                        <a class="consulting-contact-btn consulting-contact-btn--primary" href="https://calendly.com/guicheffer" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                            <span data-i18n="consulting.contact.cta.calendly">Book a free 30-min call</span>
+                        </a>
+                        <a class="consulting-contact-btn" href="mailto:hi@guicheffer.me">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                            <span>hi@guicheffer.me</span>
+                        </a>
+                        <a class="consulting-contact-btn" href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                            <span data-i18n="consulting.contact.cta.linkedin">LinkedIn</span>
+                        </a>
+                    </div>
                 </div>
             </section>
 

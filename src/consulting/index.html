@@ -7,30 +7,30 @@
     <meta name="theme-color" content="#9333ea">
     <script src="https://kit.fontawesome.com/8f33886f78.js" crossorigin="anonymous"></script>
 
-    <title>guicheffer.me – João Gui.Cheffer Prado's skills</title>
+    <title>AI Consulting — João Gui.Cheffer Prado</title>
 
-    <meta property="og:url" content="https://guicheffer.me/skills"><meta property="og:type" content="website">
+    <meta property="og:url" content="https://guicheffer.me/consulting"><meta property="og:type" content="website">
     <meta property="og:locale" content="en_GB">
     <meta property="og:locale:alternate" content="pt_BR">
     <meta property="og:locale:alternate" content="de_DE">
     <meta property="og:locale:alternate" content="es_ES">
-    <meta property="og:title" content="Skills — João Gui.Cheffer Prado">
-    <meta property="og:description" content="A look at João's tech stack and approach: JavaScript, React, Node.js, and a people-first mindset. Staff Engineer at HelloFresh, Berlin.">
+    <meta property="og:title" content="AI Consulting — João Gui.Cheffer Prado">
+    <meta property="og:description" content="AI consulting services by João Guilherme: training, SDLC transformation, in-house tooling, and strategy. Hands-on with Claude Code, Copilot, and Codex.">
     <meta property="og:image" content="https://guicheffer.me/assets/images/og.jpeg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="2048">
     <meta property="og:image:height" content="1074">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="guicheffer.me">
-    <meta property="twitter:url" content="https://guicheffer.me/skills">
-    <meta name="twitter:title" content="Skills — João Gui.Cheffer Prado">
-    <meta name="twitter:description" content="A look at João's tech stack and approach: JavaScript, React, Node.js, and a people-first mindset. Staff Engineer at HelloFresh, Berlin.">
+    <meta property="twitter:url" content="https://guicheffer.me/consulting">
+    <meta name="twitter:title" content="AI Consulting — João Gui.Cheffer Prado">
+    <meta name="twitter:description" content="AI consulting services by João Guilherme: training, SDLC transformation, in-house tooling, and strategy. Hands-on with Claude Code, Copilot, and Codex.">
     <meta name="twitter:image" content="https://guicheffer.me/assets/images/og.jpeg">
-    <link rel="alternate" hreflang="en" href="https://guicheffer.me/skills">
-    <link rel="alternate" hreflang="pt-BR" href="https://guicheffer.me/skills">
-    <link rel="alternate" hreflang="de" href="https://guicheffer.me/skills">
-    <link rel="alternate" hreflang="es" href="https://guicheffer.me/skills">
-    <link rel="alternate" hreflang="x-default" href="https://guicheffer.me/skills">
+    <link rel="alternate" hreflang="en" href="https://guicheffer.me/consulting">
+    <link rel="alternate" hreflang="pt-BR" href="https://guicheffer.me/consulting">
+    <link rel="alternate" hreflang="de" href="https://guicheffer.me/consulting">
+    <link rel="alternate" hreflang="es" href="https://guicheffer.me/consulting">
+    <link rel="alternate" hreflang="x-default" href="https://guicheffer.me/consulting">
 
     <script async="true" src="https://www.googletagmanager.com/gtag/js?id=G-ZD8LXGMM14"></script>
     <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-ZD8LXGMM14');</script>
@@ -39,9 +39,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/style.css">
-    <script defer src="/script.js?v=2"></script>
+    <script defer src="/script.js?v=3"></script>
   </head>
 <body>
+    <div class="globe-wrap" aria-hidden="true">
+      <canvas id="globe-canvas"></canvas>
+    </div>
+
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <div class="container">
@@ -61,10 +65,10 @@
                             <a href="/" data-section="about" aria-current="false" data-i18n="nav.about">about me</a>
                         </li>
                         <li>
-                            <a href="/consulting" data-section="consulting" aria-current="false" data-i18n="nav.consulting">consulting</a>
+                            <a href="/consulting" data-section="consulting" aria-current="page" data-i18n="nav.consulting">consulting</a>
                         </li>
                         <li>
-                            <a href="/skills" data-section="skills" aria-current="page" data-i18n="nav.skills">skills</a>
+                            <a href="/skills" data-section="skills" aria-current="false" data-i18n="nav.skills">skills</a>
                         </li>
                         <li>
                             <a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog</a>
@@ -109,10 +113,8 @@
             <!-- ── About section ──────────────────────── -->
             <section id="section-about" class="page-section" aria-label="About me">
                 <h1 class="title fade-up">João Gui.<span>Cheffer Prado</span></h1>
-
                 <p class="fade-up">Berlin, Germany • <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a></p>
                 <p class="fade-up" data-i18n-html="about.bio">I'm a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, leading GenAI enablement, shaping an AI-driven software development lifecycle, and applying context engineering best practices along the way. Passionate about JavaScript, complex frontend applications, and great user experiences — plus a fan of chocolates.</p>
-
                 <ul class="icons-list fade-up" aria-label="Social profiles">
                     <li><a href="https://github.com/guicheffer" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"><i class="fa fa-github" aria-hidden="true"></i> Github</a></li>
                     <li><a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"><i class="fa fa-linkedin" aria-hidden="true"></i> Linkedin</a></li>
@@ -120,72 +122,18 @@
                     <li><a href="https://codepen.io/guicheffer/" target="_blank" rel="noopener noreferrer" aria-label="CodePen profile"><i class="fa fa-codepen" aria-hidden="true"></i> Codepen</a></li>
                     <li><a href="https://gitlab.com/guicheffer" target="_blank" rel="noopener noreferrer" aria-label="GitLab profile"><i class="fa fa-gitlab" aria-hidden="true"></i> GitLab</a></li>
                 </ul>
-
                 <section class="cv-links fade-up" aria-label="Contact and CV">
-                    <p data-i18n-html="cv.chat"><i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>. </p>
-                    <p data-i18n-html="cv.cv"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>. </p>
-                    <p data-i18n-html="cv.cover"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>! </p>
+                    <p data-i18n-html="cv.chat"><i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>.</p>
+                    <p data-i18n-html="cv.cv"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.</p>
+                    <p data-i18n-html="cv.cover"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>!</p>
                     <p data-i18n-html="about.consulting"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Need help with AI adoption? <a href="/consulting" data-section="consulting" class="consulting-cta-link">See my consulting services.</a></p>
                 </section>
-
                 <section class="projects-section fade-up" aria-label="Open source projects">
                     <h3 data-i18n="about.opensource">latest open source stuff</h3>
                     <ul class="projects-list" role="list">
                         <li><a href="https://devor.ch" target="_blank" rel="noopener noreferrer" aria-label="devorch — open source project"><i class="fa fa-code-branch" aria-hidden="true"></i> devorch</a></li>
                         <li><a href="https://usevox.app" target="_blank" rel="noopener noreferrer" aria-label="vox — open source project"><i class="fa fa-microphone" aria-hidden="true"></i> vox</a></li>
                     </ul>
-                </section>
-            </section>
-
-            <!-- ── Skills section ─────────────────────── -->
-            <section id="section-skills" class="page-section" aria-label="Skills">
-                <span class="title title--sm fade-up" aria-hidden="true">João Gui.<span>Cheffer Prado</span></span>
-                <h1 class="skills-h1 fade-up"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span data-i18n="skills.title"> Some of my skills</span></h1>
-
-                <h2 class="fade-up" data-i18n="skills.lang">Programming Languages &amp; Tools:</h2>
-
-                <ul class="icons-list skills fade-up" aria-label="Programming tools and languages">
-                    <li class="list-inline-item"><i class="fab fa-node-js" title="Node.js" aria-label="Node.js"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-js-square" title="JavaScript" aria-label="JavaScript"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-react" title="React" aria-label="React"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-vuejs" title="Vue.js" aria-label="Vue.js"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-html5" title="HTML5" aria-label="HTML5"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-css3-alt" title="CSS3" aria-label="CSS3"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-sass" title="Sass" aria-label="Sass"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-wordpress" title="WordPress" aria-label="WordPress"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-npm" title="npm" aria-label="npm"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-yarn" title="Yarn" aria-label="Yarn"></i></li>
-                    <li class="list-inline-item skill-separator"><small>, &amp; of course: </small></li>
-                    <li class="list-inline-item" title="Claude Code">
-                        <svg class="skill-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Claude Code" role="img">
-                            <path d="M50 8 L4 92 H20 L32 64 H68 L80 92 H96 L50 8Z M50 32 L62 60 H38 L50 32Z" fill="currentColor" fill-rule="evenodd"/>
-                        </svg>
-                    </li>
-                    <li class="list-inline-item" title="ChatGPT / OpenAI">
-                        <svg class="skill-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="ChatGPT / OpenAI" role="img">
-                            <path d="M50 8 C44 8 39 13 39 19 L39 34 C33 31 26 32 22 37 C18 42 19 49 24 53 L37 61 C33 67 34 74 39 78 C44 82 51 81 55 76 L61 63 C67 67 74 65 78 60 C82 55 80 48 75 44 L62 37 C65 31 63 24 58 20 C55 17 52 16 50 16 Z" fill="none" stroke="currentColor" stroke-width="7"/>
-                            <circle cx="50" cy="50" r="10" fill="currentColor"/>
-                        </svg>
-                    </li>
-                    <li class="list-inline-item"><i class="fab fa-stack-overflow" title="Stack Overflow" aria-label="Stack Overflow"></i></li>
-                    <li class="list-inline-item"><i class="fab fa-google" title="Google" aria-label="Google"></i></li>
-                </ul>
-
-                <hr style="margin: 24px 0;">
-
-                <h2 class="fade-up" data-i18n="skills.how">💻 How?</h2>
-                <ul class="skills fade-up">
-                    <li data-i18n="skills.people">People-driven</li>
-                    <li data-i18n="skills.leader">Team Leader</li>
-                    <li data-i18n="skills.mobile">Mobile-First, Responsive Design</li>
-                    <li data-i18n="skills.agile">Agile Development &amp; Scrum-ish</li>
-                    <li data-i18n="skills.testing">Cross Browser Testing &amp; Debugging</li>
-                    <li data-i18n="skills.teams">Cross-Functional Teams</li>
-                    <li data-i18n-html="skills.hiring">Love hiring <i class="fa-solid fa-heart" aria-hidden="true"></i></li>
-                </ul>
-
-                <section class="consulting-cta fade-up" aria-label="Consulting offer">
-                    <p data-i18n-html="about.consulting"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Need help with AI adoption? <a href="/consulting" data-section="consulting" class="consulting-cta-link">See my consulting services.</a></p>
                 </section>
             </section>
 
@@ -255,6 +203,53 @@
                         </a>
                     </div>
                 </div>
+            </section>
+
+            <!-- ── Skills section ─────────────────────── -->
+            <section id="section-skills" class="page-section" aria-label="Skills">
+                <span class="title title--sm fade-up" aria-hidden="true">João Gui.<span>Cheffer Prado</span></span>
+                <h1 class="skills-h1 fade-up"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span data-i18n="skills.title"> Some of my skills</span></h1>
+                <h2 class="fade-up" data-i18n="skills.lang">Programming Languages &amp; Tools:</h2>
+                <ul class="icons-list skills fade-up" aria-label="Programming tools and languages">
+                    <li class="list-inline-item"><i class="fab fa-node-js" title="Node.js" aria-label="Node.js"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-js-square" title="JavaScript" aria-label="JavaScript"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-react" title="React" aria-label="React"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-vuejs" title="Vue.js" aria-label="Vue.js"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-html5" title="HTML5" aria-label="HTML5"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-css3-alt" title="CSS3" aria-label="CSS3"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-sass" title="Sass" aria-label="Sass"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-wordpress" title="WordPress" aria-label="WordPress"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-npm" title="npm" aria-label="npm"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-yarn" title="Yarn" aria-label="Yarn"></i></li>
+                    <li class="list-inline-item skill-separator"><small>, &amp; of course: </small></li>
+                    <li class="list-inline-item" title="Claude Code">
+                        <svg class="skill-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Claude Code" role="img">
+                            <path d="M50 8 L4 92 H20 L32 64 H68 L80 92 H96 L50 8Z M50 32 L62 60 H38 L50 32Z" fill="currentColor" fill-rule="evenodd"/>
+                        </svg>
+                    </li>
+                    <li class="list-inline-item" title="ChatGPT / OpenAI">
+                        <svg class="skill-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="ChatGPT / OpenAI" role="img">
+                            <path d="M50 8 C44 8 39 13 39 19 L39 34 C33 31 26 32 22 37 C18 42 19 49 24 53 L37 61 C33 67 34 74 39 78 C44 82 51 81 55 76 L61 63 C67 67 74 65 78 60 C82 55 80 48 75 44 L62 37 C65 31 63 24 58 20 C55 17 52 16 50 16 Z" fill="none" stroke="currentColor" stroke-width="7"/>
+                            <circle cx="50" cy="50" r="10" fill="currentColor"/>
+                        </svg>
+                    </li>
+                    <li class="list-inline-item"><i class="fab fa-stack-overflow" title="Stack Overflow" aria-label="Stack Overflow"></i></li>
+                    <li class="list-inline-item"><i class="fab fa-google" title="Google" aria-label="Google"></i></li>
+                </ul>
+                <hr style="margin: 24px 0;">
+                <h2 class="fade-up" data-i18n="skills.how">💻 How?</h2>
+                <ul class="skills fade-up">
+                    <li data-i18n="skills.people">People-driven</li>
+                    <li data-i18n="skills.leader">Team Leader</li>
+                    <li data-i18n="skills.mobile">Mobile-First, Responsive Design</li>
+                    <li data-i18n="skills.agile">Agile Development &amp; Scrum-ish</li>
+                    <li data-i18n="skills.testing">Cross Browser Testing &amp; Debugging</li>
+                    <li data-i18n="skills.teams">Cross-Functional Teams</li>
+                    <li data-i18n-html="skills.hiring">Love hiring <i class="fa-solid fa-heart" aria-hidden="true"></i></li>
+                </ul>
+                <section class="consulting-cta fade-up" aria-label="Consulting offer">
+                    <p data-i18n-html="about.consulting"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Need help with AI adoption? <a href="/consulting" data-section="consulting" class="consulting-cta-link">See my consulting services.</a></p>
+                </section>
             </section>
         </main>
     </div>
