@@ -1559,7 +1559,7 @@ hr {
   flex-shrink: 0;
   width: 34px;
   height: 34px;
-  border-radius: 8px;
+  border-radius: 50%;
   background: var(--purple-muted);
   border: 1px solid var(--purple-border);
   display: flex;
@@ -1663,21 +1663,6 @@ hr {
   box-shadow: 0 4px 14px var(--purple-glow);
 }
 
-.consulting-contact-btn--primary {
-  background: var(--purple-muted);
-  border-color: var(--purple);
-  color: var(--text);
-  font-weight: 600;
-}
-
-.consulting-contact-btn--primary i {
-  color: var(--text);
-}
-
-.consulting-contact-btn--primary:hover {
-  background: var(--purple-border);
-  box-shadow: 0 4px 20px var(--purple-glow);
-}
 
 /* ── Consulting CTA link (inside cv-links) ── */
 .consulting-cta-link {
