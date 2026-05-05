@@ -66,10 +66,10 @@
                             <a href="/" data-section="about" aria-current="page" data-i18n="nav.about">about me</a>
                         </li>
                         <li>
-                            <a href="/skills" data-section="skills" aria-current="false" data-i18n="nav.skills">skills</a>
+                            <a href="/consulting" data-section="consulting" aria-current="false" data-i18n="nav.consulting">consulting</a>
                         </li>
                         <li>
-                            <a href="/consulting" data-section="consulting" aria-current="false" data-i18n="nav.consulting">consulting</a>
+                            <a href="/skills" data-section="skills" aria-current="false" data-i18n="nav.skills">skills</a>
                         </li>
                         <li>
                             <a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog</a>
@@ -194,58 +194,74 @@
 
             <!-- ── Consulting section ──────────────────── -->
             <section id="section-consulting" class="page-section" aria-label="Consulting">
-                <h1 class="title fade-up">AI <span>Consulting</span></h1>
+                <h1 class="title fade-up" data-i18n-html="consulting.title">AI <span>Consulting</span></h1>
 
-                <p class="fade-up" data-i18n-html="consulting.intro">I help companies — from startups to enterprises — move faster and ship with confidence by embedding AI deeply into their engineering and product workflows.</p>
+                <p class="fade-up" data-i18n-html="consulting.intro">I help companies, from startups to enterprises, and individuals looking to grow; move faster and ship with confidence by embedding AI deeply into their engineering and product workflows.</p>
 
-                <section class="consulting-services fade-up" aria-label="Services">
-                    <h2 data-i18n="consulting.services.title">What I can do for you</h2>
+                <div class="consulting-body">
+                    <div class="consulting-main">
+                        <section class="consulting-services" aria-label="Services">
+                            <h2 class="fade-up" data-i18n="consulting.services.title">What I can do for you</h2>
 
-                    <ul class="consulting-list" role="list">
-                        <li class="consulting-item fade-up">
-                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
-                            <div>
-                                <strong data-i18n="consulting.services.tools.title">In-house AI tooling</strong>
-                                <p data-i18n="consulting.services.tools.desc">Design and build internal AI-powered tools that automate repetitive tasks, surface insights, and accelerate your team — without sending your data to third-party SaaS.</p>
-                            </div>
-                        </li>
-                        <li class="consulting-item fade-up">
-                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
-                            <div>
-                                <strong data-i18n="consulting.services.data.title">Data privacy & AI governance</strong>
-                                <p data-i18n="consulting.services.data.desc">Navigate AI adoption with confidence. I help you build guardrails that protect sensitive data, meet compliance requirements, and maintain full ownership of your context.</p>
-                            </div>
-                        </li>
-                        <li class="consulting-item fade-up">
-                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-code-branch"></i></span>
-                            <div>
-                                <strong data-i18n="consulting.services.sdlc.title">AI-driven development lifecycle</strong>
-                                <p data-i18n="consulting.services.sdlc.desc">From context engineering to AI-augmented code review, I help engineering teams reshape their SDLC to ship faster, with fewer regressions and higher developer confidence.</p>
-                            </div>
-                        </li>
-                        <li class="consulting-item fade-up">
-                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-lightbulb"></i></span>
-                            <div>
-                                <strong data-i18n="consulting.services.strategy.title">AI strategy & enablement</strong>
-                                <p data-i18n="consulting.services.strategy.desc">Not sure where to start? I'll audit your current workflows, identify the highest-leverage AI opportunities, and give you a concrete, prioritised roadmap — not just a deck.</p>
-                            </div>
-                        </li>
-                        <li class="consulting-item fade-up">
-                            <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
-                            <div>
-                                <strong data-i18n="consulting.services.teams.title">Team training & upskilling</strong>
-                                <p data-i18n="consulting.services.teams.desc">Hands-on workshops and coaching so your engineers and product people know how to prompt well, use AI agents effectively, and stay critical of what the models produce.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </section>
+                            <ul class="consulting-list" role="list">
+                                <li class="consulting-item fade-up">
+                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-users"></i></span>
+                                    <div>
+                                        <strong data-i18n="consulting.services.teams.title">Training & AI adoption</strong>
+                                        <p data-i18n="consulting.services.teams.desc">Hands-on workshops and 1:1 coaching for teams and individuals. Whether you work at a company or independently, I help you master tools like Claude Code, Claude Desktop, GitHub Copilot, and Codex; so you can exceed your own expectations and ship significantly faster.</p>
+                                    </div>
+                                </li>
+                                <li class="consulting-item fade-up">
+                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-code-branch"></i></span>
+                                    <div>
+                                        <strong data-i18n="consulting.services.sdlc.title">AI-driven development lifecycle</strong>
+                                        <p data-i18n="consulting.services.sdlc.desc">From context engineering to AI-augmented code review with Claude Code CLI, I help engineering teams reshape their SDLC to ship faster, with fewer regressions and higher developer confidence.</p>
+                                    </div>
+                                </li>
+                                <li class="consulting-item fade-up">
+                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
+                                    <div>
+                                        <strong data-i18n="consulting.services.tools.title">In-house AI tooling</strong>
+                                        <p data-i18n="consulting.services.tools.desc">Design and build internal AI-powered tools using Claude Code, Codex, or Copilot as foundations; automating repetitive tasks, surfacing insights, and accelerating your team without sending data to third-party SaaS.</p>
+                                    </div>
+                                </li>
+                                <li class="consulting-item fade-up">
+                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-lightbulb"></i></span>
+                                    <div>
+                                        <strong data-i18n="consulting.services.strategy.title">AI strategy & enablement</strong>
+                                        <p data-i18n="consulting.services.strategy.desc">Not sure where to start? I audit your current workflows, identify the highest-leverage AI opportunities, and give you a concrete, prioritised roadmap; not just a slide deck.</p>
+                                    </div>
+                                </li>
+                                <li class="consulting-item fade-up">
+                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+                                    <div>
+                                        <strong data-i18n="consulting.services.data.title">Data privacy & AI governance</strong>
+                                        <p data-i18n="consulting.services.data.desc">Navigate AI adoption with confidence. I help you build guardrails that protect sensitive data, meet compliance requirements, and maintain full ownership of your context.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
 
-                <section class="cv-links fade-up" aria-label="Get in touch">
-                    <h2 data-i18n="consulting.contact.title">Let's talk</h2>
-                    <p data-i18n-html="consulting.contact.schedule"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Schedule a free 30-minute intro call <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer">on Calendly</a>.</p>
-                    <p data-i18n-html="consulting.contact.email"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Or drop me a line at <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a> — I read every message.</p>
-                    <p data-i18n-html="consulting.contact.linkedin"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> You can also reach me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>.</p>
-                </section>
+                    <aside class="consulting-contact-card fade-up" aria-label="Get in touch">
+                        <h3 data-i18n="consulting.contact.title">Let's talk</h3>
+                        <p class="consulting-contact-sub" data-i18n="consulting.contact.sub">No commitment. No pitch deck.</p>
+                        <div class="consulting-contact-actions">
+                            <a class="consulting-contact-btn consulting-contact-btn--primary" href="https://calendly.com/guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Book a free call on Calendly">
+                                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                                <span data-i18n="consulting.contact.cta.calendly">Book a free 30-min call</span>
+                            </a>
+                            <a class="consulting-contact-btn" href="mailto:hi@guicheffer.me" aria-label="Send an email">
+                                <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                                <span>hi@guicheffer.me</span>
+                            </a>
+                            <a class="consulting-contact-btn" href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+                                <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                                <span data-i18n="consulting.contact.cta.linkedin">Message on LinkedIn</span>
+                            </a>
+                        </div>
+                    </aside>
+                </div>
             </section>
 
             <!-- ── Skills section ─────────────────────── -->
@@ -295,6 +311,10 @@
                     <li data-i18n="skills.teams">Cross-Functional Teams</li>
                     <li data-i18n-html="skills.hiring">Love hiring <i class="fa-solid fa-heart" aria-hidden="true"></i></li>
                 </ul>
+
+                <section class="consulting-cta fade-up" aria-label="Consulting offer">
+                    <p data-i18n-html="about.consulting"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Need help with AI adoption? <a href="/consulting" data-section="consulting" class="consulting-cta-link">See my consulting services.</a></p>
+                </section>
             </section>
         </main>
     </div>

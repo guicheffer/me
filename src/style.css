@@ -10,16 +10,16 @@
 :root {
   --bg: #05050d;
   --sidebar-bg: #09091a;
-  /* gradient stops: vivid dark purple + near-black */
+  /* gradient stops: subdued dark purple + near-black */
   --grad-a: #05050d;
-  --grad-b: #2e0d6e;
+  --grad-b: #1a0840;
   --grad-c: #05050d;
-  --grad-d: #1a0545;
-  --purple: #9333ea;
-  --purple-light: #a855f7;
-  --purple-muted: rgba(147, 51, 234, 0.14);
-  --purple-border: rgba(147, 51, 234, 0.28);
-  --purple-glow: rgba(147, 51, 234, 0.45);
+  --grad-d: #0e0230;
+  --purple: #7c22c8;
+  --purple-light: #9333ea;
+  --purple-muted: rgba(115, 30, 200, 0.11);
+  --purple-border: rgba(115, 30, 200, 0.22);
+  --purple-glow: rgba(115, 30, 200, 0.32);
   --text: #f2f0ff;
   --text-muted: #a09cc0;
   --text-dim: #4b4870;
@@ -130,10 +130,10 @@ textarea {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(147, 51, 234, 0.55) 0%,
-    rgba(147, 51, 234, 0.30) 20%,
-    rgba(147, 51, 234, 0.12) 40%,
-    rgba(147, 51, 234, 0.03) 60%,
+    rgba(115, 30, 200, 0.35) 0%,
+    rgba(115, 30, 200, 0.16) 20%,
+    rgba(115, 30, 200, 0.06) 40%,
+    rgba(115, 30, 200, 0.01) 60%,
     transparent 78%
   );
   pointer-events: none;
@@ -1512,18 +1512,31 @@ hr {
 }
 
 /* ── Consulting page ───────────────────────── */
-.consulting-services {
-  margin-top: 36px;
-  padding-top: 26px;
-  border-top: 1px solid var(--divider);
+
+/* Wider max-width for the consulting section */
+#section-consulting {
+  max-width: 900px;
 }
 
+.consulting-body {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 32px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.consulting-main {
+  min-width: 0;
+}
+
+/* ── Services list ─────────────────────────── */
 .consulting-services h2 {
   margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 0.7rem;
+  margin-bottom: 18px;
+  font-size: 0.68rem;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.15em;
   font-weight: 600;
   color: var(--text-dim);
 }
@@ -1534,14 +1547,14 @@ hr {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
 .consulting-item {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   align-items: flex-start;
-  padding: 18px 20px;
+  padding: 16px 18px;
   border-radius: var(--radius);
   border: 1px solid var(--card-border);
   background: var(--card-bg);
@@ -1550,14 +1563,14 @@ hr {
 
 .consulting-item:hover {
   border-color: var(--purple);
-  box-shadow: 0 6px 24px var(--purple-glow);
+  box-shadow: 0 4px 20px var(--purple-glow);
   transform: translateY(-2px);
 }
 
 .consulting-icon {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   background: var(--purple-muted);
   border: 1px solid var(--purple-border);
@@ -1565,42 +1578,115 @@ hr {
   align-items: center;
   justify-content: center;
   color: var(--purple-light);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-top: 1px;
 }
 
-.consulting-item div {
+.consulting-item > div {
   flex: 1;
+  min-width: 0;
 }
 
 .consulting-item strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .consulting-item p {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.845rem;
   line-height: 1.6;
   color: var(--text-muted);
 }
 
-/* contact sub-section (reuses .cv-links) */
-.consulting-services + .cv-links h2 {
-  margin-top: 0;
-  margin-bottom: 4px;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-weight: 600;
-  color: var(--text-dim);
+/* ── Contact card (right sidebar) ─────────── */
+.consulting-contact-card {
+  position: sticky;
+  top: 40px;
+  background: var(--card-bg);
+  border: 1px solid var(--purple-border);
+  border-radius: calc(var(--radius) + 4px);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22), 0 0 0 1px var(--purple-border);
+  animation: card-pulse 4s ease-in-out infinite;
 }
 
-/* ── Consulting CTA on about page ─────────── */
+@keyframes card-pulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.22), 0 0 0 1px var(--purple-border), 0 0 0 rgba(115,30,200,0); }
+  50%       { box-shadow: 0 8px 32px rgba(0,0,0,0.22), 0 0 0 1px var(--purple-border), 0 0 18px var(--purple-glow); }
+}
+
+.consulting-contact-card h3 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.consulting-contact-sub {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+.consulting-contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.consulting-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--transition);
+  line-height: 1.2;
+}
+
+.consulting-contact-btn i {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  color: var(--purple-light);
+}
+
+.consulting-contact-btn:hover {
+  color: var(--text);
+  border-color: var(--purple);
+  background: var(--purple-muted);
+  transform: translateX(3px);
+}
+
+.consulting-contact-btn--primary {
+  background: var(--purple-muted);
+  border-color: var(--purple);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.consulting-contact-btn--primary:hover {
+  background: var(--purple-border);
+  box-shadow: 0 0 16px var(--purple-glow);
+  transform: translateX(0) translateY(-1px);
+}
+
+/* ── Consulting CTA on about/skills pages ─── */
 .consulting-cta {
   margin-top: 0;
   padding-top: 0;
@@ -1621,9 +1707,30 @@ hr {
   border-bottom-color: var(--purple);
 }
 
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 1024px) {
+  #section-consulting {
+    max-width: 100%;
+  }
+
+  .consulting-body {
+    grid-template-columns: 1fr 240px;
+    gap: 24px;
+  }
+}
+
 @media (max-width: 768px) {
+  .consulting-body {
+    grid-template-columns: 1fr;
+  }
+
+  .consulting-contact-card {
+    position: static;
+    animation: none;
+  }
+
   .consulting-item {
-    padding: 14px 16px;
+    padding: 14px 14px;
     gap: 12px;
   }
 }
