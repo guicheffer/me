@@ -1510,3 +1510,120 @@ hr {
     padding-bottom: 20px;
   }
 }
+
+/* ── Consulting page ───────────────────────── */
+.consulting-services {
+  margin-top: 36px;
+  padding-top: 26px;
+  border-top: 1px solid var(--divider);
+}
+
+.consulting-services h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.consulting-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.consulting-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.consulting-item:hover {
+  border-color: var(--purple);
+  box-shadow: 0 6px 24px var(--purple-glow);
+  transform: translateY(-2px);
+}
+
+.consulting-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--purple-muted);
+  border: 1px solid var(--purple-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--purple-light);
+  font-size: 0.9rem;
+  margin-top: 1px;
+}
+
+.consulting-item div {
+  flex: 1;
+}
+
+.consulting-item strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.consulting-item p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* contact sub-section (reuses .cv-links) */
+.consulting-services + .cv-links h2 {
+  margin-top: 0;
+  margin-bottom: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+/* ── Consulting CTA on about page ─────────── */
+.consulting-cta {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.consulting-cta p {
+  margin-top: 12px;
+}
+
+.consulting-cta-link {
+  color: var(--purple-light);
+  border-bottom: 1px solid var(--purple-border);
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.consulting-cta-link:hover {
+  color: var(--purple);
+  border-bottom-color: var(--purple);
+}
+
+@media (max-width: 768px) {
+  .consulting-item {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+}

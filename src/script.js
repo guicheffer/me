@@ -68,7 +68,9 @@
   // /        → about section
   // /skills  → skills section
   function getSection() {
-    return window.location.pathname.startsWith('/skills') ? 'skills' : 'about';
+    if (window.location.pathname.startsWith('/skills')) return 'skills';
+    if (window.location.pathname.startsWith('/consulting')) return 'consulting';
+    return 'about';
   }
 
   // Animate in a section by name
@@ -107,8 +109,9 @@
     }
   }
 
-  // Intercept internal nav clicks
+  // Intercept internal nav + inline SPA links (nav links don't change; inline ones are re-bound via applyLang)
   document.querySelectorAll('nav a[data-section]').forEach((link) => {
+    link.dataset.spaBound = '1';
     link.addEventListener('click', (e) => {
       e.preventDefault();
       showSection(link.dataset.section, true);
@@ -377,14 +380,32 @@
     en: {
       'nav.about':        'about me',
       'nav.skills':       'skills',
+      'nav.consulting':   'consulting',
       '404.title':        'Page not found',
       '404.desc':         'This page disappeared, but I am still here.',
       '404.cta':          'take me to about me',
       'about.bio':        'I\'m a Staff Software Engineer @ <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, leading GenAI enablement, shaping an AI-driven software development lifecycle, and applying context engineering best practices along the way. Passionate about JavaScript, complex frontend applications, and great user experiences — plus a fan of chocolates.',
+      'about.consulting': '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Need help with AI adoption? <a href="/consulting" data-section="consulting" class="consulting-cta-link">See my consulting services.</a>',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Want to chat? Schedule a call, <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> here</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Need my CV? Grab it on <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> or download it in <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
       'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Looking for a cover letter? Message me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>!',
       'about.opensource': 'latest open source stuff',
+      'consulting.intro': 'I help companies — from startups to enterprises — move faster and ship with confidence by embedding AI deeply into their engineering and product workflows.',
+      'consulting.services.title':           'What I can do for you',
+      'consulting.services.tools.title':     'In-house AI tooling',
+      'consulting.services.tools.desc':      'Design and build internal AI-powered tools that automate repetitive tasks, surface insights, and accelerate your team — without sending your data to third-party SaaS.',
+      'consulting.services.data.title':      'Data privacy & AI governance',
+      'consulting.services.data.desc':       'Navigate AI adoption with confidence. I help you build guardrails that protect sensitive data, meet compliance requirements, and maintain full ownership of your context.',
+      'consulting.services.sdlc.title':      'AI-driven development lifecycle',
+      'consulting.services.sdlc.desc':       'From context engineering to AI-augmented code review, I help engineering teams reshape their SDLC to ship faster, with fewer regressions and higher developer confidence.',
+      'consulting.services.strategy.title':  'AI strategy & enablement',
+      'consulting.services.strategy.desc':   'Not sure where to start? I\'ll audit your current workflows, identify the highest-leverage AI opportunities, and give you a concrete, prioritised roadmap — not just a deck.',
+      'consulting.services.teams.title':     'Team training & upskilling',
+      'consulting.services.teams.desc':      'Hands-on workshops and coaching so your engineers and product people know how to prompt well, use AI agents effectively, and stay critical of what the models produce.',
+      'consulting.contact.title':            'Let\'s talk',
+      'consulting.contact.schedule':         '<i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Schedule a free 30-minute intro call <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer">on Calendly</a>.',
+      'consulting.contact.email':            '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Or drop me a line at <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a> — I read every message.',
+      'consulting.contact.linkedin':         '<i class="fa-brands fa-linkedin" aria-hidden="true"></i> You can also reach me <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">on LinkedIn</a>.',
       'skills.title':     ' Some of my skills',
       'skills.lang':      'Programming Languages & Tools:',
       'skills.how':       '💻 How?',
@@ -400,14 +421,32 @@
     pt: {
       'nav.about':        'sobre mim',
       'nav.skills':       'habilidades',
+      'nav.consulting':   'consultoria',
       '404.title':        'Página não encontrada',
       '404.desc':         'Essa página sumiu, mas eu ainda estou aqui.',
       '404.cta':          'voltar para sobre mim',
       'about.bio':        'Sou Staff Software Engineer na <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, liderando a adoção de GenAI, definindo um ciclo de desenvolvimento de software orientado por IA e aplicando boas práticas de context engineering no caminho. Apaixonado por JavaScript, aplicações frontend complexas e ótimas experiências de usuário — e fã de chocolates.',
+      'about.consulting': '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Precisa de ajuda com adoção de IA? <a href="/consulting" data-section="consulting" class="consulting-cta-link">Veja meus serviços de consultoria.</a>',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Quer conversar? Agende uma call <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> aqui</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Precisa do meu CV? Veja no <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> ou baixe em <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
       'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Precisa de uma carta de apresentação? Me chame <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">no LinkedIn</a>!',
       'about.opensource': 'projetos open source recentes',
+      'consulting.intro': 'Ajudo empresas — de startups a grandes corporações — a se moverem mais rápido e com mais confiança, integrando IA profundamente nos seus fluxos de engenharia e produto.',
+      'consulting.services.title':           'O que posso fazer por você',
+      'consulting.services.tools.title':     'Ferramentas de IA internas',
+      'consulting.services.tools.desc':      'Projeto e construção de ferramentas internas com IA que automatizam tarefas repetitivas, geram insights e aceleram seu time — sem enviar seus dados para SaaS de terceiros.',
+      'consulting.services.data.title':      'Privacidade de dados e governança de IA',
+      'consulting.services.data.desc':       'Adote IA com segurança. Ajudo a construir guardrails que protegem dados sensíveis, atendem requisitos de conformidade e mantêm o controle total sobre seu contexto.',
+      'consulting.services.sdlc.title':      'Ciclo de desenvolvimento orientado por IA',
+      'consulting.services.sdlc.desc':       'De context engineering a code review com IA, ajudo times de engenharia a remodelar seu SDLC para entregar mais rápido, com menos regressões e mais confiança.',
+      'consulting.services.strategy.title':  'Estratégia e capacitação em IA',
+      'consulting.services.strategy.desc':   'Não sabe por onde começar? Faço um diagnóstico dos seus fluxos atuais, identifico as oportunidades de maior impacto com IA e entrego um roadmap concreto — não só slides.',
+      'consulting.services.teams.title':     'Treinamento e capacitação de times',
+      'consulting.services.teams.desc':      'Workshops e mentoria práticos para que seus engenheiros e pessoas de produto saibam usar IA de forma eficaz, prompts bem escritos e senso crítico sobre o que os modelos produzem.',
+      'consulting.contact.title':            'Vamos conversar',
+      'consulting.contact.schedule':         '<i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Agende uma call introdutória gratuita de 30 minutos <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer">no Calendly</a>.',
+      'consulting.contact.email':            '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Ou me mande um e-mail em <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a> — eu leio tudo.',
+      'consulting.contact.linkedin':         '<i class="fa-brands fa-linkedin" aria-hidden="true"></i> Você também pode me encontrar <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">no LinkedIn</a>.',
       'skills.title':     ' Algumas das minhas habilidades',
       'skills.lang':      'Linguagens de Programação & Ferramentas:',
       'skills.how':       '💻 Como?',
@@ -423,14 +462,32 @@
     de: {
       'nav.about':        'über mich',
       'nav.skills':       'fähigkeiten',
+      'nav.consulting':   'beratung',
       '404.title':        'Seite nicht gefunden',
       '404.desc':         'Diese Seite ist verschwunden, aber ich bin noch hier.',
       '404.cta':          'zurück zu über mich',
       'about.bio':        'Ich bin Staff Software Engineer bei <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, leite die GenAI-Einführung, gestalte einen KI-gestützten Software-Entwicklungszyklus und wende dabei Best Practices im Context Engineering an. Leidenschaftlich für JavaScript, komplexe Frontend-Anwendungen und großartige Nutzererlebnisse — und ein Schokoladenliebhaber.',
+      'about.consulting': '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Hilfe bei der KI-Einführung gesucht? <a href="/consulting" data-section="consulting" class="consulting-cta-link">Meine Beratungsleistungen ansehen.</a>',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> Möchtest du reden? Termin vereinbaren <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> hier</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> Lebenslauf gewünscht? Ansehen auf <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> oder herunterladen als <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
       'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Anschreiben gewünscht? Schreib mir <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">auf LinkedIn</a>!',
       'about.opensource': 'neueste Open-Source-Projekte',
+      'consulting.intro': 'Ich helfe Unternehmen — von Startups bis zu Konzernen — schneller zu liefern und mit mehr Zuversicht zu arbeiten, indem KI tief in ihre Engineering- und Produkt-Workflows eingebettet wird.',
+      'consulting.services.title':           'Was ich für dich tun kann',
+      'consulting.services.tools.title':     'Interne KI-Werkzeuge',
+      'consulting.services.tools.desc':      'Design und Entwicklung interner KI-gestützter Tools, die repetitive Aufgaben automatisieren, Erkenntnisse liefern und dein Team beschleunigen — ohne deine Daten an Drittanbieter zu senden.',
+      'consulting.services.data.title':      'Datenschutz & KI-Governance',
+      'consulting.services.data.desc':       'KI-Einführung mit Vertrauen. Ich helfe dir, Leitplanken zu bauen, die sensible Daten schützen, Compliance-Anforderungen erfüllen und die vollständige Kontrolle über deinen Kontext sichern.',
+      'consulting.services.sdlc.title':      'KI-getriebener Entwicklungszyklus',
+      'consulting.services.sdlc.desc':       'Von Context Engineering bis KI-gestütztem Code Review helfe ich Engineering-Teams, ihren SDLC umzugestalten — für schnellere Lieferung, weniger Regressionen und höheres Vertrauen.',
+      'consulting.services.strategy.title':  'KI-Strategie & Enablement',
+      'consulting.services.strategy.desc':   'Weißt du nicht, wo du anfangen sollst? Ich analysiere deine aktuellen Workflows, identifiziere die wirkungsvollsten KI-Chancen und liefere eine konkrete, priorisierte Roadmap — kein leeres Deck.',
+      'consulting.services.teams.title':     'Team-Training & Upskilling',
+      'consulting.services.teams.desc':      'Praxisnahe Workshops und Coaching, damit deine Entwickler und Produktmenschen wissen, wie man effektiv prompted, KI-Agenten nutzt und die Modellergebnisse kritisch bewertet.',
+      'consulting.contact.title':            'Lass uns reden',
+      'consulting.contact.schedule':         '<i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Vereinbare ein kostenloses 30-minütiges Erstgespräch <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer">auf Calendly</a>.',
+      'consulting.contact.email':            '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Oder schreib mir an <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a> — ich lese jede Nachricht.',
+      'consulting.contact.linkedin':         '<i class="fa-brands fa-linkedin" aria-hidden="true"></i> Du kannst mich auch <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">auf LinkedIn</a> erreichen.',
       'skills.title':     ' Einige meiner Fähigkeiten',
       'skills.lang':      'Programmiersprachen & Werkzeuge:',
       'skills.how':       '💻 Wie?',
@@ -446,14 +503,32 @@
     es: {
       'nav.about':        'sobre mí',
       'nav.skills':       'habilidades',
+      'nav.consulting':   'consultoría',
       '404.title':        'Página no encontrada',
       '404.desc':         'Esta página desapareció, pero yo sigo aquí.',
       '404.cta':          'volver a sobre mí',
       'about.bio':        'Soy Staff Software Engineer en <a href="https://www.hellofresh.de/" target="_blank" rel="noopener noreferrer">HelloFresh</a>, liderando la adopción de GenAI, definiendo un ciclo de desarrollo de software impulsado por IA y aplicando buenas prácticas de context engineering en el proceso. Apasionado por JavaScript, aplicaciones frontend complejas y grandes experiencias de usuario — y fanático del chocolate.',
+      'about.consulting': '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> ¿Necesitas ayuda con la adopción de IA? <a href="/consulting" data-section="consulting" class="consulting-cta-link">Mira mis servicios de consultoría.</a>',
       'cv.chat':          '<i class="fa-solid fa-phone" aria-hidden="true"></i> ¿Quieres charlar? Programa una llamada <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer"> aquí</a>.',
       'cv.cv':            '<i class="fa-solid fa-id-card" aria-hidden="true"></i> ¿Necesitas mi CV? Vélo en <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/edit?usp=sharing" rel="noopener noreferrer"> Docs </a> o descárgalo en <a target="_blank" href="https://docs.google.com/document/d/1n3Tsnop2Ek7tyWDuGOzFYsZlJjhdNWMC2fgv0WvwDQk/export?format=pdf" rel="noopener noreferrer"> .pdf</a>.',
       'cv.cover':         '<i class="fa-solid fa-envelope" aria-hidden="true"></i> ¿Buscas una carta de presentación? Escríbeme <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">en LinkedIn</a>!',
       'about.opensource': 'proyectos open source recientes',
+      'consulting.intro': 'Ayudo a empresas — desde startups hasta grandes corporaciones — a moverse más rápido y entregar con confianza, integrando IA profundamente en sus flujos de trabajo de ingeniería y producto.',
+      'consulting.services.title':           'Lo que puedo hacer por ti',
+      'consulting.services.tools.title':     'Herramientas de IA internas',
+      'consulting.services.tools.desc':      'Diseño y desarrollo de herramientas internas con IA que automatizan tareas repetitivas, generan insights y aceleran a tu equipo — sin enviar tus datos a SaaS de terceros.',
+      'consulting.services.data.title':      'Privacidad de datos y gobernanza de IA',
+      'consulting.services.data.desc':       'Adopta IA con confianza. Te ayudo a crear barreras que protegen datos sensibles, cumplen requisitos de cumplimiento y mantienen el control total sobre tu contexto.',
+      'consulting.services.sdlc.title':      'Ciclo de desarrollo impulsado por IA',
+      'consulting.services.sdlc.desc':       'Desde context engineering hasta revisión de código con IA, ayudo a los equipos de ingeniería a rediseñar su SDLC para entregar más rápido, con menos regresiones y mayor confianza.',
+      'consulting.services.strategy.title':  'Estrategia y habilitación de IA',
+      'consulting.services.strategy.desc':   '¿No sabes por dónde empezar? Analizo tus flujos de trabajo actuales, identifico las oportunidades de mayor impacto con IA y entrego un roadmap concreto y priorizado — no solo diapositivas.',
+      'consulting.services.teams.title':     'Formación y capacitación de equipos',
+      'consulting.services.teams.desc':      'Talleres prácticos y coaching para que tus ingenieros y personas de producto sepan hacer prompts efectivos, usar agentes de IA y mantener sentido crítico sobre lo que producen los modelos.',
+      'consulting.contact.title':            'Hablemos',
+      'consulting.contact.schedule':         '<i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Programa una llamada introductoria gratuita de 30 minutos <a target="_blank" href="https://calendly.com/guicheffer" rel="noopener noreferrer">en Calendly</a>.',
+      'consulting.contact.email':            '<i class="fa-solid fa-envelope" aria-hidden="true"></i> O escríbeme a <a href="mailto:hi@guicheffer.me">hi@guicheffer.me</a> — leo cada mensaje.',
+      'consulting.contact.linkedin':         '<i class="fa-brands fa-linkedin" aria-hidden="true"></i> También puedes encontrarme <a href="https://linkedin.com/in/guicheffer/" target="_blank" rel="noopener noreferrer">en LinkedIn</a>.',
       'skills.title':     ' Algunas de mis habilidades',
       'skills.lang':      'Lenguajes de programación & herramientas:',
       'skills.how':       '💻 ¿Cómo?',
@@ -518,6 +593,15 @@
 
     // Re-bind cursor hover listeners to any newly created links
     if (attachHoverCursor) attachHoverCursor(document);
+
+    // Re-bind SPA navigation to any inline data-section links recreated by i18n
+    document.querySelectorAll('a[data-section]:not([data-spa-bound])').forEach((link) => {
+      link.dataset.spaBound = '1';
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection(link.dataset.section, true);
+      });
+    });
   }
 
   // Detect on load and apply (no persist — browser lang changes should be respected)
