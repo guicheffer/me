@@ -1683,6 +1683,290 @@ hr {
 }
 
 
+/* ── No hover effect on touch / mobile ──────── */
+@media (hover: none) {
+  .consulting-item:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--card-border);
+  }
+  .consulting-item:hover .consulting-icon {
+    background: var(--purple-muted);
+    box-shadow: none;
+  }
+}
+
+/* ── Prices page ─────────────────────────────── */
+.prices-page {
+  max-width: 900px;
+  padding-bottom: 64px;
+}
+
+.prices-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: color var(--transition);
+}
+
+.prices-back:hover {
+  color: var(--purple-light);
+}
+
+.prices-intro {
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 620px;
+}
+
+.prices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.prices-tier {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 24px 20px 20px;
+  gap: 18px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.prices-tier:hover {
+  border-color: var(--purple);
+  box-shadow: 0 6px 24px var(--purple-glow);
+}
+
+.prices-tier--free {
+  border-style: dashed;
+  opacity: 0.85;
+}
+
+.prices-tier--free:hover {
+  opacity: 1;
+}
+
+.prices-tier__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prices-tier__badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--purple-light);
+  background: var(--purple-muted);
+  border: 1px solid var(--purple-border);
+  border-radius: 20px;
+  padding: 2px 10px;
+  width: fit-content;
+  margin-bottom: 4px;
+}
+
+.prices-tier__header h2 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.prices-tier__price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.prices-amount {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.prices-amount--highlight {
+  color: var(--text);
+}
+
+.prices-currency-symbol {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  vertical-align: super;
+  margin-right: 1px;
+}
+
+.prices-tier__price-note {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.3;
+  margin-top: 4px;
+}
+
+.prices-tier__features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.prices-tier__features li {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  padding-left: 16px;
+  position: relative;
+  margin: 0;
+}
+
+.prices-tier__features li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: var(--purple-light);
+  font-weight: 700;
+}
+
+.prices-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  transition: all var(--transition);
+  margin-top: auto;
+}
+
+.prices-cta:hover {
+  border-color: var(--purple);
+  color: var(--text);
+  background: var(--purple-muted);
+  box-shadow: 0 4px 14px var(--purple-glow);
+}
+
+.prices-cta--primary {
+  border-color: var(--purple);
+  color: var(--text);
+  background: var(--purple-muted);
+  font-weight: 600;
+}
+
+.prices-cta--primary:hover {
+  background: var(--purple-border);
+  box-shadow: 0 4px 20px var(--purple-glow);
+}
+
+.prices-note {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-top: 32px;
+  padding: 20px 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+}
+
+.prices-note__icon {
+  flex-shrink: 0;
+  color: var(--purple-light);
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+.prices-note strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--text);
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.prices-note p {
+  margin: 0;
+  font-size: 0.835rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.prices-payment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.prices-payment__label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prices-payment__methods {
+  display: flex;
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.prices-payment__methods li {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+}
+
+.prices-payment__methods li i {
+  color: var(--purple-light);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .prices-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prices-page {
+    padding-bottom: 40px;
+  }
+}
+
 /* ── Consulting CTA link (inside cv-links) ── */
 .consulting-cta-link {
   color: var(--purple-light);

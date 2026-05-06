@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#9333ea">
+    <meta name="robots" content="noindex, nofollow">
+    <script src="https://kit.fontawesome.com/8f33886f78.js" crossorigin="anonymous"></script>
+
+    <title>Pricing — AI Consulting by João Guilherme</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/style.css">
+    <script defer src="/script.js?v=3"></script>
+    <script>
+      // Analytics: fire page_view with referrer for this hidden page
+      window.addEventListener('load', function() {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'prices_page_view', {
+            referrer: document.referrer || 'direct',
+            page_path: '/consulting/prices',
+            lang: navigator.language
+          });
+        }
+      });
+
+      // Detect currency from browser locale
+      function detectCurrency() {
+        const lang = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+        const manual = localStorage.getItem('lang-manual');
+        const effective = manual || lang;
+        if (effective.startsWith('pt')) return 'BRL';
+        return 'EUR';
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        const currency = detectCurrency();
+        document.querySelectorAll('[data-price-eur]').forEach(function(el) {
+          if (currency === 'BRL') {
+            el.textContent = el.getAttribute('data-price-brl');
+            el.closest('[data-tier]') && el.closest('[data-tier]').querySelectorAll('.prices-currency').forEach(function(c){ c.textContent = 'R$'; });
+          } else {
+            el.textContent = el.getAttribute('data-price-eur');
+            el.closest('[data-tier]') && el.closest('[data-tier]').querySelectorAll('.prices-currency').forEach(function(c){ c.textContent = '€'; });
+          }
+        });
+        document.querySelectorAll('.prices-currency-symbol').forEach(function(el) {
+          el.textContent = currency === 'BRL' ? 'R$' : '€';
+        });
+      });
+    </script>
+  </head>
+<body>
+    <div class="globe-wrap" aria-hidden="true">
+      <canvas id="globe-canvas"></canvas>
+    </div>
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <div class="container">
+      <aside id="sidebar" aria-label="Site navigation">
+        <div class="sidebar-inner">
+          <div class="profile-pic">
+            <img src="/assets/images/me-big-main-rounded.png" alt="João Guilherme — click to go home" width="120" height="120">
+          </div>
+          <nav aria-label="Primary">
+            <ul role="list">
+              <li><a href="/" data-section="about" aria-current="false" data-i18n="nav.about">about me</a></li>
+              <li><a href="/consulting" data-section="consulting" aria-current="false" data-i18n="nav.consulting">consulting</a></li>
+              <li><a href="/skills" data-section="skills" aria-current="false" data-i18n="nav.skills">skills</a></li>
+              <li><a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="sidebar-footer">
+          <button id="theme-toggle" class="icon-btn" aria-label="Switch to light mode" aria-pressed="false" title="Toggle colour theme">
+            <i class="fa-solid fa-sun" id="theme-icon" aria-hidden="true"></i>
+          </button>
+          <button id="perf-toggle" class="icon-btn" aria-label="Disable animations" aria-pressed="true" title="Toggle animations">
+            <i class="fa-solid fa-bolt" id="perf-icon" aria-hidden="true"></i>
+          </button>
+          <div class="lang-picker" id="lang-picker">
+            <button id="lang-toggle" class="icon-btn" aria-label="Change language" aria-haspopup="listbox" aria-expanded="false" title="Change language">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </button>
+            <div class="lang-dropdown" id="lang-dropdown" role="listbox" aria-label="Select language">
+              <button role="option" data-lang="pt" class="lang-option" aria-selected="false">🇧🇷 PT</button>
+              <button role="option" data-lang="en" class="lang-option" aria-selected="false">🇬🇧 EN</button>
+              <button role="option" data-lang="de" class="lang-option" aria-selected="false">🇩🇪 DE</button>
+              <button role="option" data-lang="es" class="lang-option" aria-selected="false">🇪🇸 ES</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main id="main-content" tabindex="-1">
+        <header>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">&#9776;</button>
+        </header>
+
+        <div class="prices-page">
+
+          <a href="/consulting" class="prices-back fade-up" aria-label="Back to consulting">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+            <span data-i18n="prices.back">Back to consulting</span>
+          </a>
+
+          <h1 class="title fade-up" data-i18n-html="prices.title">Pricing <span>& Packages</span></h1>
+
+          <p class="fade-up prices-intro" data-i18n="prices.intro">Every engagement is different, so these are starting points — not fixed rules. We'll figure out the right format together before anything is agreed.</p>
+
+          <!-- ── Tiers ── -->
+          <div class="prices-grid fade-up">
+
+            <!-- Free intro -->
+            <div class="prices-tier prices-tier--free" data-tier="free">
+              <div class="prices-tier__header">
+                <span class="prices-tier__badge" data-i18n="prices.free.badge">Always free</span>
+                <h2 data-i18n="prices.free.name">Intro call</h2>
+                <div class="prices-tier__price">
+                  <span class="prices-amount">0</span>
+                  <span class="prices-tier__price-note" data-i18n="prices.free.note">15 min · no commitment</span>
+                </div>
+              </div>
+              <ul class="prices-tier__features">
+                <li data-i18n="prices.free.f1">Quick chat to understand your situation</li>
+                <li data-i18n="prices.free.f2">I'll tell you honestly if I can help</li>
+                <li data-i18n="prices.free.f3">No prep needed, just show up</li>
+              </ul>
+              <a class="prices-cta" href="https://calendly.com/guicheffer" target="_blank" rel="noopener noreferrer" data-i18n="prices.free.cta">Book on Calendly</a>
+            </div>
+
+            <!-- Starter -->
+            <div class="prices-tier" data-tier="starter">
+              <div class="prices-tier__header">
+                <span class="prices-tier__badge" data-i18n="prices.starter.badge">Most popular</span>
+                <h2 data-i18n="prices.starter.name">Intro Session</h2>
+                <div class="prices-tier__price">
+                  <span class="prices-currency-symbol">€</span><span class="prices-amount prices-amount--highlight" data-price-eur="299" data-price-brl="1.799">299</span>
+                  <span class="prices-tier__price-note" data-i18n="prices.starter.note">2h session + 1h follow-up within 2 weeks</span>
+                </div>
+              </div>
+              <ul class="prices-tier__features">
+                <li data-i18n="prices.starter.f1">Deep-dive into your specific challenge</li>
+                <li data-i18n="prices.starter.f2">Written summary of what we covered</li>
+                <li data-i18n="prices.starter.f3">1h follow-up: call or async, as we agree</li>
+                <li data-i18n="prices.starter.f4">Good for individuals or small teams</li>
+              </ul>
+              <a class="prices-cta prices-cta--primary" href="mailto:hi@guicheffer.me?subject=Intro%20Session" data-i18n="prices.starter.cta">Get in touch</a>
+            </div>
+
+            <!-- Project -->
+            <div class="prices-tier" data-tier="project">
+              <div class="prices-tier__header">
+                <h2 data-i18n="prices.project.name">Project Sprint</h2>
+                <div class="prices-tier__price">
+                  <span class="prices-currency-symbol">€</span><span class="prices-amount prices-amount--highlight" data-price-eur="999" data-price-brl="5.999">999</span>
+                  <span class="prices-tier__price-note" data-i18n="prices.project.note">Fixed scope · varies per client</span>
+                </div>
+              </div>
+              <ul class="prices-tier__features">
+                <li data-i18n="prices.project.f1">Workflow audit + prioritised AI roadmap</li>
+                <li data-i18n="prices.project.f2">Up to 5h of async support over 3 weeks</li>
+                <li data-i18n="prices.project.f3">Review session at the end</li>
+                <li data-i18n="prices.project.f4">Good for teams starting an AI initiative</li>
+              </ul>
+              <a class="prices-cta" href="mailto:hi@guicheffer.me?subject=Project%20Sprint" data-i18n="prices.project.cta">Let's talk scope</a>
+            </div>
+
+            <!-- Retainer -->
+            <div class="prices-tier" data-tier="retainer">
+              <div class="prices-tier__header">
+                <h2 data-i18n="prices.retainer.name">Monthly Retainer</h2>
+                <div class="prices-tier__price">
+                  <span class="prices-currency-symbol">€</span><span class="prices-amount prices-amount--highlight" data-price-eur="1.799" data-price-brl="10.999">1.799</span>
+                  <span class="prices-tier__price-note" data-i18n="prices.retainer.note">/ month · ongoing support</span>
+                </div>
+              </div>
+              <ul class="prices-tier__features">
+                <li data-i18n="prices.retainer.f1">Regular check-ins, format up to us</li>
+                <li data-i18n="prices.retainer.f2">Async availability throughout the month</li>
+                <li data-i18n="prices.retainer.f3">Hands-on help as things come up</li>
+                <li data-i18n="prices.retainer.f4">Cancel any time, no lock-in</li>
+              </ul>
+              <a class="prices-cta" href="mailto:hi@guicheffer.me?subject=Monthly%20Retainer" data-i18n="prices.retainer.cta">Let's talk</a>
+            </div>
+
+          </div>
+
+          <!-- ── AI tools note ── -->
+          <div class="prices-note fade-up">
+            <div class="prices-note__icon" aria-hidden="true"><i class="fa-solid fa-circle-info"></i></div>
+            <div>
+              <strong data-i18n="prices.aitools.title">AI tool costs are separate</strong>
+              <p data-i18n-html="prices.aitools.desc">Any AI subscriptions we use together — <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer">Claude Desktop</a> for exploratory work, <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank" rel="noopener noreferrer">Claude Code CLI</a> for engineering workflows, GitHub Copilot, Gemini, or others — are billed to you directly. I work with preference for Claude; it's what I use every day and know best. But I'll always recommend what actually fits your context.</p>
+            </div>
+          </div>
+
+          <!-- ── Payment methods ── -->
+          <div class="prices-payment fade-up" aria-label="Payment methods">
+            <span class="prices-payment__label" data-i18n="prices.payment.label">Payments via</span>
+            <ul class="prices-payment__methods" aria-label="Accepted payment methods">
+              <li><i class="fa-brands fa-paypal" aria-hidden="true"></i> PayPal</li>
+              <li><i class="fa-solid fa-building-columns" aria-hidden="true"></i> IBAN</li>
+              <li><i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> Wise</li>
+              <li><i class="fa-solid fa-qrcode" aria-hidden="true"></i> PIX</li>
+            </ul>
+          </div>
+
+        </div>
+      </main>
+    </div>
+</body>
+</html>
