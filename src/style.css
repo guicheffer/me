@@ -1733,9 +1733,16 @@ hr {
   }
 }
 
+/* ── Pricing page: let main breathe wider ─────── */
+main[data-static-page] {
+  max-width: none;
+  padding: 48px 48px 64px;
+}
+
 /* ── Prices page ─────────────────────────────── */
 .prices-page {
-  max-width: 1100px;
+  max-width: 1200px;
+  width: 100%;
   padding-bottom: 64px;
 }
 
@@ -2061,10 +2068,11 @@ hr {
 
 /* ── Quiz card highlight ──────────────────── */
 .consulting-item--quiz {
-  border-color: var(--purple-border) !important;
-  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(115, 30, 200, 0.08) 100%) !important;
+  border-color: var(--purple) !important;
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(115, 30, 200, 0.13) 100%) !important;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 0 1px var(--purple-border), 0 4px 20px var(--purple-glow);
 }
 
 .consulting-item--quiz::before {
@@ -2072,14 +2080,49 @@ hr {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, transparent 60%, rgba(115, 30, 200, 0.12) 100%);
+  background: linear-gradient(135deg, transparent 40%, rgba(115, 30, 200, 0.18) 100%);
   pointer-events: none;
 }
 
 .consulting-item--quiz .consulting-icon {
-  background: var(--purple-border);
+  background: var(--purple);
   border-color: var(--purple);
-  color: var(--text);
+  color: #fff;
+  box-shadow: 0 0 12px var(--purple-glow);
+}
+
+.consulting-item--quiz strong {
+  color: var(--purple-light) !important;
+}
+
+/* Quiz card "answered" state */
+.consulting-item--quiz.quiz-done {
+  opacity: 0.6;
+  cursor: default !important;
+  box-shadow: none;
+  border-color: var(--card-border) !important;
+}
+
+.consulting-item--quiz.quiz-done .consulting-icon {
+  background: var(--purple-muted);
+  border-color: var(--purple-border);
+  color: var(--purple-light);
+  box-shadow: none;
+}
+
+.consulting-item--quiz.quiz-done strong {
+  color: var(--text-muted) !important;
+}
+
+.quiz-redo-hint {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 6px;
+  display: none;
+}
+
+.consulting-item--quiz.quiz-done .quiz-redo-hint {
+  display: block;
 }
 
 /* ── Quiz overlay ─────────────────────────── */
@@ -2119,7 +2162,7 @@ hr {
   width: min(600px, calc(100vw - 40px));
   max-height: calc(100svh - 60px);
   overflow-y: auto;
-  padding: 52px 44px 40px;
+  padding: 20px 44px 40px;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--purple-border);
   transform: translateY(20px);
   opacity: 0;
@@ -2131,35 +2174,19 @@ hr {
   opacity: 1;
 }
 
-.quiz-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: var(--text-muted);
-  cursor: pointer;
+/* Progress bar + close button on the same row */
+.quiz-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  transition: all var(--transition);
-  z-index: 2;
-}
-
-.quiz-close:hover {
-  border-color: var(--purple);
-  color: var(--text);
+  gap: 12px;
+  margin-bottom: 36px;
 }
 
 .quiz-progress {
+  flex: 1;
   height: 3px;
   background: var(--card-border);
   border-radius: 2px;
-  margin-bottom: 40px;
   overflow: hidden;
 }
 
@@ -2169,6 +2196,27 @@ hr {
   border-radius: 2px;
   transition: width 0.3s ease;
   width: 0%;
+}
+
+.quiz-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  transition: all var(--transition);
+}
+
+.quiz-close:hover {
+  border-color: var(--purple);
+  color: var(--text);
 }
 
 .quiz-question {
@@ -2314,7 +2362,91 @@ hr {
 
 @media (max-width: 768px) {
   .quiz-modal {
-    padding: 28px 22px 24px;
+    padding: 16px 20px 28px;
     border-radius: 16px;
+  }
+}
+
+/* ── Cookie banner ───────────────────────── */
+.cookie-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px 12px 20px;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--purple-border);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  max-width: calc(100vw - 48px);
+  width: max-content;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.cookie-banner--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.cookie-banner__msg {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cookie-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--transition);
+  border: 1px solid var(--card-border);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.cookie-btn:hover {
+  border-color: var(--purple);
+  color: var(--text);
+}
+
+.cookie-btn--accept {
+  background: var(--purple-muted);
+  border-color: var(--purple);
+  color: var(--text);
+}
+
+.cookie-btn--accept:hover {
+  background: var(--purple-border);
+  box-shadow: 0 0 10px var(--purple-glow);
+}
+
+@media (max-width: 600px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    width: calc(100vw - 32px);
+    bottom: 16px;
+  }
+
+  .cookie-banner__msg {
+    white-space: normal;
   }
 }

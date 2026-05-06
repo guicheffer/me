@@ -436,6 +436,10 @@
       'quiz.result.maybe.title':   'Hard to say without talking.',
       'quiz.result.maybe.desc':    'Your situation could go either way. A free 15-min call is probably the fastest way to figure it out.',
       'quiz.result.cta':           'Book a free 15-min intro call',
+      'quiz.redo':                 'Answered — answer again?',
+      'cookie.msg':                'This site uses cookies for analytics. No personal data is sold.',
+      'cookie.accept':             'Accept',
+      'cookie.deny':               'Deny',
       'prices.back':               'Back to consulting',
       'prices.title':              'Pricing <span>&amp; Packages</span>',
       'prices.intro':              'Every engagement is different, so these are starting points — not fixed rules. We\'ll figure out the right format together before anything is agreed.',
@@ -531,6 +535,10 @@
       'quiz.result.maybe.title':   'Difícil dizer sem conversar.',
       'quiz.result.maybe.desc':    'Sua situação pode ir pra qualquer lado. Uma call gratuita de 15 min é provavelmente a forma mais rápida de descobrir.',
       'quiz.result.cta':           'Agendar intro call gratuita de 15 min',
+      'quiz.redo':                 'Respondido — responder de novo?',
+      'cookie.msg':                'Este site usa cookies para análise. Nenhum dado pessoal é vendido.',
+      'cookie.accept':             'Aceitar',
+      'cookie.deny':               'Recusar',
       'prices.back':               'Voltar para consultoria',
       'prices.title':              'Preços <span>&amp; Pacotes</span>',
       'prices.intro':              'Cada projeto é diferente, então esses são pontos de partida — não regras fixas. A gente define o formato certo juntos antes de qualquer coisa.',
@@ -626,6 +634,10 @@
       'quiz.result.maybe.title':   'Schwer zu sagen ohne Gespräch.',
       'quiz.result.maybe.desc':    'Deine Situation könnte in beide Richtungen gehen. Ein kostenloser 15-Minuten-Anruf ist wahrscheinlich der schnellste Weg, das herauszufinden.',
       'quiz.result.cta':           'Kostenlosen 15-min-Intro-Call buchen',
+      'quiz.redo':                 'Beantwortet — nochmal beantworten?',
+      'cookie.msg':                'Diese Website verwendet Cookies für Analysen. Keine persönlichen Daten werden verkauft.',
+      'cookie.accept':             'Akzeptieren',
+      'cookie.deny':               'Ablehnen',
       'prices.back':               'Zurück zur Beratung',
       'prices.title':              'Preise <span>&amp; Pakete</span>',
       'prices.intro':              'Jedes Engagement ist anders, daher sind das Ausgangspunkte — keine festen Regeln. Wir finden gemeinsam das richtige Format, bevor irgendetwas vereinbart wird.',
@@ -721,6 +733,10 @@
       'quiz.result.maybe.title':   'Difícil saberlo sin hablar.',
       'quiz.result.maybe.desc':    'Tu situación podría ir en cualquier dirección. Una llamada gratuita de 15 min es probablemente la forma más rápida de averiguarlo.',
       'quiz.result.cta':           'Reservar intro call gratuita de 15 min',
+      'quiz.redo':                 'Respondido — responder de nuevo?',
+      'cookie.msg':                'Este sitio usa cookies para análisis. No se venden datos personales.',
+      'cookie.accept':             'Aceptar',
+      'cookie.deny':               'Rechazar',
       'prices.back':               'Volver a consultoría',
       'prices.title':              'Precios <span>&amp; Paquetes</span>',
       'prices.intro':              'Cada proyecto es diferente, así que estos son puntos de partida — no reglas fijas. Juntos encontraremos el formato adecuado antes de acordar nada.',
@@ -874,6 +890,86 @@
       langToggle?.focus();
     }
   });
+
+  /* ── Static page nav: consulting link → hard navigate ──── */
+  // On static pages (e.g. /consulting/pricing), data-section links don't
+  // do SPA routing, so we bind them as real navigations instead.
+  if (isStaticPage) {
+    document.querySelectorAll('nav a[data-section]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = link.dataset.section;
+        window.location.href = section === 'about' ? '/' : `/${section}`;
+      });
+    });
+  }
+
+  /* ── Cookie consent banner ─────────────────────────────── */
+  (() => {
+    const COOKIE_KEY = 'cookie_consent';
+    const existing = localStorage.getItem(COOKIE_KEY);
+
+    // Close/reload = accept (treated as implicit consent)
+    if (!existing) {
+      // Mark accept on page unload (close/refresh without explicit choice)
+      window.addEventListener('beforeunload', () => {
+        if (!localStorage.getItem(COOKIE_KEY)) {
+          localStorage.setItem(COOKIE_KEY, 'accepted');
+        }
+      });
+    }
+
+    // Only show banner on first visit
+    if (existing) {
+      if (existing === 'denied') disableAnalytics();
+      return;
+    }
+
+    function disableAnalytics() {
+      window['ga-disable-G-ZD8LXGMM14'] = true;
+    }
+
+    function getLang() {
+      try {
+        const manual = localStorage.getItem('lang-manual');
+        const l = manual || (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+        return l.split('-')[0].toLowerCase();
+      } catch(e) { return 'en'; }
+    }
+
+    const msgs = {
+      en: { msg: 'This site uses cookies for analytics. No personal data is sold.', accept: 'Accept', deny: 'Deny' },
+      pt: { msg: 'Este site usa cookies para análise. Nenhum dado pessoal é vendido.', accept: 'Aceitar', deny: 'Recusar' },
+      de: { msg: 'Diese Website verwendet Cookies für Analysen. Keine persönlichen Daten werden verkauft.', accept: 'Akzeptieren', deny: 'Ablehnen' },
+      es: { msg: 'Este sitio usa cookies para análisis. No se venden datos personales.', accept: 'Aceptar', deny: 'Rechazar' },
+    };
+
+    const lang = getLang();
+    const copy = msgs[lang] || msgs.en;
+
+    const banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'region');
+    banner.setAttribute('aria-label', 'Cookie consent');
+    banner.innerHTML = `
+      <p class="cookie-banner__msg">${copy.msg}</p>
+      <div class="cookie-banner__actions">
+        <button class="cookie-btn cookie-btn--deny" id="cookie-deny">${copy.deny}</button>
+        <button class="cookie-btn cookie-btn--accept" id="cookie-accept">${copy.accept}</button>
+      </div>`;
+    document.body.appendChild(banner);
+    requestAnimationFrame(() => banner.classList.add('cookie-banner--visible'));
+
+    function dismiss(choice) {
+      localStorage.setItem(COOKIE_KEY, choice);
+      banner.classList.remove('cookie-banner--visible');
+      setTimeout(() => banner.remove(), 300);
+      if (choice === 'denied') disableAnalytics();
+    }
+
+    document.getElementById('cookie-accept').addEventListener('click', () => dismiss('accepted'));
+    document.getElementById('cookie-deny').addEventListener('click', () => dismiss('denied'));
+  })();
 
   /* ── Secret keysequence → /consulting/pricing ──────────── */
   // Type "precos", "prices", "preise", or "precios" anywhere on /consulting
