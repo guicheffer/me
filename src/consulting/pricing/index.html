@@ -21,7 +21,7 @@
         if (typeof gtag !== 'undefined') {
           gtag('event', 'prices_page_view', {
             referrer: document.referrer || 'direct',
-            page_path: '/consulting/prices',
+            page_path: '/consulting/pricing',
             lang: navigator.language
           });
         }
@@ -69,9 +69,9 @@
           <nav aria-label="Primary">
             <ul role="list">
               <li><a href="/" data-section="about" aria-current="false" data-i18n="nav.about">about me</a></li>
-              <li><a href="/consulting" data-section="consulting" aria-current="false" data-i18n="nav.consulting">consulting</a></li>
+              <li><a href="/consulting" data-section="consulting" aria-current="page" data-i18n="nav.consulting">consulting</a></li>
               <li><a href="/skills" data-section="skills" aria-current="false" data-i18n="nav.skills">skills</a></li>
-              <li><a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog</a></li>
+              <li><a href="https://medium.com/@guicheffer" target="_blank" rel="noopener noreferrer" aria-label="Blog — opens Medium in a new tab">blog <i class="fa-solid fa-arrow-up-right-from-square nav-external-icon" aria-hidden="true"></i></a></li>
             </ul>
           </nav>
         </div>

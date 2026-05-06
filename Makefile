@@ -43,7 +43,7 @@ build:
 	@npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true \
 		dist/consulting/index.html -o dist/consulting/index.html
 	@npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true \
-		dist/consulting/prices/index.html -o dist/consulting/prices/index.html
+		dist/consulting/pricing/index.html -o dist/consulting/pricing/index.html
 	@npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true \
 		dist/404.html -o dist/404.html
 	@echo "Done! Production files in dist/"

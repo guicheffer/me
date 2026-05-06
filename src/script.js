@@ -65,7 +65,7 @@
   }
 
   /* ── SPA routing (pathname-based) ───────────────────────── */
-  // Static pages (e.g. /consulting/prices) opt out via data-static-page on <main>
+  // Static pages (e.g. /consulting/pricing) opt out via data-static-page on <main>
   const isStaticPage = !!document.querySelector('main[data-static-page]');
 
   // /        → about section
@@ -874,6 +874,29 @@
       langToggle?.focus();
     }
   });
+
+  /* ── Secret keysequence → /consulting/pricing ──────────── */
+  // Type "precos", "prices", "preise", or "precios" anywhere on /consulting
+  (() => {
+    const SECRETS = ['precos', 'prices', 'preise', 'precios'];
+    const MAX_GAP = 1200; // ms — "human" pace between keystrokes
+    let buffer = '';
+    let lastKey = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      const now = Date.now();
+      if (now - lastKey > MAX_GAP) buffer = '';
+      lastKey = now;
+      buffer = (buffer + e.key.toLowerCase()).slice(-8);
+      if (SECRETS.some(s => buffer.endsWith(s))) {
+        buffer = '';
+        if (typeof gtag !== 'undefined') gtag('event', 'secret_pricing_unlock', { page: window.location.pathname });
+        window.location.href = '/consulting/pricing';
+      }
+    });
+  })();
 
   /* ── Background globe ────────────────────────────────────── */
   const globeCanvas = document.getElementById('globe-canvas');
