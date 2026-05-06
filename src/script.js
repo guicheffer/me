@@ -65,6 +65,9 @@
   }
 
   /* ── SPA routing (pathname-based) ───────────────────────── */
+  // Static pages (e.g. /consulting/prices) opt out via data-static-page on <main>
+  const isStaticPage = !!document.querySelector('main[data-static-page]');
+
   // /        → about section
   // /skills  → skills section
   function getSection() {
@@ -109,20 +112,26 @@
     }
   }
 
-  // Intercept internal nav + inline SPA links (nav links don't change; inline ones are re-bound via applyLang)
-  document.querySelectorAll('nav a[data-section]').forEach((link) => {
-    link.dataset.spaBound = '1';
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      showSection(link.dataset.section, true);
+  if (isStaticPage) {
+    // Static pages: trigger fade-ups directly on the whole document
+    triggerFadeUps(document.body);
+  } else {
+    // Intercept internal nav + inline SPA links
+    document.querySelectorAll('nav a[data-section]').forEach((link) => {
+      link.dataset.spaBound = '1';
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection(link.dataset.section, true);
+      });
     });
-  });
 
-  // Browser back/forward
-  window.addEventListener('popstate', () => showSection(getSection(), false));
+    // Browser back/forward
+    window.addEventListener('popstate', () => showSection(getSection(), false));
 
-  // Initial render — based on current pathname
-  showSection(getSection(), false);
+    // Initial render — based on current pathname
+    showSection(getSection(), false);
+  }
+
 
   /* ── Fade-up entrance animations ─────────────────────────── */
   let io;
