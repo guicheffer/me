@@ -112,28 +112,8 @@
     }
   }
 
-  if (isStaticPage) {
-    // Static pages: trigger fade-ups directly on the whole document
-    triggerFadeUps(document.body);
-  } else {
-    // Intercept internal nav + inline SPA links
-    document.querySelectorAll('nav a[data-section]').forEach((link) => {
-      link.dataset.spaBound = '1';
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        showSection(link.dataset.section, true);
-      });
-    });
-
-    // Browser back/forward
-    window.addEventListener('popstate', () => showSection(getSection(), false));
-
-    // Initial render — based on current pathname
-    showSection(getSection(), false);
-  }
-
-
   /* ── Fade-up entrance animations ─────────────────────────── */
+  // Declared here so isStaticPage block below can call triggerFadeUps
   let io;
 
   function triggerFadeUps(container) {
@@ -159,6 +139,27 @@
       io.observe(el);
     });
   }
+
+  if (isStaticPage) {
+    // Static pages: trigger fade-ups directly on the whole document
+    triggerFadeUps(document.body);
+  } else {
+    // Intercept internal nav + inline SPA links
+    document.querySelectorAll('nav a[data-section]').forEach((link) => {
+      link.dataset.spaBound = '1';
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection(link.dataset.section, true);
+      });
+    });
+
+    // Browser back/forward
+    window.addEventListener('popstate', () => showSection(getSection(), false));
+
+    // Initial render — based on current pathname
+    showSection(getSection(), false);
+  }
+
 
   /* ── Mobile sidebar ─────────────────────────────────────── */
   let isMobile = window.innerWidth <= 768;
@@ -431,9 +432,9 @@
       'q4':                        'Is there a specific workflow or process you want to transform with AI?',
       'q5':                        'Would an outside perspective help you move faster or cut through the noise?',
       'quiz.result.yes.title':     'Yep, I think I can help.',
-      'quiz.result.yes.desc':      'Based on your answers, there\'s a good chance a conversation would be useful. No commitment — just a quick chat to see if it makes sense.',
-      'quiz.result.maybe.title':   'Maybe — hard to say without talking.',
-      'quiz.result.maybe.desc':    'Your situation sounds like it could go either way. A free 15-min call is probably the fastest way to figure it out.',
+      'quiz.result.yes.desc':      'Based on your answers, there\'s a good chance a conversation would be useful. No commitment, just a quick chat to see if it makes sense.',
+      'quiz.result.maybe.title':   'Hard to say without talking.',
+      'quiz.result.maybe.desc':    'Your situation could go either way. A free 15-min call is probably the fastest way to figure it out.',
       'quiz.result.cta':           'Book a free 15-min intro call',
       'prices.back':               'Back to consulting',
       'prices.title':              'Pricing <span>&amp; Packages</span>',
@@ -526,8 +527,8 @@
       'q4':                        'Tem algum fluxo ou processo específico que quer transformar com IA?',
       'q5':                        'Uma perspectiva externa te ajudaria a avançar mais rápido?',
       'quiz.result.yes.title':     'Acho que consigo ajudar, sim.',
-      'quiz.result.yes.desc':      'Pelas suas respostas, uma conversa provavelmente seria útil. Sem compromisso — só um bate-papo rápido pra ver se faz sentido.',
-      'quiz.result.maybe.title':   'Talvez — difícil dizer sem conversar.',
+      'quiz.result.yes.desc':      'Pelas suas respostas, uma conversa provavelmente seria útil. Sem compromisso, só um bate-papo rápido pra ver se faz sentido.',
+      'quiz.result.maybe.title':   'Difícil dizer sem conversar.',
       'quiz.result.maybe.desc':    'Sua situação pode ir pra qualquer lado. Uma call gratuita de 15 min é provavelmente a forma mais rápida de descobrir.',
       'quiz.result.cta':           'Agendar intro call gratuita de 15 min',
       'prices.back':               'Voltar para consultoria',
@@ -621,8 +622,8 @@
       'q4':                        'Gibt es einen bestimmten Workflow, den du mit KI transformieren möchtest?',
       'q5':                        'Würde eine externe Perspektive helfen, schneller voranzukommen?',
       'quiz.result.yes.title':     'Ich glaube, ich kann helfen.',
-      'quiz.result.yes.desc':      'Deine Antworten deuten darauf hin, dass ein Gespräch sinnvoll wäre. Kein Commitment — nur ein kurzer Chat, um zu sehen, ob es passt.',
-      'quiz.result.maybe.title':   'Vielleicht — schwer zu sagen ohne Gespräch.',
+      'quiz.result.yes.desc':      'Deine Antworten deuten darauf hin, dass ein Gespräch sinnvoll wäre. Kein Commitment, nur ein kurzer Chat, um zu sehen, ob es passt.',
+      'quiz.result.maybe.title':   'Schwer zu sagen ohne Gespräch.',
       'quiz.result.maybe.desc':    'Deine Situation könnte in beide Richtungen gehen. Ein kostenloser 15-Minuten-Anruf ist wahrscheinlich der schnellste Weg, das herauszufinden.',
       'quiz.result.cta':           'Kostenlosen 15-min-Intro-Call buchen',
       'prices.back':               'Zurück zur Beratung',
@@ -716,8 +717,8 @@
       'q4':                        '¿Hay algún flujo de trabajo que quieras transformar con IA?',
       'q5':                        '¿Una perspectiva externa te ayudaría a avanzar más rápido?',
       'quiz.result.yes.title':     'Creo que puedo ayudarte.',
-      'quiz.result.yes.desc':      'Por tus respuestas, es probable que una conversación sea útil. Sin compromiso — solo una charla rápida para ver si tiene sentido.',
-      'quiz.result.maybe.title':   'Quizás — difícil saberlo sin hablar.',
+      'quiz.result.yes.desc':      'Por tus respuestas, es probable que una conversación sea útil. Sin compromiso, solo una charla rápida para ver si tiene sentido.',
+      'quiz.result.maybe.title':   'Difícil saberlo sin hablar.',
       'quiz.result.maybe.desc':    'Tu situación podría ir en cualquier dirección. Una llamada gratuita de 15 min es probablemente la forma más rápida de averiguarlo.',
       'quiz.result.cta':           'Reservar intro call gratuita de 15 min',
       'prices.back':               'Volver a consultoría',

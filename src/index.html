@@ -185,6 +185,16 @@
                                 <i class="fa fa-microphone" aria-hidden="true"></i> vox
                             </a>
                         </li>
+                        <li class="consulting-item consulting-item--quiz fade-up" id="quiz-trigger" role="button" tabindex="0" aria-haspopup="dialog">
+                            <div>
+                                <div class="consulting-item__header">
+                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-circle-question"></i></span>
+                                    <strong data-i18n="quiz.card.title">Not sure if you need consulting?</strong>
+                                </div>
+                                <p data-i18n="quiz.card.desc">Answer 5 quick questions and find out. Takes under a minute.</p>
+                            </div>
+                            <span class="consulting-item__arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+                        </li>
                     </ul>
                 </section>
             </section>
@@ -198,16 +208,6 @@
                 <section class="consulting-services" aria-label="Services">
                     <h2 class="fade-up" data-i18n="consulting.services.title">What I can do for you</h2>
                     <ul class="consulting-list" role="list">
-                        <li class="consulting-item consulting-item--quiz fade-up" id="quiz-trigger" role="button" tabindex="0" aria-haspopup="dialog">
-                            <div>
-                                <div class="consulting-item__header">
-                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-circle-question"></i></span>
-                                    <strong data-i18n="quiz.card.title">Not sure if you need consulting?</strong>
-                                </div>
-                                <p data-i18n="quiz.card.desc">Answer 5 quick questions and find out. Takes under a minute.</p>
-                            </div>
-                            <span class="consulting-item__arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
-                        </li>
                         <li class="consulting-item fade-up">
                             <div>
                                 <div class="consulting-item__header">
@@ -251,15 +251,6 @@
                                     <strong data-i18n="consulting.services.data.title">Data privacy & AI governance</strong>
                                 </div>
                                 <p data-i18n="consulting.services.data.desc">Adopting AI without losing control of your data. I help you set boundaries that make sense: what goes in, what stays out, and how to stay compliant without slowing everything down.</p>
-                            </div>
-                        </li>
-                        <li class="consulting-item fade-up">
-                            <div>
-                                <div class="consulting-item__header">
-                                    <span class="consulting-icon" aria-hidden="true"><i class="fa-solid fa-comments"></i></span>
-                                    <strong data-i18n="consulting.services.intro.title">Just a conversation</strong>
-                                </div>
-                                <p data-i18n="consulting.services.intro.desc">Not sure what you need yet? That's fine. A relaxed, no-strings chat is often the best first step, and it costs nothing.</p>
                             </div>
                         </li>
                     </ul>
@@ -362,13 +353,13 @@
             <!-- Result -->
             <div class="quiz-result" id="quiz-result" hidden>
                 <div class="quiz-result__yes" id="quiz-result-yes" hidden>
-                    <div class="quiz-result__icon">🎯</div>
+                    <div class="quiz-result__icon"><svg class="quiz-result__svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M8 12.5l2.5 2.5 5.5-5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                     <h2 data-i18n="quiz.result.yes.title">Yep, I think I can help.</h2>
                     <p data-i18n="quiz.result.yes.desc">Based on your answers, there's a good chance a conversation would be useful. No commitment — just a quick chat to see if it makes sense.</p>
                     <a href="https://calendly.com/guicheffer" target="_blank" rel="noopener noreferrer" class="quiz-result__cta" data-i18n="quiz.result.cta">Book a free 15-min intro call</a>
                 </div>
                 <div class="quiz-result__maybe" id="quiz-result-maybe" hidden>
-                    <div class="quiz-result__icon">🤔</div>
+                    <div class="quiz-result__icon"><svg class="quiz-result__svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.5" r="0.75" fill="currentColor"/></svg></div>
                     <h2 data-i18n="quiz.result.maybe.title">Maybe — hard to say without talking.</h2>
                     <p data-i18n="quiz.result.maybe.desc">Your situation sounds like it could go either way. A free 15-min call is probably the fastest way to figure it out.</p>
                     <a href="https://calendly.com/guicheffer" target="_blank" rel="noopener noreferrer" class="quiz-result__cta" data-i18n="quiz.result.cta">Book a free 15-min intro call</a>
