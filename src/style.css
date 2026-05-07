@@ -1518,16 +1518,17 @@ hr {
   max-width: 1200px;
 }
 
-/* Hidden pricing link after contact strip */
+/* Hidden pricing link — sits next to the strip actions */
 .consulting-pricing-link {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   color: var(--text-dim);
   text-decoration: none;
-  opacity: 0.35;
+  opacity: 0.3;
   transition: opacity var(--transition), color var(--transition);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  align-self: center;
+  flex-shrink: 0;
 }
 
 .consulting-pricing-link:hover {
@@ -1797,8 +1798,10 @@ main[data-static-page] {
   border: 1px solid var(--card-border);
   background: var(--card-bg);
   border-radius: 20px;
-  padding: 24px 20px 20px;
+  padding: 24px 20px 64px; /* bottom reserved for travelling button */
   gap: 18px;
+  position: relative;
+  overflow: hidden;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -1912,16 +1915,17 @@ main[data-static-page] {
   display: none;
 }
 
-/* Travelling button */
+/* Travelling button — lives inside .prices-grid, moves between cards */
 .prices-floating-btn {
-  position: fixed;
-  pointer-events: none;
-  z-index: 400;
+  position: absolute; /* reparented into each tier by JS */
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 11px 20px;
+  padding: 10px 20px;
   border-radius: var(--radius);
   border: 1px solid var(--purple);
   background: var(--purple-muted);
@@ -1931,19 +1935,13 @@ main[data-static-page] {
   font-family: var(--font-body);
   text-decoration: none;
   white-space: nowrap;
-  opacity: 0;
+  width: calc(100% - 32px);
+  text-align: center;
+  justify-content: center;
   box-shadow: 0 4px 20px var(--purple-glow);
-  /* transition handles both movement and fade */
-  transition: left 0.38s cubic-bezier(0.4,0,0.2,1),
-              top 0.38s cubic-bezier(0.4,0,0.2,1),
-              opacity 0.22s ease,
-              width 0.3s ease;
-  overflow: hidden;
-}
-
-.prices-floating-btn.is-visible {
   pointer-events: auto;
-  opacity: 1;
+  z-index: 2;
+  transition: background var(--transition), box-shadow var(--transition);
 }
 
 .prices-floating-btn:hover {
@@ -2106,10 +2104,16 @@ main[data-static-page] {
 /* ── Quiz card highlight ──────────────────── */
 .consulting-item--quiz {
   border-color: var(--purple) !important;
-  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(115, 30, 200, 0.13) 100%) !important;
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(115, 30, 200, 0.18) 100%) !important;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 0 1px var(--purple-border), 0 4px 20px var(--purple-glow);
+  box-shadow: 0 0 0 1px var(--purple), 0 6px 28px var(--purple-glow);
+  animation: quiz-card-pulse 3s ease-in-out infinite;
+}
+
+@keyframes quiz-card-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px var(--purple), 0 6px 28px var(--purple-glow); }
+  50%       { box-shadow: 0 0 0 1px var(--purple), 0 8px 36px var(--purple-glow), 0 0 24px rgba(115,30,200,0.3); }
 }
 
 .consulting-item--quiz::before {
@@ -2117,19 +2121,23 @@ main[data-static-page] {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, transparent 40%, rgba(115, 30, 200, 0.18) 100%);
+  background: linear-gradient(135deg, transparent 30%, rgba(115, 30, 200, 0.22) 100%);
   pointer-events: none;
 }
 
 .consulting-item--quiz .consulting-icon {
   background: var(--purple);
-  border-color: var(--purple);
+  border-color: var(--purple-light);
   color: #fff;
-  box-shadow: 0 0 12px var(--purple-glow);
+  box-shadow: 0 0 16px var(--purple-glow);
 }
 
 .consulting-item--quiz strong {
   color: var(--purple-light) !important;
+}
+
+.consulting-item--quiz p {
+  color: var(--text-muted) !important;
 }
 
 /* Quiz card "answered" state */
@@ -2395,6 +2403,20 @@ main[data-static-page] {
   background: var(--purple-border);
   box-shadow: 0 4px 20px var(--purple-glow);
   transform: translateY(-2px);
+}
+
+.quiz-result__pricing-link {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  opacity: 0.5;
+  text-decoration: none;
+  transition: opacity var(--transition), color var(--transition);
+  margin-top: -4px;
+}
+
+.quiz-result__pricing-link:hover {
+  opacity: 1;
+  color: var(--purple-light);
 }
 
 @media (max-width: 768px) {

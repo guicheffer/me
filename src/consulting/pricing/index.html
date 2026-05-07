@@ -215,12 +215,10 @@
 
     <script>
     (() => {
+      // ── Travelling CTA button ────────────────────────────
       const btn = document.getElementById('prices-floating-btn');
       const tiers = document.querySelectorAll('.prices-tier[data-cta-href]');
-      const grid = document.querySelector('.prices-grid');
-      if (!btn || !tiers.length || !grid) return;
-
-      let activeTimer = null;
+      if (!btn || !tiers.length) return;
 
       function t(key) {
         try {
@@ -231,16 +229,22 @@
         } catch(e) { return key; }
       }
 
+      // Remove from DOM initially; will be appended into hovered tier
+      if (btn.parentNode) btn.parentNode.removeChild(btn);
+
+      let currentTier = null;
+
       function moveTo(tier) {
-        const rect = tier.getBoundingClientRect();
-        const href = tier.dataset.ctaHref;
+        if (currentTier === tier) return;
+        currentTier = tier;
+
         const label = t(tier.dataset.ctaI18n) || tier.dataset.ctaI18n;
+        const href  = tier.dataset.ctaHref;
         const attrs = tier.dataset.ctaAttrs || '';
 
         btn.textContent = label;
         btn.href = href;
 
-        // Apply target/rel from attrs string
         if (attrs.includes('_blank')) {
           btn.setAttribute('target', '_blank');
           btn.setAttribute('rel', 'noopener noreferrer');
@@ -249,55 +253,28 @@
           btn.removeAttribute('rel');
         }
 
-        // Measure btn width after text update
-        btn.style.visibility = 'hidden';
-        btn.style.opacity = '0';
-        btn.style.display = 'inline-flex';
-        const btnW = btn.offsetWidth;
-        const btnH = btn.offsetHeight;
-        btn.style.visibility = '';
-        btn.style.display = '';
-
-        // Position at bottom-center of tier card
-        const left = rect.left + (rect.width / 2) - (btnW / 2);
-        const top  = rect.bottom - btnH - 16;
-
-        btn.style.left = Math.round(left) + 'px';
-        btn.style.top  = Math.round(top)  + 'px';
-        btn.classList.add('is-visible');
-        btn.style.opacity = '1';
-
-        // Clip to tier card: use clip-path so btn only shows inside the tier
-        // Actually easier: just show/hide based on containment, keep it simple
+        // Append into this tier (CSS absolute positions it at bottom)
+        tier.appendChild(btn);
       }
 
-      function hide() {
-        btn.classList.remove('is-visible');
-        btn.style.opacity = '0';
-      }
+      // Set initial card (free tier)
+      const defaultTier = document.querySelector('.prices-tier[data-tier="free"]');
+      if (defaultTier) moveTo(defaultTier);
 
       tiers.forEach(tier => {
-        tier.addEventListener('mouseenter', () => {
-          clearTimeout(activeTimer);
-          moveTo(tier);
-        });
-        tier.addEventListener('mouseleave', (e) => {
-          // Only hide if not moving to another tier
-          activeTimer = setTimeout(() => {
-            if (!document.querySelector('.prices-tier:hover')) hide();
-          }, 80);
-        });
+        tier.addEventListener('mouseenter', () => moveTo(tier));
       });
 
-      // Hide when leaving grid entirely
-      grid.addEventListener('mouseleave', hide);
-
-      // Also hide on scroll (position would be stale)
-      window.addEventListener('scroll', hide, { passive: true });
-
-      // Initial position: free tier (default)
-      const freeTier = document.querySelector('.prices-tier[data-tier="free"]');
-      if (freeTier) moveTo(freeTier);
+      // ── Close-tab logic for "back" link ──────────────────
+      // If page was opened in a new tab (opener exists), clicking "back"
+      // closes this tab instead of navigating away.
+      const backLink = document.querySelector('.prices-back');
+      if (backLink && window.opener) {
+        backLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.close();
+        });
+      }
     })();
     </script>
 </body>
