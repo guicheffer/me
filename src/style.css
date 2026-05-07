@@ -1520,15 +1520,15 @@ hr {
 
 /* Hidden pricing link — sits next to the strip actions */
 .consulting-pricing-link {
-  font-size: 0.7rem;
-  color: var(--text-dim);
+  display: block;
+  text-align: right;
+  margin-top: 10px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
   text-decoration: none;
-  opacity: 0.3;
+  opacity: 0.5;
   transition: opacity var(--transition), color var(--transition);
   letter-spacing: 0.03em;
-  white-space: nowrap;
-  align-self: center;
-  flex-shrink: 0;
 }
 
 .consulting-pricing-link:hover {
@@ -2142,10 +2142,11 @@ main[data-static-page] {
 
 /* Quiz card "answered" state */
 .consulting-item--quiz.quiz-done {
-  opacity: 0.6;
-  cursor: default !important;
+  opacity: 0.7;
+  cursor: pointer !important;
   box-shadow: none;
-  border-color: var(--card-border) !important;
+  border-color: var(--purple-border) !important;
+  animation: none;
 }
 
 .consulting-item--quiz.quiz-done .consulting-icon {
@@ -2176,6 +2177,60 @@ main[data-static-page] {
   color: var(--purple-light);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* Friendly CTA state after "yes" result */
+.consulting-item--quiz.quiz-done-yes {
+  border-color: var(--purple) !important;
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(115, 30, 200, 0.15) 100%) !important;
+  opacity: 1;
+  animation: none;
+}
+
+.consulting-item--quiz.quiz-done-yes .consulting-icon {
+  background: var(--purple);
+  border-color: var(--purple-light);
+  color: #fff;
+  box-shadow: 0 0 14px var(--purple-glow);
+}
+
+.consulting-item--quiz.quiz-done-yes strong {
+  color: var(--text) !important;
+}
+
+.quiz-done-cta {
+  display: none;
+  margin-top: 10px;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.consulting-item--quiz.quiz-done-yes .quiz-done-cta {
+  display: flex;
+}
+
+.quiz-done-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--purple);
+  background: var(--purple-muted);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  text-decoration: none;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  transition: all 0.1s ease;
+}
+
+.quiz-done-cta__btn:hover {
+  background: var(--purple-border);
+  box-shadow: 0 4px 14px var(--purple-glow);
 }
 
 /* ── Quiz overlay ─────────────────────────── */
