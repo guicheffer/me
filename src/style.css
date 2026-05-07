@@ -2142,22 +2142,7 @@ main[data-static-page] {
 
 /* Quiz card "answered" state */
 .consulting-item--quiz.quiz-done {
-  opacity: 0.7;
   cursor: pointer !important;
-  box-shadow: none;
-  border-color: var(--purple-border) !important;
-  animation: none;
-}
-
-.consulting-item--quiz.quiz-done .consulting-icon {
-  background: var(--purple-muted);
-  border-color: var(--purple-border);
-  color: var(--purple-light);
-  box-shadow: none;
-}
-
-.consulting-item--quiz.quiz-done strong {
-  color: var(--text-muted) !important;
 }
 
 .quiz-redo-hint {
