@@ -257,13 +257,21 @@
         tier.appendChild(btn);
       }
 
-      // Set initial card (free tier)
-      const defaultTier = document.querySelector('.prices-tier[data-tier="free"]');
-      if (defaultTier) moveTo(defaultTier);
-
       tiers.forEach(tier => {
         tier.addEventListener('mouseenter', () => moveTo(tier));
       });
+
+      // Defer initial placement until script.js has populated __QUIZ_TRANS__
+      function initDefault() {
+        const defaultTier = document.querySelector('.prices-tier[data-tier="free"]');
+        if (defaultTier) moveTo(defaultTier);
+      }
+
+      if (document.readyState === 'complete') {
+        initDefault();
+      } else {
+        window.addEventListener('load', initDefault);
+      }
 
       // ── Close-tab logic for "back" link ──────────────────
       // If page was opened in a new tab (opener exists), clicking "back"
