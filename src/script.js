@@ -103,6 +103,14 @@
         next.classList.remove('entering');
         next.classList.add('active');
         triggerFadeUps(next);
+
+        // Auto-open quiz when entering consulting for the first time
+        if (name === 'consulting' && !localStorage.getItem('quiz_done')) {
+          setTimeout(() => {
+            const trigger = document.getElementById('quiz-trigger');
+            if (trigger) trigger.click();
+          }, 800);
+        }
       });
     });
 
@@ -438,6 +446,7 @@
       'quiz.result.maybe.desc':    'Your situation could go either way. A free 15-min call is probably the fastest way to figure it out.',
       'quiz.result.cta':           'Book a free 15-min intro call',
       'quiz.redo':                 'Answered, answer again?',
+      'quiz.redo.overlay':          'start over',
       'quiz.done.cta.calendly':    'Book a free 15-min call',
       'quiz.done.cta.email':       'hi@guicheffer.me',
       'quiz.done.title':           'Looks like we should talk.',
@@ -542,6 +551,7 @@
       'quiz.result.maybe.desc':    'Sua situação pode ir pra qualquer lado. Uma call gratuita de 15 min é provavelmente a forma mais rápida de descobrir.',
       'quiz.result.cta':           'Agendar intro call gratuita de 15 min',
       'quiz.redo':                 'Respondido, responder de novo?',
+      'quiz.redo.overlay':          'começar de novo',
       'quiz.done.cta.calendly':    'Agendar call gratuita de 15 min',
       'quiz.done.cta.email':       'hi@guicheffer.me',
       'quiz.done.title':           'Parece que devemos conversar.',
@@ -646,6 +656,7 @@
       'quiz.result.maybe.desc':    'Deine Situation könnte in beide Richtungen gehen. Ein kostenloser 15-Minuten-Anruf ist wahrscheinlich der schnellste Weg, das herauszufinden.',
       'quiz.result.cta':           'Kostenlosen 15-min-Intro-Call buchen',
       'quiz.redo':                 'Beantwortet, nochmal beantworten?',
+      'quiz.redo.overlay':          'nochmal starten',
       'quiz.done.cta.calendly':    'Kostenlosen 15-min-Call buchen',
       'quiz.done.cta.email':       'hi@guicheffer.me',
       'quiz.done.title':           'Klingt nach einem Gespräch.',
@@ -750,6 +761,7 @@
       'quiz.result.maybe.desc':    'Tu situación podría ir en cualquier dirección. Una llamada gratuita de 15 min es probablemente la forma más rápida de averiguarlo.',
       'quiz.result.cta':           'Reservar intro call gratuita de 15 min',
       'quiz.redo':                 'Respondido, responder de nuevo?',
+      'quiz.redo.overlay':          'empezar de nuevo',
       'quiz.done.cta.calendly':    'Reservar llamada gratuita de 15 min',
       'quiz.done.cta.email':       'hi@guicheffer.me',
       'quiz.done.title':           'Parece que deberíamos hablar.',

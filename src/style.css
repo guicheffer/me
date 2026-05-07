@@ -2453,6 +2453,24 @@ main[data-static-page] {
   transform: translateY(-2px);
 }
 
+.quiz-result__redo {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  transition: color var(--transition);
+  margin-top: -4px;
+}
+
+.quiz-result__redo:hover {
+  color: var(--text-muted);
+}
+
 .quiz-result__pricing-link {
   font-size: 0.72rem;
   color: var(--text-dim);
