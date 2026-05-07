@@ -2170,6 +2170,14 @@ main[data-static-page] {
   display: block;
 }
 
+.quiz-redo-hint a {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  color: var(--purple-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ── Quiz overlay ─────────────────────────── */
 .quiz-overlay {
   position: fixed;
