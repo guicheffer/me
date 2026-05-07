@@ -421,6 +421,7 @@
       'consulting.contact.cta.calendly':     'Book a free 30-min call',
       'consulting.contact.cta.linkedin':     'Message on LinkedIn',
       'consulting.contact.cta.prices':      'View pricing',
+      'consulting.pricing.link':           'pricing →',
       'quiz.card.title':           'Not sure if you need consulting?',
       'quiz.card.desc':            'Answer 5 quick questions and find out. Takes under a minute.',
       'quiz.yes':                  'Yes',
@@ -520,6 +521,7 @@
       'consulting.contact.cta.calendly':     'Agendar call gratuita de 30 min',
       'consulting.contact.cta.linkedin':     'Mensagem no LinkedIn',
       'consulting.contact.cta.prices':      'Ver preços',
+      'consulting.pricing.link':           'preços →',
       'quiz.card.title':           'Não sabe se precisa de consultoria?',
       'quiz.card.desc':            'Responde 5 perguntas rápidas e descobre. Leva menos de um minuto.',
       'quiz.yes':                  'Sim',
@@ -619,6 +621,7 @@
       'consulting.contact.cta.calendly':     'Kostenloses 30-min-Gespräch buchen',
       'consulting.contact.cta.linkedin':     'Nachricht auf LinkedIn',
       'consulting.contact.cta.prices':      'Preise ansehen',
+      'consulting.pricing.link':           'preise →',
       'quiz.card.title':           'Nicht sicher, ob du Beratung brauchst?',
       'quiz.card.desc':            'Beantworte 5 kurze Fragen und finde es heraus. Dauert unter einer Minute.',
       'quiz.yes':                  'Ja',
@@ -718,6 +721,7 @@
       'consulting.contact.cta.calendly':     'Reservar llamada gratuita de 30 min',
       'consulting.contact.cta.linkedin':     'Mensaje en LinkedIn',
       'consulting.contact.cta.prices':      'Ver precios',
+      'consulting.pricing.link':           'precios →',
       'quiz.card.title':           '¿No sabes si necesitas consultoría?',
       'quiz.card.desc':            'Responde 5 preguntas rápidas y descúbrelo. Menos de un minuto.',
       'quiz.yes':                  'Sí',
@@ -974,7 +978,7 @@
   /* ── Secret keysequence → /consulting/pricing ──────────── */
   // Type "precos", "prices", "preise", or "precios" anywhere on /consulting
   (() => {
-    const SECRETS = ['precos', 'prices', 'preise', 'precios'];
+    const SECRETS = ['precos', 'prices', 'preise', 'precios', 'pricing', 'preisgestaltung', 'preisen'];
     const MAX_GAP = 1200; // ms — "human" pace between keystrokes
     let buffer = '';
     let lastKey = 0;

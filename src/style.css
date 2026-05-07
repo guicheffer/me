@@ -1514,9 +1514,25 @@ hr {
 /* ── Consulting page ───────────────────────── */
 
 /* Wider max-width for consulting + prices sections */
-#section-consulting,
-.prices-page {
-  max-width: 1020px;
+#section-consulting {
+  max-width: 1200px;
+}
+
+/* Hidden pricing link after contact strip */
+.consulting-pricing-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  opacity: 0.35;
+  transition: opacity var(--transition), color var(--transition);
+  letter-spacing: 0.04em;
+}
+
+.consulting-pricing-link:hover {
+  opacity: 1;
+  color: var(--purple-light);
 }
 
 /* ── Services list ─────────────────────────── */
@@ -1891,30 +1907,51 @@ main[data-static-page] {
   font-weight: 700;
 }
 
+/* Static per-card CTAs hidden — replaced by travelling button */
 .prices-cta {
+  display: none;
+}
+
+/* Travelling button */
+.prices-floating-btn {
+  position: fixed;
+  pointer-events: none;
+  z-index: 400;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 9px 16px;
+  gap: 7px;
+  padding: 11px 20px;
   border-radius: var(--radius);
-  border: 1px solid var(--card-border);
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  font-weight: 500;
-  text-decoration: none;
-  text-align: center;
-  transition: all var(--transition);
-  margin-top: auto;
-}
-
-.prices-cta:hover {
-  border-color: var(--purple);
-  color: var(--text);
+  border: 1px solid var(--purple);
   background: var(--purple-muted);
-  box-shadow: 0 4px 14px var(--purple-glow);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0;
+  box-shadow: 0 4px 20px var(--purple-glow);
+  /* transition handles both movement and fade */
+  transition: left 0.38s cubic-bezier(0.4,0,0.2,1),
+              top 0.38s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.22s ease,
+              width 0.3s ease;
+  overflow: hidden;
 }
 
+.prices-floating-btn.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.prices-floating-btn:hover {
+  background: var(--purple-border);
+  box-shadow: 0 6px 28px var(--purple-glow);
+}
+
+/* Keep old primary style for non-JS fallback */
 .prices-cta--primary {
   border-color: var(--purple);
   color: var(--text);

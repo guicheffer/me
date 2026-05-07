@@ -116,7 +116,7 @@
           <div class="prices-grid fade-up">
 
             <!-- Free intro -->
-            <div class="prices-tier prices-tier--free" data-tier="free">
+            <div class="prices-tier prices-tier--free" data-tier="free" data-cta-href="https://calendly.com/guicheffer" data-cta-i18n="prices.free.cta" data-cta-attrs="target='_blank' rel='noopener noreferrer'">
               <div class="prices-tier__header">
                 <span class="prices-tier__badge" data-i18n="prices.free.badge">Always free</span>
                 <h2 data-i18n="prices.free.name">Intro call</h2>
@@ -130,11 +130,10 @@
                 <li data-i18n="prices.free.f2">I'll tell you honestly if I can help</li>
                 <li data-i18n="prices.free.f3">No prep needed, just show up</li>
               </ul>
-              <a class="prices-cta" href="https://calendly.com/guicheffer" target="_blank" rel="noopener noreferrer" data-i18n="prices.free.cta">Book on Calendly</a>
             </div>
 
             <!-- Starter -->
-            <div class="prices-tier" data-tier="starter">
+            <div class="prices-tier" data-tier="starter" data-cta-href="mailto:hi@guicheffer.me?subject=Intro%20Session" data-cta-i18n="prices.starter.cta" data-cta-attrs="">
               <div class="prices-tier__header">
                 <span class="prices-tier__badge" data-i18n="prices.starter.badge">Most popular</span>
                 <h2 data-i18n="prices.starter.name">Intro Session</h2>
@@ -149,11 +148,10 @@
                 <li data-i18n="prices.starter.f3">1h follow-up: call or async, as we agree</li>
                 <li data-i18n="prices.starter.f4">Good for individuals or small teams</li>
               </ul>
-              <a class="prices-cta prices-cta--primary" href="mailto:hi@guicheffer.me?subject=Intro%20Session" data-i18n="prices.starter.cta">Get in touch</a>
             </div>
 
             <!-- Project -->
-            <div class="prices-tier" data-tier="project">
+            <div class="prices-tier" data-tier="project" data-cta-href="mailto:hi@guicheffer.me?subject=Project%20Sprint" data-cta-i18n="prices.project.cta" data-cta-attrs="">
               <div class="prices-tier__header">
                 <h2 data-i18n="prices.project.name">Project Sprint</h2>
                 <div class="prices-tier__price">
@@ -167,11 +165,10 @@
                 <li data-i18n="prices.project.f3">Review session at the end</li>
                 <li data-i18n="prices.project.f4">Good for teams starting an AI initiative</li>
               </ul>
-              <a class="prices-cta" href="mailto:hi@guicheffer.me?subject=Project%20Sprint" data-i18n="prices.project.cta">Let's talk scope</a>
             </div>
 
             <!-- Retainer -->
-            <div class="prices-tier" data-tier="retainer">
+            <div class="prices-tier" data-tier="retainer" data-cta-href="mailto:hi@guicheffer.me?subject=Monthly%20Retainer" data-cta-i18n="prices.retainer.cta" data-cta-attrs="">
               <div class="prices-tier__header">
                 <h2 data-i18n="prices.retainer.name">Monthly Retainer</h2>
                 <div class="prices-tier__price">
@@ -185,10 +182,12 @@
                 <li data-i18n="prices.retainer.f3">Hands-on help as things come up</li>
                 <li data-i18n="prices.retainer.f4">Cancel any time, no lock-in</li>
               </ul>
-              <a class="prices-cta" href="mailto:hi@guicheffer.me?subject=Monthly%20Retainer" data-i18n="prices.retainer.cta">Let's talk</a>
             </div>
 
           </div>
+
+          <!-- Travelling CTA button (positioned by JS) -->
+          <a class="prices-floating-btn" id="prices-floating-btn" href="#" aria-label="Get in touch"></a>
 
           <!-- ── AI tools note ── -->
           <div class="prices-note fade-up">
@@ -213,5 +212,93 @@
         </div>
       </main>
     </div>
+
+    <script>
+    (() => {
+      const btn = document.getElementById('prices-floating-btn');
+      const tiers = document.querySelectorAll('.prices-tier[data-cta-href]');
+      const grid = document.querySelector('.prices-grid');
+      if (!btn || !tiers.length || !grid) return;
+
+      let activeTimer = null;
+
+      function t(key) {
+        try {
+          const lang = localStorage.getItem('lang-manual') ||
+            ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').split('-')[0];
+          const TRANS = window.__QUIZ_TRANS__ || {};
+          return (TRANS[lang] && TRANS[lang][key]) || (TRANS['en'] && TRANS['en'][key]) || key;
+        } catch(e) { return key; }
+      }
+
+      function moveTo(tier) {
+        const rect = tier.getBoundingClientRect();
+        const href = tier.dataset.ctaHref;
+        const label = t(tier.dataset.ctaI18n) || tier.dataset.ctaI18n;
+        const attrs = tier.dataset.ctaAttrs || '';
+
+        btn.textContent = label;
+        btn.href = href;
+
+        // Apply target/rel from attrs string
+        if (attrs.includes('_blank')) {
+          btn.setAttribute('target', '_blank');
+          btn.setAttribute('rel', 'noopener noreferrer');
+        } else {
+          btn.removeAttribute('target');
+          btn.removeAttribute('rel');
+        }
+
+        // Measure btn width after text update
+        btn.style.visibility = 'hidden';
+        btn.style.opacity = '0';
+        btn.style.display = 'inline-flex';
+        const btnW = btn.offsetWidth;
+        const btnH = btn.offsetHeight;
+        btn.style.visibility = '';
+        btn.style.display = '';
+
+        // Position at bottom-center of tier card
+        const left = rect.left + (rect.width / 2) - (btnW / 2);
+        const top  = rect.bottom - btnH - 16;
+
+        btn.style.left = Math.round(left) + 'px';
+        btn.style.top  = Math.round(top)  + 'px';
+        btn.classList.add('is-visible');
+        btn.style.opacity = '1';
+
+        // Clip to tier card: use clip-path so btn only shows inside the tier
+        // Actually easier: just show/hide based on containment, keep it simple
+      }
+
+      function hide() {
+        btn.classList.remove('is-visible');
+        btn.style.opacity = '0';
+      }
+
+      tiers.forEach(tier => {
+        tier.addEventListener('mouseenter', () => {
+          clearTimeout(activeTimer);
+          moveTo(tier);
+        });
+        tier.addEventListener('mouseleave', (e) => {
+          // Only hide if not moving to another tier
+          activeTimer = setTimeout(() => {
+            if (!document.querySelector('.prices-tier:hover')) hide();
+          }, 80);
+        });
+      });
+
+      // Hide when leaving grid entirely
+      grid.addEventListener('mouseleave', hide);
+
+      // Also hide on scroll (position would be stale)
+      window.addEventListener('scroll', hide, { passive: true });
+
+      // Initial position: free tier (default)
+      const freeTier = document.querySelector('.prices-tier[data-tier="free"]');
+      if (freeTier) moveTo(freeTier);
+    })();
+    </script>
 </body>
 </html>
