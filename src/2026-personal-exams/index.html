@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Meus Exames — Maio 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --normal: #22c55e; --normal-bg: #052e16; --normal-border: #166534;
+      --limite: #60a5fa; --limite-bg: #172554; --limite-border: #1e40af;
+      --atencao: #fbbf24; --atencao-bg: #431407; --atencao-border: #92400e;
+      --alterado: #f87171; --alterado-bg: #3f0000; --alterado-border: #991b1b;
+      --text: #f1f5f9; --sub: #cbd5e1; --muted: #94a3b8; --dim: #475569;
+      --bg: #0a0f1e; --surface: #111827; --raised: #1e293b; --border: #1f2d3d;
+      --radius: 12px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── GATE ── */
+    #gate {
+      min-height: 100dvh; display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .gate-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px 32px; width: 100%; max-width: 360px;
+      text-align: center;
+    }
+    .gate-icon { font-size: 32px; margin-bottom: 16px; }
+    .gate-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .gate-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .gate-input {
+      width: 100%; padding: 10px 14px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--text); font-size: 15px; text-align: center;
+      letter-spacing: 0.1em; margin-bottom: 12px;
+      transition: border-color 0.15s;
+    }
+    .gate-input:focus { outline: none; border-color: var(--muted); }
+    .gate-input.shake {
+      animation: shake 0.35s ease;
+      border-color: var(--alterado);
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .gate-btn {
+      width: 100%; padding: 10px; border-radius: 8px;
+      background: var(--text); color: var(--bg);
+      font-size: 14px; font-weight: 700; cursor: pointer; border: none;
+      transition: opacity 0.15s;
+    }
+    .gate-btn:hover { opacity: 0.88; }
+    .gate-error { font-size: 12px; color: var(--alterado); margin-top: 10px; min-height: 16px; }
+
+    /* ── APP (hidden until unlocked) ── */
+    #app { display: none; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100; padding: 0 20px;
+    }
+    .header-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 58px; gap: 12px;
+    }
+    .header-meta { min-width: 0; }
+    .header-title { font-size: 15px; font-weight: 700; }
+    .header-sub { font-size: 11px; color: var(--muted); }
+    .header-actions { display: flex; gap: 7px; flex-shrink: 0; }
+    .btn {
+      padding: 6px 13px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s;
+      line-height: 1.4; white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-ghost { background: var(--raised); color: var(--sub); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--border); }
+    .btn-solid { background: var(--text); color: var(--bg); }
+    .btn-solid:hover { opacity: 0.88; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 20px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; }
+    .nav-item {
+      padding: 9px 12px; font-size: 12px; font-weight: 600;
+      color: var(--muted); text-decoration: none;
+      white-space: nowrap; border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-item:hover { color: var(--text); border-bottom-color: var(--dim); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--text); color: var(--bg);
+      font-size: 13px; padding: 10px 18px; border-radius: 8px;
+      opacity: 0; transition: transform 0.25s, opacity 0.25s;
+      z-index: 300; pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── MAIN ── */
+    main { max-width: 1000px; margin: 0 auto; padding: 22px 20px 64px; }
+
+    /* ── NARRATIVE ── */
+    .narrative {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px;
+    }
+    .narrative-heading {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--muted); margin-bottom: 14px;
+    }
+    .narr-block { margin-bottom: 14px; }
+    .narr-block:last-child { margin-bottom: 0; }
+    .narr-block-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; margin-bottom: 8px;
+    }
+    .narr-block-title.red { color: var(--alterado); }
+    .narr-block-title.yellow { color: var(--atencao); }
+    .narr-block-title.green { color: var(--normal); }
+    .narr-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 6px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px; color: var(--sub); line-height: 1.5;
+    }
+    .narr-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .narr-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 7px;
+    }
+    .narr-dot.red { background: var(--alterado); }
+    .narr-dot.yellow { background: var(--atencao); }
+    .narr-dot.green { background: var(--normal); }
+    .narr-strong { font-weight: 600; color: var(--text); }
+
+    /* ── SUMMARY ── */
+    .summary {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 8px; margin-bottom: 14px;
+    }
+    .summary-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 10px;
+      text-align: center; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      user-select: none;
+    }
+    .summary-card:active { transform: scale(0.96); }
+    .summary-card.active-normal   { border-color: var(--normal);   background: var(--normal-bg); }
+    .summary-card.active-limite   { border-color: var(--limite);   background: var(--limite-bg); }
+    .summary-card.active-atencao  { border-color: var(--atencao);  background: var(--atencao-bg); }
+    .summary-card.active-alterado { border-color: var(--alterado); background: var(--alterado-bg); }
+    .summary-count { font-size: 30px; font-weight: 800; line-height: 1; }
+    .summary-count.normal   { color: var(--normal); }
+    .summary-count.limite   { color: var(--limite); }
+    .summary-count.atencao  { color: var(--atencao); }
+    .summary-count.alterado { color: var(--alterado); }
+    .summary-label { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 500; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+    .filter-btn {
+      padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      cursor: pointer; border: 1px solid var(--border); background: transparent;
+      color: var(--muted); transition: all 0.15s; white-space: nowrap;
+    }
+    .filter-btn:hover { color: var(--text); border-color: var(--dim); }
+    .filter-btn.f-all.active     { background: var(--raised); color: var(--text); border-color: var(--muted); }
+    .filter-btn.f-normal.active  { background: var(--normal-bg);   color: var(--normal);   border-color: var(--normal-border); }
+    .filter-btn.f-limite.active  { background: var(--limite-bg);   color: var(--limite);   border-color: var(--limite-border); }
+    .filter-btn.f-atencao.active { background: var(--atencao-bg);  color: var(--atencao);  border-color: var(--atencao-border); }
+    .filter-btn.f-alterado.active{ background: var(--alterado-bg); color: var(--alterado); border-color: var(--alterado-border); }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 38px; scroll-margin-top: 110px; }
+    .section-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      margin-bottom: 12px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(390px, 1fr)); gap: 11px; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); border-left-width: 4px;
+      display: flex; flex-direction: column;
+    }
+    .card[data-status="normal"]   { border-left-color: var(--normal); }
+    .card[data-status="limite"]   { border-left-color: var(--limite); }
+    .card[data-status="atencao"]  { border-left-color: var(--atencao); }
+    .card[data-status="alterado"] { border-left-color: var(--alterado); }
+    .card-top { padding: 15px 15px 0; }
+    .card-head {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 8px;
+    }
+    .card-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .badge {
+      padding: 2px 9px; border-radius: 999px; font-size: 10px; font-weight: 700;
+      white-space: nowrap; flex-shrink: 0; letter-spacing: 0.03em;
+    }
+    .badge-normal   { background: var(--normal-bg);   color: var(--normal);   border: 1px solid var(--normal-border); }
+    .badge-limite   { background: var(--limite-bg);   color: var(--limite);   border: 1px solid var(--limite-border); }
+    .badge-atencao  { background: var(--atencao-bg);  color: var(--atencao);  border: 1px solid var(--atencao-border); }
+    .badge-alterado { background: var(--alterado-bg); color: var(--alterado); border: 1px solid var(--alterado-border); }
+    .result-row { display: flex; align-items: baseline; gap: 5px; }
+    .result-val { font-size: 24px; font-weight: 800; line-height: 1; }
+    .result-val.normal   { color: var(--normal); }
+    .result-val.limite   { color: var(--limite); }
+    .result-val.atencao  { color: var(--atencao); }
+    .result-val.alterado { color: var(--alterado); }
+    .result-unit { font-size: 12px; color: var(--muted); }
+    .result-ref  { font-size: 11px; color: var(--dim); margin-top: 3px; margin-bottom: 11px; }
+
+    /* ── INFO BOXES ── */
+    .info-boxes { display: flex; flex-direction: column; gap: 7px; margin: 0 15px 11px; }
+    .info-box { border-radius: 8px; padding: 9px 11px; }
+    .info-box-ai   { background: var(--bg); border: 1px solid var(--border); }
+    .info-box-eli5 { background: #120d22; border: 1px solid #2a1a5e; }
+    .box-label {
+      font-size: 9px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--dim); margin-bottom: 5px;
+    }
+    .info-box-eli5 .box-label { color: #6d28d9; }
+    .box-text { font-size: 12px; color: var(--sub); line-height: 1.55; }
+    .eli5-rows { display: flex; flex-direction: column; gap: 4px; }
+    .eli5-row { font-size: 12px; color: var(--sub); line-height: 1.5; }
+    .eli5-key { font-weight: 700; color: #a78bfa; margin-right: 3px; }
+
+    /* ── NOTES ── */
+    .card-notes { padding: 0 15px 15px; display: flex; flex-direction: column; gap: 9px; margin-top: auto; }
+    .notes-label {
+      font-size: 10px; font-weight: 700; color: var(--dim);
+      margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    textarea {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 12px; font-family: inherit; color: var(--text);
+      resize: vertical; min-height: 60px; background: var(--bg);
+      line-height: 1.5; transition: border-color 0.15s;
+    }
+    textarea::placeholder { color: var(--dim); }
+    textarea:focus { outline: none; border-color: var(--muted); }
+    .notes-footer { display: flex; justify-content: flex-end; margin-top: 2px; }
+    .autosave-indicator { font-size: 10px; color: var(--normal); opacity: 0; transition: opacity 0.4s; }
+    .autosave-indicator.show { opacity: 1; }
+
+    #empty-state { text-align: center; padding: 56px 24px; color: var(--dim); font-size: 14px; display: none; }
+
+    @media (max-width: 680px) {
+      .section-grid { grid-template-columns: 1fr; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 400px) {
+      main { padding: 16px 14px 64px; }
+      header, nav { padding-left: 14px; padding-right: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── PASSWORD GATE ── -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Acesso restrito</div>
+    <div class="gate-sub">Digite a senha para continuar</div>
+    <input
+      id="gate-input" class="gate-input" type="password"
+      placeholder="senha" autocomplete="off"
+      onkeydown="if(event.key==='Enter')unlock()"
+    >
+    <button class="gate-btn" onclick="unlock()">Entrar</button>
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+  <header>
+    <div class="header-inner">
+      <div class="header-meta">
+        <div class="header-title">Meus Exames</div>
+        <div class="header-sub">Coleta: 11/05/2026 &middot; Biofast Jaguaré</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost" onclick="saveAll()">Salvar</button>
+        <button class="btn btn-solid" onclick="generateMarkdown()">Gerar Markdown</button>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#hemograma" class="nav-item">Hemograma</a>
+      <a href="#lipidios"  class="nav-item">Lipídios</a>
+      <a href="#hepatico"  class="nav-item">Hepático</a>
+      <a href="#renal"     class="nav-item">Renal</a>
+      <a href="#glicemia"  class="nav-item">Glicemia</a>
+      <a href="#outros"    class="nav-item">Outros</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="narrative">
+      <div class="narrative-heading">Resumo geral</div>
+      <div class="narr-block">
+        <div class="narr-block-title red">Requer ação</div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">Homocisteína 20,3 µmol/L</span> — único valor fora da faixa (ref: até 15,4). Sugere deficiência de B6, B12 ou folato. Falar com médico; provavelmente vai pedir B12 + folato no sangue e indicar complexo B.</span>
+        </div>
+      </div>
+      <div class="narr-block">
+        <div class="narr-block-title yellow">Atenção</div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span><span class="narr-strong">Linfócitos 969/mm³</span> — 31 unidades abaixo do mínimo (1.000). Diferença mínima; provável variação do dia, estresse ou inverso dos neutrófilos altos. Mencionar ao médico.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span><span class="narr-strong">Colesterol Total 210 mg/dL + LDL 101 mg/dL</span> — faixa limítrofe. O HDL de 89 mg/dL é excelente e compensa bastante. Reduzir gordura saturada e aumentar fibras.</span>
+        </div>
+      </div>
+      <div class="narr-block">
+        <div class="narr-block-title green">Destaques positivos</div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">HDL 89 mg/dL</span> — excelente. Maior protetor cardiovascular do painel. Ref. mínima (homens): 55 mg/dL.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">HbA1c 5,0% + Glicose 77 mg/dL</span> — metabolismo da glicose perfeito. Zero risco de diabetes no horizonte.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">Fígado, rins e hemograma</span> — TGO/TGP normais, creatinina 1,05 com TFGe de 96, hemograma sem anemia nem alteração relevante.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">Triglicérides 100 + Ferritina 247 + ApoA-1 187</span> — todos ótimos.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary" id="summary"></div>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div id="groups"></div>
+    <div id="empty-state">Nenhum exame nesta categoria.</div>
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── Gate ──
+const PW_KEY = 'exams2026_unlocked';
+function unlock() {
+  const val = document.getElementById('gate-input').value.trim().toLowerCase();
+  if (val === 'biofast') {
+    sessionStorage.setItem(PW_KEY, '1');
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    const inp = document.getElementById('gate-input');
+    inp.classList.remove('shake');
+    void inp.offsetWidth;
+    inp.classList.add('shake');
+    document.getElementById('gate-error').textContent = 'Senha incorreta.';
+    inp.value = '';
+    inp.focus();
+  }
+}
+if (sessionStorage.getItem(PW_KEY)) {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ── Data ──
+const EXAMS = [
+  {
+    group: 'Hemograma Completo', anchor: 'hemograma',
+    items: [
+      { id: 'hemacias', name: 'Hemácias', result: '5,3', unit: 'milhões/mm³', ref: 'Ref. (masc.): 4,5 – 5,9', status: 'normal',
+        ai: 'Contagem de glóbulos vermelhos dentro do intervalo de referência. Boa capacidade de transporte de oxigênio.',
+        eli5: { oque: 'Os "caminhões" do sangue — cada um carrega oxigênio dos pulmões pro resto do corpo.', porq: 'Dieta razoável, sem anemia, sem desidratação crônica.', prox: 'Nada. Continue assim.' } },
+      { id: 'hemoglobina', name: 'Hemoglobina', result: '15,2', unit: 'g/dL', ref: 'Ref. (masc.): 13,5 – 17,5', status: 'normal',
+        ai: 'Nível adequado para homens. Confirma boa capacidade de oxigenação dos tecidos.',
+        eli5: { oque: 'A proteína dentro dos caminhões que segura o oxigênio durante o transporte.', porq: 'Bom nível de ferro e vitaminas. Sem perda de sangue significativa.', prox: 'Manter.' } },
+      { id: 'hematocrito', name: 'Hematócrito', result: '45,6', unit: '%', ref: 'Ref. (masc.): 41 – 53%', status: 'normal',
+        ai: 'Proporção de células vermelhas no sangue dentro da faixa esperada.',
+        eli5: { oque: 'Quantos % do seu sangue são células vermelhas — o resto é líquido.', porq: 'Equilíbrio normal entre produção e vida útil das células. Boa hidratação.', prox: 'Manter.' } },
+      { id: 'vcm', name: 'VCM', result: '85,9', unit: 'fL', ref: 'Ref.: 80 – 100 fL', status: 'normal',
+        ai: 'Tamanho médio das hemácias normal. Sem sinais de anemia ferropriva nem deficiência de B12/folato.',
+        eli5: { oque: 'O tamanho médio dos caminhões. Tamanho certo = funcionam direito.', porq: 'Sem deficiência de ferro nem B12/folato.', prox: 'Manter.' } },
+      { id: 'hcm', name: 'HCM', result: '28,6', unit: 'pg', ref: 'Ref.: 26 – 34 pg', status: 'normal',
+        ai: 'Conteúdo médio de hemoglobina por célula dentro do normal.',
+        eli5: { oque: 'Quanto de "carga de oxigênio" tem em cada caminhão individualmente.', porq: 'Dieta com ferro e vitaminas adequados. Células produzidas com qualidade.', prox: 'Manter.' } },
+      { id: 'chcm', name: 'CHCM', result: '33,3', unit: 'g/dL', ref: 'Ref.: 31 – 37 g/dL', status: 'normal',
+        ai: 'Concentração de hemoglobina por célula normal.',
+        eli5: { oque: 'O quão "cheio" está cada caminhão. Uma versão concentrada do HCM.', porq: 'Sem anemia nem alteração de produção.', prox: 'Manter.' } },
+      { id: 'rdw', name: 'RDW', result: '12,9', unit: '%', ref: 'Ref.: 11,5 – 14,5%', status: 'normal',
+        ai: 'Variação no tamanho das hemácias dentro do esperado. Não sugere processo anêmico.',
+        eli5: { oque: 'O quanto os caminhões variam de tamanho entre si. Ideal é serem uniformes — e são.', porq: 'Medula óssea produzindo células de forma consistente.', prox: 'Manter.' } },
+      { id: 'leucocitos', name: 'Leucócitos (Total)', result: '7.180', unit: '/mm³', ref: 'Ref.: 5.000 – 10.000', status: 'normal',
+        ai: 'Contagem total de glóbulos brancos dentro da faixa normal. Sem sinais de infecção ativa ou inflamação sistêmica.',
+        eli5: { oque: 'Seus soldados do sistema imune. 7.180 por mm³ — o esperado é entre 5 e 10 mil.', porq: 'Sem infecção ativa, sem inflamação importante.', prox: 'Nada.' } },
+      { id: 'neutrofilos', name: 'Neutrófilos', result: '74,8% · 5.371', unit: '/mm³', ref: 'Ref. (abs.): 1.800 – 8.000/mm³', status: 'normal',
+        ai: 'Valor absoluto dentro da referência. Percentual no limite superior — pode ser variação individual ou reflexo inverso dos linfócitos levemente baixos.',
+        eli5: { oque: 'Os soldados de linha de frente — primeiros a chegar em infecção bacteriana.', porq: 'Percentual alto mas absoluto ok. Pode ser estresse na coleta ou relação inversa com linfócitos.', prox: 'Nada isoladamente.' } },
+      { id: 'eosinofilos', name: 'Eosinófilos', result: '4,0% · 287', unit: '/mm³', ref: 'Ref. (abs.): 0 – 600/mm³', status: 'normal',
+        ai: 'Dentro da faixa. Sem sinais de resposta alérgica ou parasitária ativa.',
+        eli5: { oque: 'Soldados especializados em parasitas e reações alérgicas.', porq: 'Sem alergia ativa significativa.', prox: 'Manter.' } },
+      { id: 'basofilos', name: 'Basófilos', result: '0,3% · 22', unit: '/mm³', ref: 'Ref. (abs.): 0 – 200/mm³', status: 'normal',
+        ai: 'Normal.',
+        eli5: { oque: 'Soldados raros envolvidos em reações alérgicas graves. São poucos mesmo no normal.', porq: 'Normal.', prox: 'Nada.' } },
+      { id: 'linfocitos', name: 'Linfócitos', result: '13,5% · 969', unit: '/mm³', ref: 'Ref. (abs.): 1.000 – 5.000/mm³', status: 'atencao',
+        ai: 'Valor absoluto ficou 31 unidades abaixo do limite inferior. Diferença mínima — pode refletir variação individual, estresse na coleta ou relação inversa com neutrófilos altos.',
+        eli5: { oque: 'Os soldados com "memória" — reconhecem inimigos que o corpo já combateu.', porq: 'Ficou 31 abaixo do mínimo. Provavelmente neutrófilos altos compensando + estresse na coleta.', prox: 'Mencionar ao médico na próxima consulta. Provavelmente só repetição do hemograma.' } },
+      { id: 'monocitos', name: 'Monócitos', result: '7,4% · 531', unit: '/mm³', ref: 'Ref. (abs.): 80 – 1.200/mm³', status: 'normal',
+        ai: 'Normal.',
+        eli5: { oque: 'O "serviço de limpeza" do sistema imune — removem debris e inimigos mortos dos tecidos.', porq: 'Normal.', prox: 'Nada.' } },
+      { id: 'plaquetas', name: 'Plaquetas', result: '323.000', unit: '/mm³', ref: 'Ref.: 150.000 – 450.000', status: 'normal',
+        ai: 'Contagem de plaquetas adequada.',
+        eli5: { oque: 'As "tampas de emergência" do corpo — chegam quando você sangra e fecham o buraco.', porq: 'Produção normal na medula.', prox: 'Nada.' } },
+      { id: 'vpm', name: 'VPM', result: '9,4', unit: 'fL', ref: 'Ref. (masc.): 7,4 – 11,4 fL', status: 'normal',
+        ai: 'Volume médio de plaquetas normal.',
+        eli5: { oque: 'O tamanho médio das tampas de emergência. Tamanho normal = funcionam bem.', porq: 'Normal.', prox: 'Nada.' } },
+    ],
+  },
+  {
+    group: 'Perfil Lipídico', anchor: 'lipidios',
+    items: [
+      { id: 'colesterol-total', name: 'Colesterol Total', result: '210', unit: 'mg/dL', ref: 'Desejável: < 200 · Limítrofe: 200–239 · Elevado: > 240', status: 'atencao',
+        ai: 'Faixa limítrofe. Isoladamente não é alarmante — o HDL de 89 e triglicérides de 100 mudam o contexto completamente.',
+        eli5: { oque: 'A soma de todos os tipos de gordura no sangue. Ideal < 200 — você está em 210.', porq: 'Provavelmente gordura saturada acima do ideal. HDL ótimo compensa bastante.', prox: 'Reduzir gordura saturada e ultraprocessados.' } },
+      { id: 'ldl', name: 'LDL Colesterol', result: '101', unit: 'mg/dL', ref: 'Baixo risco: < 130 · Intermediário: < 100 · Alto: < 70', status: 'atencao',
+        ai: 'Para risco cardiovascular baixo, aceitável (< 130). Levemente acima do limiar de risco intermediário (< 100).',
+        eli5: { oque: 'O "colesterol ruim" — o que se deposita nas artérias se ficar alto por muito tempo.', porq: 'Dieta com gordura saturada, genética ou os dois. 101 é aceitável mas já no limite.', prox: 'Aumentar fibras (aveia, feijão), reduzir gordura saturada.' } },
+      { id: 'hdl', name: 'HDL Colesterol', result: '89', unit: 'mg/dL', ref: 'Ref. (homens): > 55 mg/dL', status: 'normal',
+        ai: 'Excelente. Bem acima do mínimo recomendado. HDL elevado é o maior protetor cardiovascular deste painel.',
+        eli5: { oque: 'O "colesterol bom" — recolhe gordura das artérias e leva pro fígado eliminar.', porq: 'Provavelmente atividade física regular e boas gorduras na dieta.', prox: 'Continue o que faz. Melhor resultado individual do painel.' } },
+      { id: 'triglicerides', name: 'Triglicérides', result: '100', unit: 'mg/dL', ref: 'Ref.: < 150 mg/dL', status: 'normal',
+        ai: 'Dentro da faixa ideal com jejum de 12h.',
+        eli5: { oque: 'Gordura circulante no sangue — muito ligada a açúcar, álcool e carboidratos simples.', porq: 'Dieta baixa em açúcar/álcool ou boa atividade física.', prox: 'Manter.' } },
+      { id: 'vldl', name: 'VLDL Colesterol', result: '20', unit: 'mg/dL', ref: 'Sem referência padronizada', status: 'normal',
+        ai: 'Calculado a partir dos triglicérides. Resultado baixo e coerente com o bom perfil lipídico geral.',
+        eli5: { oque: 'O transportador de triglicérides no sangue — calculado matematicamente.', porq: 'Consequência direta dos triglicérides baixos.', prox: 'Manter.' } },
+      { id: 'apoa1', name: 'Apolipoproteína A-1', result: '187', unit: 'mg/dL', ref: 'Ref.: 100 – 200 mg/dL', status: 'normal',
+        ai: 'Boa concentração de ApoA-1, principal proteína protetora do HDL. Próximo do teto — positivo.',
+        eli5: { oque: 'A proteína que dá estrutura ao HDL e faz ele funcionar.', porq: 'Consistente com o HDL de 89. Os dois andam juntos.', prox: 'Manter.' } },
+      { id: 'apob', name: 'Apolipoproteína B', result: '85', unit: 'mg/dL', ref: 'Baixo: < 100 · Intermediário: < 90 · Alto: < 70', status: 'limite',
+        ai: 'Faixa de baixo risco (< 100), mas próximo do limiar para risco intermediário (< 90).',
+        eli5: { oque: 'A proteína presente em todas as partículas "ruins". Conta total de partículas que podem entupir artérias.', porq: 'Em 85 — baixo risco mas a 5 unidades do limiar intermediário.', prox: 'Manter estilo de vida. Se LDL melhorar com dieta, ApoB cai junto.' } },
+    ],
+  },
+  {
+    group: 'Função Hepática', anchor: 'hepatico',
+    items: [
+      { id: 'tgo', name: 'TGO (AST)', result: '24', unit: 'U/L', ref: 'Ref. (homens): até 50 U/L', status: 'normal',
+        ai: 'Transaminase hepática dentro do normal. Sem sinais de inflamação ou lesão no fígado.',
+        eli5: { oque: 'Enzima que vaza das células do fígado quando danificadas. Baixa = fígado intacto.', porq: 'Sem sobrecarga de álcool, remédios ou infecção.', prox: 'Nada.' } },
+      { id: 'tgp', name: 'TGP (ALT)', result: '32', unit: 'U/L', ref: 'Ref. (homens): até 50 U/L', status: 'normal',
+        ai: 'TGP é o marcador mais sensível de saúde hepática. Bem dentro dos limites.',
+        eli5: { oque: 'A enzima mais específica do fígado — sobe antes de qualquer outra quando algo está errado.', porq: 'Fígado saudável. Sem esteatose detectável, sem hepatite.', prox: 'Evitar exageros em álcool e anti-inflamatórios.' } },
+    ],
+  },
+  {
+    group: 'Função Renal', anchor: 'renal',
+    items: [
+      { id: 'creatinina', name: 'Creatinina', result: '1,05', unit: 'mg/dL', ref: 'Ref.: 0,70 – 1,20 mg/dL', status: 'limite',
+        ai: 'Dentro do intervalo, mas no terço superior (87,5% do caminho até o limite). Rins funcionando bem — vale manter hidratação.',
+        eli5: { oque: 'Resíduo do metabolismo dos músculos. Os rins filtram ela do sangue.', porq: 'Rins funcionando normalmente. Valor alto do normal pode ser mais músculo = mais creatinina.', prox: 'Manter boa hidratação. Evitar ibuprofeno/AINEs sem necessidade.' } },
+      { id: 'tfg', name: 'Taxa de Filtração Glomerular (TFGe)', result: '96,10', unit: 'mL/min/1,73m²', ref: 'Normal: ≥ 90 · Leve: 60–89 · Moderada: 30–59', status: 'normal',
+        ai: 'Função renal normal. Os rins estão filtrando adequadamente.',
+        eli5: { oque: 'A velocidade com que seus rins limpam o sangue. 96 = funcionando a ~100%.', porq: 'Rins saudáveis, sem doença renal crônica.', prox: 'Hidratação e cuidado com anti-inflamatórios.' } },
+    ],
+  },
+  {
+    group: 'Glicemia', anchor: 'glicemia',
+    items: [
+      { id: 'glicose', name: 'Glicose', result: '77', unit: 'mg/dL', ref: 'Ref.: 65 – 100 mg/dL', status: 'normal',
+        ai: 'Glicemia de jejum normal. Sem sinais de hipoglicemia ou hiperglicemia.',
+        eli5: { oque: 'O açúcar no sangue agora (após 12h de jejum). É a energia básica das células.', porq: 'Sem consumo excessivo de carboidratos. Pâncreas produzindo insulina normalmente.', prox: 'Manter alimentação equilibrada.' } },
+      { id: 'hba1c', name: 'Hemoglobina Glicada (HbA1c)', result: '5,0', unit: '%', ref: 'Normal: < 5,7% · Pré-diabetes: 5,7–6,4% · Diabetes: > 6,4%', status: 'normal',
+        ai: 'Excelente. Reflete média glicêmica dos últimos 3 meses. Abaixo de 5,7% — sem sinais de pré-diabetes ou diabetes.',
+        eli5: { oque: 'A "média" do seu açúcar nos últimos 3 meses. 5% é ótimo.', porq: 'Dieta com pouco açúcar ou boa atividade física.', prox: 'Manter. Sem risco de diabetes no horizonte.' } },
+      { id: 'glicemia-media', name: 'Glicemia Estimada Média', result: '97', unit: 'mg/dL', ref: 'Calculada a partir do HbA1c', status: 'normal',
+        ai: 'Tradução matemática do HbA1c — consistente com o resultado de 5,0%.',
+        eli5: { oque: 'Uma tradução do HbA1c para "glicemia média diária". Só matemática.', porq: 'Derivado direto do HbA1c de 5,0%.', prox: 'Manter.' } },
+    ],
+  },
+  {
+    group: 'Outros', anchor: 'outros',
+    items: [
+      { id: 'ferritina', name: 'Ferritina', result: '247', unit: 'ng/mL', ref: 'Ref.: 30 – 400 ng/mL', status: 'normal',
+        ai: 'Reserva de ferro dentro da faixa normal. Sem deficiência nem sobrecarga.',
+        eli5: { oque: 'A "reserva estratégica" de ferro do corpo, guardada no fígado.', porq: 'Boa ingestão de ferro. Sem perda por sangramento crônico.', prox: 'Manter.' } },
+      { id: 'homocisteina', name: 'Homocisteína', result: '20,3', unit: 'µmol/L', ref: 'Ref.: 4,0 – 15,4 µmol/L', status: 'alterado',
+        ai: 'Acima da faixa (15,4 µmol/L). Único valor claramente fora do intervalo. Marcador de risco cardiovascular — indica deficiência de B6, B12 ou folato, ou variante genética MTHFR.',
+        eli5: { oque: 'Um aminoácido que em excesso irrita as paredes das artérias por dentro.', porq: 'Quase sempre deficiência de B6, B12 ou folato (B9). Pode ser pouca ingestão de vegetais verdes, ou variante MTHFR.', prox: 'Este é o ponto mais importante do painel. Falar com médico — vai pedir B12 e folato e provavelmente indicar complexo B. Resolvível.' } },
+    ],
+  },
+];
+
+// ── Helpers ──
+const badgeClass = s => `badge badge-${s}`;
+const badgeLabel = s => ({ normal: 'Normal', limite: 'No Limite', atencao: 'Atenção', alterado: 'Alterado' }[s] || s);
+const doctorKey  = id => `exam_doctor_${id}`;
+const notesKey   = id => `exam_notes_${id}`;
+
+function getCounts() {
+  const c = { normal: 0, limite: 0, atencao: 0, alterado: 0 };
+  EXAMS.forEach(g => g.items.forEach(e => c[e.status]++));
+  return c;
+}
+
+function renderSummary() {
+  const c = getCounts();
+  document.getElementById('summary').innerHTML = [
+    { key: 'normal', label: 'Normal' },
+    { key: 'limite', label: 'No Limite' },
+    { key: 'atencao', label: 'Atenção' },
+    { key: 'alterado', label: 'Alterado' },
+  ].map(({ key, label }) => `
+    <div class="summary-card" data-filter="${key}" onclick="setFilter('${key}')">
+      <div class="summary-count ${key}">${c[key]}</div>
+      <div class="summary-label">${label}</div>
+    </div>
+  `).join('');
+}
+
+function renderFilterBar() {
+  document.getElementById('filter-bar').innerHTML = [
+    { key: 'all', label: 'Todos' },
+    { key: 'alterado', label: 'Alterado' },
+    { key: 'atencao', label: 'Atenção' },
+    { key: 'limite', label: 'No Limite' },
+    { key: 'normal', label: 'Normal' },
+  ].map(f => `
+    <button class="filter-btn f-${f.key}" data-filter="${f.key}" onclick="setFilter('${f.key}')">${f.label}</button>
+  `).join('');
+}
+
+let activeFilter = 'all';
+function setFilter(f) {
+  if (activeFilter === f) f = 'all';
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  document.querySelectorAll('.summary-card').forEach(c => {
+    c.className = 'summary-card' + (c.dataset.filter === f ? ` active-${f}` : '');
+  });
+  let anyVisible = false;
+  document.querySelectorAll('.section').forEach(section => {
+    let has = false;
+    section.querySelectorAll('.card').forEach(card => {
+      const show = f === 'all' || card.dataset.status === f;
+      card.style.display = show ? '' : 'none';
+      if (show) has = true;
+    });
+    section.style.display = has ? '' : 'none';
+    if (has) anyVisible = true;
+  });
+  document.getElementById('empty-state').style.display = anyVisible ? 'none' : 'block';
+  if (f !== 'all') {
+    const first = document.querySelector('.card:not([style*="none"])');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function renderGroups() {
+  document.getElementById('groups').innerHTML = EXAMS.map(group => `
+    <section class="section" id="${group.anchor}">
+      <div class="section-title">${group.group}</div>
+      <div class="section-grid">
+        ${group.items.map(exam => {
+          const dv = localStorage.getItem(doctorKey(exam.id)) || '';
+          const nv = localStorage.getItem(notesKey(exam.id))  || '';
+          return `
+          <div class="card" data-status="${exam.status}">
+            <div class="card-top">
+              <div class="card-head">
+                <div class="card-name">${exam.name}</div>
+                <span class="${badgeClass(exam.status)}">${badgeLabel(exam.status)}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-val ${exam.status}">${exam.result}</span>
+                <span class="result-unit">${exam.unit}</span>
+              </div>
+              <div class="result-ref">${exam.ref}</div>
+            </div>
+            <div class="info-boxes">
+              <div class="info-box info-box-ai">
+                <div class="box-label">Diagnóstico IA</div>
+                <div class="box-text">${exam.ai}</div>
+              </div>
+              <div class="info-box info-box-eli5">
+                <div class="box-label">Em linguagem simples</div>
+                <div class="eli5-rows">
+                  <div class="eli5-row"><span class="eli5-key">O que é:</span>${exam.eli5.oque}</div>
+                  <div class="eli5-row"><span class="eli5-key">Por que está assim:</span>${exam.eli5.porq}</div>
+                  <div class="eli5-row"><span class="eli5-key">Próximos passos:</span>${exam.eli5.prox}</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-notes">
+              <div>
+                <div class="notes-label">Diagnóstico do Médico</div>
+                <textarea id="doctor_${exam.id}" placeholder="Anote o que seu médico disse..." oninput="onInput('${exam.id}','doctor',this)">${dv}</textarea>
+                <div class="notes-footer"><span class="autosave-indicator" id="ind_${exam.id}_doctor">Salvo</span></div>
+              </div>
+              <div>
+                <div class="notes-label">Minhas Anotações</div>
+                <textarea id="notes_${exam.id}" placeholder="Dúvidas, observações ou lembretes..." oninput="onInput('${exam.id}','notes',this)">${nv}</textarea>
+                <div class="notes-footer"><span class="autosave-indicator" id="ind_${exam.id}_notes">Salvo</span></div>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </section>
+  `).join('');
+}
+
+let debounceTimers = {};
+function onInput(examId, type, el) {
+  clearTimeout(debounceTimers[examId + type]);
+  debounceTimers[examId + type] = setTimeout(() => {
+    localStorage.setItem(type === 'doctor' ? doctorKey(examId) : notesKey(examId), el.value);
+    const ind = document.getElementById(`ind_${examId}_${type}`);
+    if (ind) { ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 1800); }
+  }, 400);
+}
+
+function saveAll() {
+  EXAMS.forEach(g => g.items.forEach(exam => {
+    const d = document.getElementById(`doctor_${exam.id}`);
+    const n = document.getElementById(`notes_${exam.id}`);
+    if (d) localStorage.setItem(doctorKey(exam.id), d.value);
+    if (n) localStorage.setItem(notesKey(exam.id),  n.value);
+  }));
+  showToast('Tudo salvo.');
+}
+
+function generateMarkdown() {
+  saveAll();
+  const lines = ['# Meus Exames — Maio 2026', '', 'Coleta: 11/05/2026 · Biofast Jaguaré', ''];
+  EXAMS.forEach(group => {
+    lines.push(`## ${group.group}`, '');
+    group.items.forEach(exam => {
+      const doctor = localStorage.getItem(doctorKey(exam.id)) || '';
+      const notes  = localStorage.getItem(notesKey(exam.id))  || '';
+      lines.push(
+        `### ${exam.name}`,
+        `- **Resultado:** ${exam.result} ${exam.unit}`,
+        `- **Referência:** ${exam.ref}`,
+        `- **Status:** ${badgeLabel(exam.status)}`,
+        '',
+        `**Diagnóstico IA:** ${exam.ai}`,
+        '',
+        `**Em linguagem simples:**`,
+        `- O que é: ${exam.eli5.oque}`,
+        `- Por que está assim: ${exam.eli5.porq}`,
+        `- Próximos passos: ${exam.eli5.prox}`,
+        '',
+        `**Diagnóstico do Médico:** ${doctor.trim() || '_sem anotação_'}`,
+        '',
+        `**Minhas Anotações:** ${notes.trim() || '_sem anotação_'}`,
+        '',
+        '---', '',
+      );
+    });
+  });
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/markdown' })),
+    download: 'exames-maio-2026.md',
+  });
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('Markdown gerado e baixado.');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function init() {
+  renderSummary();
+  renderFilterBar();
+  renderGroups();
+  document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+  document.getElementById('gate-input') && document.getElementById('gate-input').focus();
+}
+
+if (sessionStorage.getItem(PW_KEY)) init();
+</script>
+</body>
+</html>
