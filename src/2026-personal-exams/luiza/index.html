@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Exames Luiza — Maio 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --normal:           #34d399;
+      --normal-bg:        #022c22;
+      --normal-border:    #065f46;
+      --limite:           #c084fc;
+      --limite-bg:        #1e0a3c;
+      --limite-border:    #6b21a8;
+      --atencao:          #f472b6;
+      --atencao-bg:       #3b0a2a;
+      --atencao-border:   #9d174d;
+      --alterado:         #fb7185;
+      --alterado-bg:      #3f0000;
+      --alterado-border:  #9f1239;
+      --text:    #f0e8ff;
+      --sub:     #d8b4fe;
+      --muted:   #a78bfa;
+      --dim:     #6d4fa0;
+      --bg:      #08051a;
+      --surface: #100d24;
+      --raised:  #1a1533;
+      --border:  #231c45;
+      --radius:  12px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── GATE ── */
+    #gate {
+      min-height: 100dvh; display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .gate-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 36px 32px; width: 100%; max-width: 360px;
+      text-align: center;
+    }
+    .gate-icon { font-size: 32px; margin-bottom: 16px; }
+    .gate-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .gate-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .gate-input {
+      width: 100%; padding: 10px 14px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--text); font-size: 15px; text-align: center;
+      letter-spacing: 0.1em; margin-bottom: 12px;
+      transition: border-color 0.15s;
+    }
+    .gate-input:focus { outline: none; border-color: var(--muted); }
+    .gate-input.shake { animation: shake 0.35s ease; border-color: var(--alterado); }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)}
+    }
+    .gate-btn {
+      width: 100%; padding: 10px; border-radius: 8px;
+      background: var(--muted); color: var(--bg);
+      font-size: 14px; font-weight: 700; cursor: pointer; border: none;
+      transition: opacity 0.15s;
+    }
+    .gate-btn:hover { opacity: 0.85; }
+    .gate-error { font-size: 12px; color: var(--alterado); margin-top: 10px; min-height: 16px; }
+
+    #app { display: none; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100; padding: 0 20px;
+    }
+    .header-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 58px; gap: 12px;
+    }
+    .header-meta { min-width: 0; }
+    .header-title { font-size: 15px; font-weight: 700; }
+    .header-sub { font-size: 11px; color: var(--muted); }
+    .header-actions { display: flex; gap: 7px; flex-shrink: 0; }
+    .btn {
+      padding: 6px 13px; border-radius: 8px; font-size: 12px; font-weight: 600;
+      cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s;
+      line-height: 1.4; white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-ghost { background: var(--raised); color: var(--sub); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--border); }
+    .btn-solid { background: var(--muted); color: var(--bg); }
+    .btn-solid:hover { opacity: 0.85; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 20px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; }
+    .nav-item {
+      padding: 9px 11px; font-size: 11px; font-weight: 600;
+      color: var(--dim); text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-item:hover { color: var(--text); border-bottom-color: var(--limite-border); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--muted); color: var(--bg);
+      font-size: 13px; padding: 10px 18px; border-radius: 8px;
+      opacity: 0; transition: transform 0.25s, opacity 0.25s;
+      z-index: 300; pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 22px 20px 64px; }
+
+    /* ── NARRATIVE ── */
+    .narrative {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px;
+    }
+    .narrative-heading {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--muted); margin-bottom: 14px;
+    }
+    .narr-block { margin-bottom: 14px; }
+    .narr-block:last-child { margin-bottom: 0; }
+    .narr-block-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; margin-bottom: 8px;
+    }
+    .narr-block-title.red { color: var(--alterado); }
+    .narr-block-title.yellow { color: var(--atencao); }
+    .narr-block-title.green { color: var(--normal); }
+    .narr-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 6px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px; color: var(--sub); line-height: 1.5;
+    }
+    .narr-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .narr-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    .narr-dot.red { background: var(--alterado); }
+    .narr-dot.yellow { background: var(--atencao); }
+    .narr-dot.green { background: var(--normal); }
+    .narr-strong { font-weight: 600; color: var(--text); }
+
+    /* ── SUMMARY ── */
+    .summary {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 8px; margin-bottom: 14px;
+    }
+    .summary-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 10px;
+      text-align: center; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      user-select: none;
+    }
+    .summary-card:active { transform: scale(0.96); }
+    .summary-card.active-normal   { border-color: var(--normal);   background: var(--normal-bg); }
+    .summary-card.active-limite   { border-color: var(--limite);   background: var(--limite-bg); }
+    .summary-card.active-atencao  { border-color: var(--atencao);  background: var(--atencao-bg); }
+    .summary-card.active-alterado { border-color: var(--alterado); background: var(--alterado-bg); }
+    .summary-count { font-size: 30px; font-weight: 800; line-height: 1; }
+    .summary-count.normal   { color: var(--normal); }
+    .summary-count.limite   { color: var(--limite); }
+    .summary-count.atencao  { color: var(--atencao); }
+    .summary-count.alterado { color: var(--alterado); }
+    .summary-label { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 500; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+    .filter-btn {
+      padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      cursor: pointer; border: 1px solid var(--border); background: transparent;
+      color: var(--dim); transition: all 0.15s; white-space: nowrap;
+    }
+    .filter-btn:hover { color: var(--text); border-color: var(--dim); }
+    .filter-btn.f-all.active     { background: var(--raised); color: var(--text); border-color: var(--muted); }
+    .filter-btn.f-normal.active  { background: var(--normal-bg);   color: var(--normal);   border-color: var(--normal-border); }
+    .filter-btn.f-limite.active  { background: var(--limite-bg);   color: var(--limite);   border-color: var(--limite-border); }
+    .filter-btn.f-atencao.active { background: var(--atencao-bg);  color: var(--atencao);  border-color: var(--atencao-border); }
+    .filter-btn.f-alterado.active{ background: var(--alterado-bg); color: var(--alterado); border-color: var(--alterado-border); }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 38px; scroll-margin-top: 115px; }
+    .section-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      margin-bottom: 12px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(390px, 1fr)); gap: 11px; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); border-left-width: 4px;
+      display: flex; flex-direction: column;
+    }
+    .card[data-status="normal"]   { border-left-color: var(--normal); }
+    .card[data-status="limite"]   { border-left-color: var(--limite); }
+    .card[data-status="atencao"]  { border-left-color: var(--atencao); }
+    .card[data-status="alterado"] { border-left-color: var(--alterado); }
+    .card-top { padding: 15px 15px 0; }
+    .card-head {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px; margin-bottom: 8px;
+    }
+    .card-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .badge {
+      padding: 2px 9px; border-radius: 999px; font-size: 10px; font-weight: 700;
+      white-space: nowrap; flex-shrink: 0; letter-spacing: 0.03em;
+    }
+    .badge-normal   { background: var(--normal-bg);   color: var(--normal);   border: 1px solid var(--normal-border); }
+    .badge-limite   { background: var(--limite-bg);   color: var(--limite);   border: 1px solid var(--limite-border); }
+    .badge-atencao  { background: var(--atencao-bg);  color: var(--atencao);  border: 1px solid var(--atencao-border); }
+    .badge-alterado { background: var(--alterado-bg); color: var(--alterado); border: 1px solid var(--alterado-border); }
+    .result-row { display: flex; align-items: baseline; gap: 5px; }
+    .result-val { font-size: 24px; font-weight: 800; line-height: 1; }
+    .result-val.normal   { color: var(--normal); }
+    .result-val.limite   { color: var(--limite); }
+    .result-val.atencao  { color: var(--atencao); }
+    .result-val.alterado { color: var(--alterado); }
+    .result-unit { font-size: 12px; color: var(--muted); }
+    .result-ref  { font-size: 11px; color: var(--dim); margin-top: 3px; margin-bottom: 11px; }
+
+    .info-boxes { display: flex; flex-direction: column; gap: 7px; margin: 0 15px 11px; }
+    .info-box { border-radius: 8px; padding: 9px 11px; }
+    .info-box-ai   { background: var(--bg); border: 1px solid var(--border); }
+    .info-box-eli5 { background: #0e0826; border: 1px solid #2d1060; }
+    .box-label {
+      font-size: 9px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--dim); margin-bottom: 5px;
+    }
+    .info-box-eli5 .box-label { color: #9333ea; }
+    .box-text { font-size: 12px; color: var(--sub); line-height: 1.55; }
+    .eli5-rows { display: flex; flex-direction: column; gap: 4px; }
+    .eli5-row { font-size: 12px; color: var(--sub); line-height: 1.5; }
+    .eli5-key { font-weight: 700; color: #c084fc; margin-right: 3px; }
+
+    .card-notes { padding: 0 15px 15px; display: flex; flex-direction: column; gap: 9px; margin-top: auto; }
+    .notes-label {
+      font-size: 10px; font-weight: 700; color: var(--dim);
+      margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    textarea {
+      width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 12px; font-family: inherit; color: var(--text);
+      resize: vertical; min-height: 60px; background: var(--bg);
+      line-height: 1.5; transition: border-color 0.15s;
+    }
+    textarea::placeholder { color: var(--dim); }
+    textarea:focus { outline: none; border-color: var(--muted); }
+    .notes-footer { display: flex; justify-content: flex-end; margin-top: 2px; }
+    .autosave-indicator { font-size: 10px; color: var(--normal); opacity: 0; transition: opacity 0.4s; }
+    .autosave-indicator.show { opacity: 1; }
+
+    #empty-state { text-align: center; padding: 56px 24px; color: var(--dim); font-size: 14px; display: none; }
+
+    @media (max-width: 680px) {
+      .section-grid { grid-template-columns: 1fr; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 400px) {
+      main { padding: 16px 14px 64px; }
+      header, nav { padding-left: 14px; padding-right: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-icon">🔒</div>
+    <div class="gate-title">Acesso restrito</div>
+    <div class="gate-sub">Digite a senha para continuar</div>
+    <input id="gate-input" class="gate-input" type="password" placeholder="senha" autocomplete="off" onkeydown="if(event.key==='Enter')unlock()">
+    <button class="gate-btn" onclick="unlock()">Entrar</button>
+    <div class="gate-error" id="gate-error"></div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="header-inner">
+      <div class="header-meta">
+        <div class="header-title">Exames Luiza</div>
+        <div class="header-sub">Coleta: 11/05/2026 &middot; Biofast Jaguaré</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost" onclick="saveAll()">Salvar</button>
+        <button class="btn btn-solid" onclick="generateMarkdown()">Gerar Markdown</button>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#lipidios"   class="nav-item">Lipídios</a>
+      <a href="#hemograma"  class="nav-item">Hemograma</a>
+      <a href="#ferro"      class="nav-item">Ferro</a>
+      <a href="#minerals"   class="nav-item">Minerais</a>
+      <a href="#hepatico"   class="nav-item">Hepático</a>
+      <a href="#renal"      class="nav-item">Renal</a>
+      <a href="#glicemia"   class="nav-item">Glicemia</a>
+      <a href="#hormonios"  class="nav-item">Hormônios</a>
+      <a href="#tireoide"   class="nav-item">Tireoide</a>
+      <a href="#vitaminas"  class="nav-item">Vitaminas</a>
+      <a href="#outros"     class="nav-item">Outros</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="narrative">
+      <div class="narrative-heading">Resumo geral</div>
+
+      <div class="narr-block">
+        <div class="narr-block-title red">Requer atenção imediata</div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">SHBG 403 nmol/L</span> — muito acima do normal (ref. feminino: 18–136 nmol/L). SHBG elevado "sequestra" testosterona livre, podendo causar queda de libido, fadiga e dificuldade de ganho muscular. Discutir com ginecologista/endocrinologista.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">PCR Ultrassensível 1,21 mg/dL</span> — acima do limiar de referência (negativo: < 0,50 mg/dL). Indica inflamação ativa ou infecciosa em curso. Nessa situação, não pode ser usado para avaliar risco cardiovascular. Discutir com médico.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">T3 1,89 ng/mL</span> — levemente acima do limite superior (ref: até 1,81 ng/mL). Sinal de que a tireoide pode estar produzindo mais T3 do que o normal — avaliar em conjunto com TSH e T4L.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">T4 Tiroxina 13,0 µg/dL</span> — acima do limite (ref: até 12,5 µg/dL). Junto com o T3 elevado, sugere possível hipertireoidismo subclínico — TSH ainda dentro do normal (1,66), mas o conjunto merece avaliação médica.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">DHT Dihidrotestosterona 46,23 pg/mL</span> — resultado bem abaixo do esperado para mulheres pré-menopausa (ref: 24–368 pg/mL). Na verdade está dentro da faixa mas próximo do limite inferior — avaliar com médico no contexto do SHBG elevado e androgênios.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">LH 0,3 mUI/mL</span> — muito abaixo da fase folicular (ref: 2,58–13,07). FSH também < 0,3 mUI/mL. Ambos suprimidos — pode indicar uso de anticoncepcional hormonal, fase lútea ou anovulação. Contextualizar com ginecologista.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">PCR Quantitativa 11,8 mg/L</span> — acima do limite (ref: < 5 mg/L). Processo inflamatório/infeccioso ativo — consistente com a PCR-us também elevada.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">Capacidade de Fixação do Ferro (TIBC) 425 µg/dL</span> — acima do limite superior (ref: até 392 µg/dL). TIBC alto com ferritina baixa (90 ng/mL relativo ao estoque) sugere reserva de ferro em processo de redução. Monitorar.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">DHEA 6,10 ng/mL</span> — acima do limite superior feminino (ref: 0,8–5,0 ng/mL). DHEA elevado pode indicar hiperfunção adrenal leve. Avaliar junto com DHEA-S e androstenediona.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot red"></span>
+          <span><span class="narr-strong">PTH 12,4 pg/mL</span> — abaixo do limite inferior (ref: 15–65 pg/mL). PTH suprimido com vitamina D adequada (64 ng/mL) pode ser normal, mas vale monitorar hipercalcemia latente.</span>
+        </div>
+      </div>
+
+      <div class="narr-block">
+        <div class="narr-block-title yellow">Atenção</div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span><span class="narr-strong">Apolipoproteína B 108 mg/dL</span> — faixa de risco intermediário/alto (< 100 = baixo; ela está em 108). Indica excesso de partículas aterogênicas.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span><span class="narr-strong">Estradiol (E2) 500 pg/mL</span> — acima da fase folicular (ref: 30–161). Pode estar na janela ovulatória (até ~1005 pg) ou lútea (até ~319 pg) — resultado depende muito do dia do ciclo. Confirmar com médico.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span><span class="narr-strong">Hemoglobina 12,4 g/dL + Hematócrito 38,4%</span> — no limite inferior feminino (ref: ≥ 12,0 g/dL e ≥ 36%). Tecnicamente dentro da faixa mas bem próximo da anemia leve. Acompanhar.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span><span class="narr-strong">Hemácias 4,4 milhões/mm³</span> — ligeiramente abaixo do limite feminino (ref: 4,0–5,2). Na verdade dentro da faixa, mas contexto com hemoglobina no limite merece atenção.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span><span class="narr-strong">Ácido Fólico 4,9 ng/mL</span> — próximo do limite inferior (ref: 3,9–26,8 ng/mL). Não está deficiente, mas está na parte baixa da faixa — importante especialmente para saúde reprodutiva.</span>
+        </div>
+      </div>
+
+      <div class="narr-block">
+        <div class="narr-block-title green">Destaques positivos</div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">Vitamina D 64 ng/mL</span> — ótima (ref. suficiente: 30–100). Nível excelente de vitamina D.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">Glicose 73 + Insulina 10,6</span> — glicemia e insulina em jejum normais. Sem resistência à insulina aparente.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">TSH 1,66 µUI/mL + T4L 1,19 ng/dL</span> — TSH dentro do normal, T4 livre ok. Apesar do T3/T4 total levemente elevados, TSH ainda compensado.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">Cálcio, Fósforo, Potássio, Sódio, Magnésio</span> — todos os eletrólitos dentro das faixas normais.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">TGO/TGP, Creatinina, Ureia, Amilase, Lipase</span> — fígado, rins e pâncreas funcionando bem.</span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot green"></span>
+          <span><span class="narr-strong">Vitamina B12 547 pg/mL + B6 20 µg/L</span> — reservas de B12 e B6 adequadas.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary" id="summary"></div>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div id="groups"></div>
+    <div id="empty-state">Nenhum exame nesta categoria.</div>
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const PW_KEY = 'exams2026_luiza_unlocked';
+function unlock() {
+  const val = document.getElementById('gate-input').value.trim().toLowerCase();
+  if (val === 'biofast') {
+    sessionStorage.setItem(PW_KEY, '1');
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    const inp = document.getElementById('gate-input');
+    inp.classList.remove('shake'); void inp.offsetWidth; inp.classList.add('shake');
+    document.getElementById('gate-error').textContent = 'Senha incorreta.';
+    inp.value = ''; inp.focus();
+  }
+}
+if (sessionStorage.getItem(PW_KEY)) {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+const EXAMS = [
+  { group: 'Perfil Lipídico', anchor: 'lipidios', items: [
+    { id: 'apob', name: 'Apolipoproteína B', result: '108', unit: 'mg/dL',
+      ref: 'Baixo: < 100 · Intermediário: < 90 · Alto: < 70', status: 'atencao',
+      ai: 'Acima da faixa de baixo risco (< 100 mg/dL). ApoB conta todas as partículas aterogênicas circulantes — em 108 está na categoria intermediária/alta.',
+      eli5: { oque: 'A contagem total de partículas "ruins" que podem se depositar nas artérias.', porq: 'Dieta com gordura saturada ou predisposição genética. Importante avaliar junto com LDL e HDL.', prox: 'Discutir com médico. Dieta rica em fibras, redução de gordura saturada.' } },
+    { id: 'apoa1', name: 'Apolipoproteína A-1', result: '225', unit: 'mg/dL',
+      ref: '100 – 200 mg/dL', status: 'limite',
+      ai: 'Levemente acima do limite superior (200 mg/dL). ApoA-1 é a proteína protetora do HDL — valor alto é geralmente positivo, mas acima da faixa merece registro.',
+      eli5: { oque: 'A proteína que forma o "colesterol bom" (HDL) e remove gordura das artérias.', porq: 'Valor acima do limite pode ser variação individual ou HDL muito ativo.', prox: 'Monitorar. Isoladamente não é preocupante.' } },
+    { id: 'triglicerides', name: 'Triglicérides', result: '118', unit: 'mg/dL',
+      ref: 'Inferior a 150 mg/dL', status: 'normal',
+      ai: 'Dentro da faixa ideal com jejum de 12h. Bom resultado.',
+      eli5: { oque: 'Gordura circulante no sangue — sobe com açúcar, álcool e carboidratos simples.', porq: 'Dieta equilibrada ou boa atividade física.', prox: 'Manter.' } },
+  ]},
+
+  { group: 'Hemograma Completo', anchor: 'hemograma', items: [
+    { id: 'hemacias', name: 'Hemácias', result: '4,4', unit: 'milhões/mm³',
+      ref: 'Ref. (fem.): 4,0 – 5,2', status: 'normal',
+      ai: 'Dentro da faixa feminina, mas na metade inferior. Observar em conjunto com hemoglobina.',
+      eli5: { oque: 'Os "caminhões" de oxigênio do sangue.', porq: 'Dentro do normal para mulheres. Menstruação regular pode manter nível no terço inferior.', prox: 'Monitorar junto com hemoglobina.' } },
+    { id: 'hemoglobina', name: 'Hemoglobina', result: '12,4', unit: 'g/dL',
+      ref: 'Ref. (fem.): 12,0 – 16,0', status: 'limite',
+      ai: 'Dentro da faixa feminina mas no primeiro 10% dela. Limiar de anemia leve é 12,0 — está apenas 0,4 acima. Merece monitoramento.',
+      eli5: { oque: 'A proteína que carrega oxigênio dentro dos glóbulos vermelhos.', porq: 'Menstruação intensa, dieta com ferro baixo ou reservas de ferro em queda.', prox: 'Monitorar. Checar ferritina (90 ng/mL — ainda ok mas pode cair mais).' } },
+    { id: 'hematocrito', name: 'Hematócrito', result: '38,4', unit: '%',
+      ref: 'Ref. (fem.): 36 – 46%', status: 'normal',
+      ai: 'Dentro da faixa feminina, próximo do terço inferior.',
+      eli5: { oque: 'Quantos % do sangue são células vermelhas.', porq: 'Normal para mulheres, especialmente em período fértil.', prox: 'Manter.' } },
+    { id: 'vcm', name: 'VCM', result: '87,1', unit: 'fL',
+      ref: '80 – 100 fL', status: 'normal',
+      ai: 'Tamanho médio das hemácias normal. Sem sinais de anemia ferropriva nem deficiência de B12/folato.',
+      eli5: { oque: 'O tamanho médio dos caminhões de oxigênio.', porq: 'Sem deficiências vitamínicas que alterem o tamanho.', prox: 'Manter.' } },
+    { id: 'hcm', name: 'HCM', result: '28,1', unit: 'pg',
+      ref: '26 – 34 pg', status: 'normal',
+      ai: 'Conteúdo de hemoglobina por célula dentro do normal.',
+      eli5: { oque: 'Quanto de oxigênio cada caminhão consegue carregar.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'chcm', name: 'CHCM', result: '32,3', unit: 'g/dL',
+      ref: '31 – 37 g/dL', status: 'normal',
+      ai: 'Concentração de hemoglobina por célula normal.',
+      eli5: { oque: 'O quão "carregado" está cada caminhão.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'rdw', name: 'RDW', result: '13,2', unit: '%',
+      ref: '11,5 – 14,5%', status: 'normal',
+      ai: 'Variação de tamanho das hemácias dentro do esperado.',
+      eli5: { oque: 'O quanto os caminhões variam de tamanho entre si.', porq: 'Medula óssea produzindo células de forma consistente.', prox: 'Manter.' } },
+    { id: 'leucocitos', name: 'Leucócitos (Total)', result: '6.430', unit: '/mm³',
+      ref: '5.000 – 10.000/mm³', status: 'normal',
+      ai: 'Contagem total de glóbulos brancos dentro da faixa normal.',
+      eli5: { oque: 'O exército do sistema imune — total de soldados circulando.', porq: 'Sem infecção sistêmica ativa por este parâmetro. (PCR elevada sugere processo localizado.)', prox: 'Nada.' } },
+    { id: 'neutrofilos', name: 'Neutrófilos', result: '62,7% · 4.032', unit: '/mm³',
+      ref: 'Abs.: 1.800 – 8.000/mm³', status: 'normal',
+      ai: 'Dentro da faixa de referência.',
+      eli5: { oque: 'Soldados de linha de frente contra bactérias.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'eosinofilos', name: 'Eosinófilos', result: '2,0% · 129', unit: '/mm³',
+      ref: 'Abs.: 0 – 600/mm³', status: 'normal',
+      ai: 'Normal. Sem sinais de alergia ou parasitose ativa.',
+      eli5: { oque: 'Soldados especializados em parasitas e reações alérgicas.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'basofilos', name: 'Basófilos', result: '0,6% · 39', unit: '/mm³',
+      ref: 'Abs.: 0 – 200/mm³', status: 'normal',
+      ai: 'Normal.',
+      eli5: { oque: 'Soldados raros envolvidos em reações alérgicas graves.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'linfocitos', name: 'Linfócitos', result: '28,9% · 1.858', unit: '/mm³',
+      ref: 'Abs.: 1.000 – 5.000/mm³', status: 'normal',
+      ai: 'Dentro da faixa de referência.',
+      eli5: { oque: 'Soldados com memória imunológica — reconhecem inimigos já combatidos.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'monocitos', name: 'Monócitos', result: '5,8% · 373', unit: '/mm³',
+      ref: 'Abs.: 80 – 1.200/mm³', status: 'normal',
+      ai: 'Normal.',
+      eli5: { oque: 'O "serviço de limpeza" — removem células mortas e detritos.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'plaquetas', name: 'Plaquetas', result: '311.000', unit: '/mm³',
+      ref: '150.000 – 450.000/mm³', status: 'normal',
+      ai: 'Contagem de plaquetas adequada.',
+      eli5: { oque: 'As "tampas de emergência" — fecham feridas quando você sangra.', porq: 'Produção normal na medula.', prox: 'Nada.' } },
+    { id: 'vpm', name: 'VPM', result: '9,7', unit: 'fL',
+      ref: 'Ref. (fem.): 7,9 – 10,8 fL', status: 'normal',
+      ai: 'Tamanho médio de plaquetas dentro do normal feminino.',
+      eli5: { oque: 'O tamanho médio das tampas de emergência.', porq: 'Normal.', prox: 'Nada.' } },
+  ]},
+
+  { group: 'Metabolismo do Ferro', anchor: 'ferro', items: [
+    { id: 'tibc', name: 'Capacidade Total de Fixação do Ferro (TIBC)', result: '425', unit: 'µg/dL',
+      ref: '135 – 392 µg/dL', status: 'alterado',
+      ai: 'Acima do limite superior (392 µg/dL). TIBC elevado indica que o sangue está com "capacidade vazia" de carregar ferro — o organismo está tentando absorver mais. Sugere início de deficiência de ferro, especialmente com ferritina em queda.',
+      eli5: { oque: 'A "capacidade total de carga" dos transportadores de ferro no sangue.', porq: 'TIBC sobe quando o corpo tem menos ferro disponível — ele "abre mais espaço" para absorver mais. Com ferritina em 90 (ainda normal mas baixo para uma mulher de 33 anos), sugere que os estoques estão diminuindo.', prox: 'Discutir com médico. Pode indicar necessidade de suplementação de ferro preventiva.' } },
+    { id: 'ferro', name: 'Ferro Sérico', result: '100', unit: 'µg/dL',
+      ref: '33 – 193 µg/dL', status: 'normal',
+      ai: 'Dentro da faixa de referência.',
+      eli5: { oque: 'O ferro circulando ativamente no sangue agora.', porq: 'Normal. Ferro sérico flutuante durante o dia — melhor avaliado em conjunto com ferritina e TIBC.', prox: 'Manter ingestão de ferro na dieta (carne vermelha, leguminosas, vegetais escuros).' } },
+    { id: 'saturacao', name: 'Índice de Saturação da Transferrina', result: '24', unit: '%',
+      ref: 'Mulheres: 15 – 50%', status: 'normal',
+      ai: 'Dentro da faixa feminina. Indica que 24% dos transportadores de ferro estão ocupados — normal mas no terço inferior.',
+      eli5: { oque: 'Quantos % dos "caminhões de ferro" estão carregados.', porq: 'Normal, mas junto com TIBC elevado sugere que os caminhões estão pouco cheios.', prox: 'Monitorar junto com ferritina.' } },
+    { id: 'transferrina', name: 'Transferrina', result: '342', unit: 'mg/dL',
+      ref: '200 – 360 mg/dL', status: 'normal',
+      ai: 'Dentro da faixa mas próximo do limite superior — consistente com TIBC elevado.',
+      eli5: { oque: 'A proteína que transporta ferro pelo sangue — os "caminhões" do ferro.', porq: 'Transferrina sobe quando o corpo quer transportar mais ferro. Consistente com TIBC alto.', prox: 'Monitorar.' } },
+    { id: 'ferritina', name: 'Ferritina', result: '90', unit: 'ng/mL',
+      ref: 'Ref. (fem.): 11 – 306,8 ng/mL', status: 'normal',
+      ai: 'Dentro da faixa feminina. Para uma mulher de 33 anos em período fértil, 90 ng/mL é um valor razoável, mas no contexto do TIBC elevado vale acompanhar.',
+      eli5: { oque: 'A "reserva estratégica" de ferro no fígado.', porq: 'Normal, mas TIBC elevado sugere que os estoques podem estar sendo consumidos mais rápido do que repostos.', prox: 'Manter dieta rica em ferro. Monitorar em 6 meses.' } },
+  ]},
+
+  { group: 'Minerais e Eletrólitos', anchor: 'minerals', items: [
+    { id: 'calcio-total', name: 'Cálcio Total', result: '9,2', unit: 'mg/dL',
+      ref: '8,6 – 10,0 mg/dL', status: 'normal',
+      ai: 'Dentro da faixa de referência.',
+      eli5: { oque: 'O cálcio total no sangue — vital para ossos, músculos e nervos.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'calcio-ion', name: 'Cálcio Ionizável', result: '1,14', unit: 'mmol/L',
+      ref: '1,11 – 1,40 mmol/L', status: 'normal',
+      ai: 'Fração ativa do cálcio dentro do normal.',
+      eli5: { oque: 'A fração do cálcio que realmente está "disponível" para uso pelo corpo.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'fosforo', name: 'Fósforo', result: '3,3', unit: 'mg/dL',
+      ref: '2,5 – 4,5 mg/dL', status: 'normal',
+      ai: 'Normal.',
+      eli5: { oque: 'Mineral importante para energia (ATP) e saúde óssea.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'potassio', name: 'Potássio', result: '4,2', unit: 'mmol/L',
+      ref: '3,5 – 5,1 mmol/L', status: 'normal',
+      ai: 'Normal. Eletrolito essencial para função cardíaca e muscular.',
+      eli5: { oque: 'Mineral crucial para o coração e músculos funcionarem bem.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'magnesio', name: 'Magnésio Sérico', result: '2,2', unit: 'mg/dL',
+      ref: '1,6 – 2,6 mg/dL', status: 'normal',
+      ai: 'Normal.',
+      eli5: { oque: 'Mineral envolvido em mais de 300 reações no corpo — sono, humor, energia.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'sodio', name: 'Sódio', result: '144', unit: 'mmol/L',
+      ref: '136 – 145 mmol/L', status: 'normal',
+      ai: 'No limite superior, mas dentro da faixa normal.',
+      eli5: { oque: 'O principal eletrólito do sangue — regula pressão e hidratação.', porq: 'Normal.', prox: 'Manter boa hidratação.' } },
+    { id: 'zinco', name: 'Zinco Sérico', result: '94', unit: 'µg/dL',
+      ref: '70 – 120 µg/dL', status: 'normal',
+      ai: 'Normal.',
+      eli5: { oque: 'Mineral importante para imunidade, cicatrização e fertilidade.', porq: 'Normal.', prox: 'Manter.' } },
+    { id: 'selenio', name: 'Selênio Sérico', result: '84,3', unit: 'µg/L',
+      ref: '70 – 120 µg/L', status: 'normal',
+      ai: 'Normal. Selênio é antioxidante essencial e importante para a tireoide.',
+      eli5: { oque: 'Mineral antioxidante — protege células e apoia a tireoide.', porq: 'Normal.', prox: 'Manter.' } },
+  ]},
+
+  { group: 'Função Hepática e Pancreática', anchor: 'hepatico', items: [
+    { id: 'tgo', name: 'TGO (AST)', result: '20', unit: 'U/L',
+      ref: 'Mulheres: até 35 U/L', status: 'normal',
+      ai: 'Transaminase hepática bem dentro do normal.',
+      eli5: { oque: 'Enzima que vaza quando o fígado é danificado. Baixa = fígado saudável.', porq: 'Sem inflamação hepática.', prox: 'Nada.' } },
+    { id: 'tgp', name: 'TGP (ALT)', result: '14', unit: 'U/L',
+      ref: 'Mulheres: até 35 U/L', status: 'normal',
+      ai: 'Marcador mais específico de saúde hepática — resultado ótimo.',
+      eli5: { oque: 'A enzima mais específica do fígado — a primeira a subir quando algo está errado.', porq: 'Fígado em excelente estado.', prox: 'Nada.' } },
+    { id: 'amilase', name: 'Amilase', result: '75', unit: 'U/L',
+      ref: '28 – 100 U/L', status: 'normal',
+      ai: 'Normal. Enzima pancreática e salivar dentro da faixa.',
+      eli5: { oque: 'Enzima digestiva produzida pelo pâncreas e glândulas salivares.', porq: 'Pâncreas funcionando normalmente.', prox: 'Nada.' } },
+    { id: 'lipase', name: 'Lipase', result: '35', unit: 'U/L',
+      ref: '13 – 60 U/L', status: 'normal',
+      ai: 'Normal. Lipase é o marcador mais específico de saúde pancreática.',
+      eli5: { oque: 'Enzima pancreática que digere gordura.', porq: 'Pâncreas saudável.', prox: 'Nada.' } },
+  ]},
+
+  { group: 'Função Renal', anchor: 'renal', items: [
+    { id: 'creatinina', name: 'Creatinina', result: '0,82', unit: 'mg/dL',
+      ref: 'Ref. (fem.): 0,50 – 0,90 mg/dL', status: 'normal',
+      ai: 'Dentro da faixa feminina, no terço superior. Rins filtrando normalmente.',
+      eli5: { oque: 'Resíduo muscular filtrado pelos rins — sobe quando os rins estão sobrecarregados.', porq: 'Rins funcionando bem.', prox: 'Manter hidratação. Evitar AINEs sem necessidade.' } },
+    { id: 'ureia', name: 'Ureia', result: '23,3', unit: 'mg/dL',
+      ref: '16,6 – 48,5 mg/dL', status: 'normal',
+      ai: 'Normal. Ureia é o principal produto do metabolismo proteico, filtrado pelos rins.',
+      eli5: { oque: 'Resíduo da digestão de proteínas — filtrado pelos rins normalmente.', porq: 'Rins funcionando bem.', prox: 'Nada.' } },
+  ]},
+
+  { group: 'Glicemia e Insulina', anchor: 'glicemia', items: [
+    { id: 'glicose', name: 'Glicose', result: '73', unit: 'mg/dL',
+      ref: '65 – 100 mg/dL', status: 'normal',
+      ai: 'Glicemia de jejum normal.',
+      eli5: { oque: 'O açúcar no sangue após 12h de jejum.', porq: 'Sem consumo excessivo de carboidratos simples.', prox: 'Manter.' } },
+    { id: 'insulina', name: 'Insulina', result: '10,6', unit: 'µU/mL',
+      ref: '2,6 – 24,9 µU/mL', status: 'normal',
+      ai: 'Insulina de jejum dentro do normal. Sem sinais de resistência à insulina.',
+      eli5: { oque: 'O hormônio que "abre a porta" das células para o açúcar entrar.', porq: 'Nível adequado em jejum — sem hiperinsulinemia que indicaria resistência à insulina.', prox: 'Manter.' } },
+    { id: 'pcr-quant', name: 'PCR Quantitativa', result: '11,8', unit: 'mg/L',
+      ref: 'Inferior a 5,0 mg/L', status: 'alterado',
+      ai: 'Acima do limite de referência (< 5 mg/L). Indica processo inflamatório ou infeccioso ativo. Consistente com a PCR-us também elevada (1,21 mg/dL).',
+      eli5: { oque: 'A "sirene" de inflamação do corpo — sobe quando há infecção, inflamação ou lesão tecidual.', porq: 'Processo inflamatório ativo no momento da coleta. Pode ser desde uma infecção viral até inflamação sistêmica.', prox: 'Discutir com médico — identificar causa da inflamação.' } },
+    { id: 'pcr-us', name: 'PCR Ultrassensível (PCR-us)', result: '1,21', unit: 'mg/dL',
+      ref: 'Negativo: < 0,50 mg/dL', status: 'alterado',
+      ai: 'Positivo (> 0,50 mg/dL). Indica processo inflamatório/infeccioso em andamento. Nesta situação, não pode ser usado para avaliação de risco cardiovascular.',
+      eli5: { oque: 'Versão mais sensível da PCR — detecta inflamações menores.', porq: 'Inflamação ativa no momento da coleta. Em 1,21 está mais de 2x acima do limiar negativo.', prox: 'Repetir após resolução do processo (aguardar pelo menos 2 semanas). Identificar causa com médico.' } },
+  ]},
+
+  { group: 'Hormônios Femininos e Adrenais', anchor: 'hormonios', items: [
+    { id: 'testosterona-total', name: 'Testosterona Total', result: '48,1', unit: 'ng/dL',
+      ref: 'Ref. (fem.): 10 – 54 ng/dL', status: 'normal',
+      ai: 'Dentro da faixa feminina, próximo do limite superior.',
+      eli5: { oque: 'Hormônio importante também em mulheres: libido, energia, massa muscular.', porq: 'Normal. Próximo do limite superior pode ser variação individual.', prox: 'Avaliar em conjunto com SHBG (que está muito elevado, sequestrado a T. livre).' } },
+    { id: 'testosterona-livre', name: 'Testosterona Livre', result: '0,95', unit: 'ng/dL',
+      ref: 'Ref. (fem.): 0,06 – 1,08 ng/dL', status: 'normal',
+      ai: 'Dentro da faixa, mas próximo do limite superior. No contexto do SHBG extremamente elevado (403 nmol/L), essa testosterona livre disponível é relativamente escassa.',
+      eli5: { oque: 'A testosterona "ativa" — só esta fração age nos tecidos.', porq: 'Tecnicamente normal, mas o SHBG alto está "segurando" grande parte da testosterona total, deixando menos livre.', prox: 'Discutir com médico o impacto do SHBG elevado na testosterona biodisponível.' } },
+    { id: 'shbg', name: 'SHBG', result: '403,0', unit: 'nmol/L',
+      ref: 'Ref. (fem. não-grávida): 18 – 136 nmol/L', status: 'alterado',
+      ai: 'Muito acima do limite superior feminino (136 nmol/L). SHBG é a proteína que "prende" os hormônios sexuais. Nível tão alto sequestra testosterona e estradiol, deixando menos hormônio livre para agir. Pode causar queda de libido, fadiga, ressecamento vaginal, dificuldade de ganho muscular.',
+      eli5: { oque: 'A proteína que "amarra" os hormônios sexuais — quanto mais SHBG, menos hormônio "livre" disponível.', porq: 'Pode ser causado por: uso de anticoncepcional oral (causa mais comum!), hipertireoidismo, dieta com poucas calorias ou muita fibra, predisposição genética.', prox: 'Discutir com ginecologista/endocrinologista. Se usar anticoncepcional oral, pode ser causa direta.' } },
+    { id: 'estradiol', name: 'E2 – Estradiol', result: '500', unit: 'pg/mL',
+      ref: 'Folicular: 30–161 · Ovulatória: 98–1.005 · Lútea: 43–319', status: 'atencao',
+      ai: 'Valor de 500 pg/mL está acima da fase folicular e lútea, mas dentro da janela ovulatória. O resultado é muito dependente do dia do ciclo na hora da coleta. Contextualizar com médico.',
+      eli5: { oque: 'O principal hormônio feminino — regula ciclo, fertilidade, ossos e humor.', porq: 'O valor depende totalmente do dia do ciclo menstrual na hora do exame. 500 pode ser normal na ovulação.', prox: 'Confirmar com médico em qual fase do ciclo a coleta foi feita.' } },
+    { id: 'fsh', name: 'FSH', result: '< 0,300', unit: 'mUI/mL',
+      ref: 'Fase folicular: 3,5 – 12,5 mUI/mL', status: 'alterado',
+      ai: 'Suprimido (< 0,3 mUI/mL), bem abaixo da referência. FSH suprimido junto com LH suprimido é o padrão clássico de uso de anticoncepcional hormonal combinado, ou pode indicar fase lútea avançada ou anovulação.',
+      eli5: { oque: 'O hormônio que "ordena" os ovários a desenvolver folículos.', porq: 'FSH suprimido junto com LH suprimido sugere anticoncepcional hormonal combinado (pílula) inibindo os hormônios da hipófise. Confirmar com médico.', prox: 'Contextualizar com uso de anticoncepcional.' } },
+    { id: 'lh', name: 'LH', result: '0,3', unit: 'mUI/mL',
+      ref: 'Fase folicular: 2,58 – 13,07 mUI/mL', status: 'alterado',
+      ai: 'Suprimido. LH + FSH suprimidos é padrão de supressão hipofisária por anticoncepcional hormonal combinado.',
+      eli5: { oque: 'O hormônio que "dispara" a ovulação.', porq: 'Suprimido — consistente com uso de anticoncepcional oral que inibe o ciclo natural.', prox: 'Confirmar com médico.' } },
+    { id: 'progesterona', name: 'Progesterona', result: '0,11', unit: 'ng/mL',
+      ref: 'Fase folicular: < 1,0 ng/mL', status: 'normal',
+      ai: 'Dentro da referência para fase folicular. Consistente com supressão ovulatória.',
+      eli5: { oque: 'Hormônio que prepara o útero para gravidez após a ovulação.', porq: 'Baixo — consistente com ausência de ovulação (fase folicular ou uso de anticoncepcional).', prox: 'Normal neste contexto.' } },
+    { id: 'prolactina', name: 'Prolactina', result: '6,96', unit: 'ng/mL',
+      ref: 'Ref. (fem.): 4,79 – 23,3 ng/mL', status: 'normal',
+      ai: 'Dentro da faixa feminina normal. Sem sinais de hiperprolactinemia.',
+      eli5: { oque: 'Hormônio da amamentação — quando elevado fora da gravidez pode causar irregularidades menstruais.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'dheas', name: 'DHEA-S', result: '41', unit: 'µg/dL',
+      ref: 'Ref. (fem. 35–49 anos): 18 – 246 µg/dL', status: 'normal',
+      ai: 'Dentro da faixa feminina, na metade inferior.',
+      eli5: { oque: 'Hormônio adrenal precursor dos hormônios sexuais — o "estoque" de androgênios.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'androstenediona', name: 'Androstenediona', result: '0,3', unit: 'ng/mL',
+      ref: 'Ref. (fem.): 0,3 – 3,3 ng/mL', status: 'normal',
+      ai: 'No limite inferior da referência feminina.',
+      eli5: { oque: 'Hormônio precursor de estrogênio e testosterona produzido pelas adrenais e ovários.', porq: 'No limite inferior. Pode ser influenciado por uso de anticoncepcional.', prox: 'Monitorar.' } },
+    { id: 'dht', name: 'DHT – Dihidrotestosterona', result: '46,23', unit: 'pg/mL',
+      ref: 'Mulheres pré-menopausa: 24 – 368 pg/mL', status: 'normal',
+      ai: 'Dentro da faixa feminina pré-menopausa, no terço inferior.',
+      eli5: { oque: 'Forma mais potente da testosterona — envolvida em cabelo, pele e libido.', porq: 'Normal para mulheres, mas no terço inferior — consistente com SHBG elevado.', prox: 'Avaliar em conjunto com SHBG.' } },
+    { id: 'dhea', name: 'DHEA', result: '6,10', unit: 'ng/mL',
+      ref: 'Ref. (fem.): 0,8 – 5,0 ng/mL', status: 'alterado',
+      ai: 'Acima do limite superior feminino (5,0 ng/mL). DHEA é produzida pelas adrenais e é precursora dos hormônios sexuais. Nível elevado pode indicar hiperfunção adrenal leve.',
+      eli5: { oque: 'Hormônio adrenal — precursor de estrogênio e testosterona, envolvido em energia e bem-estar.', porq: 'Levemente acima do limite. Pode ser variação individual, estresse adrenal ou hiperfunção leve.', prox: 'Discutir com médico — pode requerer investigação adrenal se persistente.' } },
+    { id: '17-alfa', name: '17-Alfa Hidroxi Progesterona', result: '0,10', unit: 'ng/mL',
+      ref: 'Mulheres – fase folicular: 0,20 – 1,30 ng/mL', status: 'atencao',
+      ai: 'Abaixo do limite inferior da fase folicular feminina (0,20 ng/mL). Pode ser normal em fase lútea tardia ou com uso de anticoncepcional. Contextualizar com médico.',
+      eli5: { oque: 'Hormônio intermediário na produção de cortisol e androgênios pelas adrenais.', porq: 'Baixo — pode ser fase do ciclo (lútea) ou supressão por anticoncepcional.', prox: 'Confirmar com médico em qual fase do ciclo foi coletado.' } },
+    { id: 'pth', name: 'PTH – Paratormônio', result: '12,4', unit: 'pg/mL',
+      ref: '15 – 65 pg/mL', status: 'alterado',
+      ai: 'Abaixo do limite inferior (15 pg/mL). PTH baixo com cálcio normal (9,2 mg/dL) e vitamina D ótima (64 ng/mL) é consistente — a Vit. D adequada suprime o PTH. Avaliar com médico se há hipercalcemia.',
+      eli5: { oque: 'Hormônio que regula o cálcio no sangue — sobe quando o cálcio está baixo.', porq: 'PTH baixo é esperado quando vitamina D está ótima (64 ng/mL) — a Vit. D suprime o PTH.', prox: 'Provavelmente normal neste contexto. Confirmar com médico.' } },
+  ]},
+
+  { group: 'Tireoide', anchor: 'tireoide', items: [
+    { id: 'tsh', name: 'TSH (Ultrassensível)', result: '1,66', unit: 'µUI/mL',
+      ref: '0,38 – 5,33 µUI/mL', status: 'normal',
+      ai: 'TSH dentro da faixa normal — a hipófise está pedindo uma quantidade normal de produção à tireoide.',
+      eli5: { oque: 'O hormônio que "comanda" a tireoide — quando TSH está normal, a tireoide está respondendo adequadamente.', porq: 'Normal.', prox: 'Monitorar junto com T3 e T4 que estão levemente elevados.' } },
+    { id: 't3', name: 'T3 – Triiodotironina', result: '1,89', unit: 'ng/mL',
+      ref: '0,60 – 1,81 ng/mL', status: 'alterado',
+      ai: 'Levemente acima do limite superior (1,81 ng/mL). T3 é o hormônio tireoidiano mais ativo. Junto com T4 também elevado, mas TSH ainda normal, sugere possível hipertireoidismo subclínico inicial.',
+      eli5: { oque: 'A forma mais ativa dos hormônios da tireoide — acelera o metabolismo.', porq: 'Levemente elevado. Junto com T4 alto mas TSH ainda normal — pode ser variação ou início de hipertireoidismo subclínico.', prox: 'Avaliar com médico/endocrinologista. Anticorpos TPO e anti-tireoglobulina normais — afasta tireoidite de Hashimoto.' } },
+    { id: 't4-total', name: 'T4 – Tiroxina Total', result: '13,0', unit: 'µg/dL',
+      ref: '4,5 – 12,5 µg/dL', status: 'alterado',
+      ai: 'Levemente acima do limite superior (12,5 µg/dL). T4 total pode ser influenciado por proteínas transportadoras — o SHBG elevado pode afetar indiretamente. Avaliar junto com T4 livre.',
+      eli5: { oque: 'A forma de "estoque" dos hormônios da tireoide — precisa ser convertida em T3 para agir.', porq: 'Levemente acima do limite. Avaliar em conjunto com T4 livre e TSH.', prox: 'Discutir com médico/endocrinologista.' } },
+    { id: 't4l', name: 'T4L – Tiroxina Livre', result: '1,19', unit: 'ng/dL',
+      ref: '0,70 – 1,48 ng/dL', status: 'normal',
+      ai: 'T4 livre dentro da faixa normal — o que atenua a preocupação com T3/T4 total levemente elevados.',
+      eli5: { oque: 'A fração ativa do T4 — a que realmente age no corpo.', porq: 'Normal. Isso sugere que o T4 total elevado pode ser influenciado por proteínas transportadoras.', prox: 'Monitorar.' } },
+    { id: 'anti-tpo', name: 'Anti-TPO (Anticorpo Antitireoidiano)', result: '15', unit: 'UI/mL',
+      ref: 'Até 34 UI/mL', status: 'normal',
+      ai: 'Normal. Ausência de anticorpos contra a tireoide — afasta tireoidite de Hashimoto e outras autoimunes.',
+      eli5: { oque: 'Anticorpos que atacam a tireoide — elevados indicam doença autoimune da tireoide.', porq: 'Normal — sistema imune não está atacando a tireoide.', prox: 'Nada.' } },
+    { id: 'anti-tireoglob', name: 'Anti-Tireoglobulina', result: '24', unit: 'UI/mL',
+      ref: 'Até 115 UI/mL', status: 'normal',
+      ai: 'Normal.',
+      eli5: { oque: 'Outro anticorpo relacionado à tireoide — elevado em Hashimoto ou câncer de tireoide.', porq: 'Normal.', prox: 'Nada.' } },
+    { id: 'trab', name: 'TRAb (Anti-receptor de TSH)', result: '1,32', unit: 'UI/L',
+      ref: 'Não reagente: < 3,10 UI/L', status: 'normal',
+      ai: 'Não reagente (< 3,10 UI/L). Afasta doença de Graves como causa dos valores levemente elevados de T3/T4.',
+      eli5: { oque: 'Anticorpo que estimula a tireoide a produzir mais hormônio — elevado na Doença de Graves.', porq: 'Normal — não há anticorpos estimuladores da tireoide.', prox: 'Nada. Graves descartado.' } },
+  ]},
+
+  { group: 'Vitaminas e Micronutrientes', anchor: 'vitaminas', items: [
+    { id: 'vit-d', name: 'Vitamina D – 25 Hidroxi', result: '64', unit: 'ng/mL',
+      ref: 'Suficiente: 30 – 100 ng/mL', status: 'normal',
+      ai: 'Ótima. Nível de vitamina D excelente — bem acima do limiar de suficiência.',
+      eli5: { oque: 'A vitamina do sol — essencial para ossos, imunidade, humor e muito mais.', porq: 'Bom resultado. Provavelmente exposição solar adequada ou suplementação.', prox: 'Manter.' } },
+    { id: 'vit-b12', name: 'Vitamina B12 – Cobalamina', result: '547', unit: 'pg/mL',
+      ref: '197 – 771 pg/mL', status: 'normal',
+      ai: 'Dentro da faixa, no terço médio.',
+      eli5: { oque: 'Vitamina essencial para nervos, DNA e formação de glóbulos vermelhos.', porq: 'Normal. Boa ingestão de proteína animal ou suplementação.', prox: 'Manter.' } },
+    { id: 'acido-folico', name: 'Ácido Fólico (Vitamina B9)', result: '4,9', unit: 'ng/mL',
+      ref: '3,9 – 26,8 ng/mL', status: 'limite',
+      ai: 'Dentro da faixa mas no primeiro 5% dela (próximo do limite inferior: 3,9 ng/mL). Para uma mulher em idade fértil, folato é especialmente importante para saúde reprodutiva e neurológica.',
+      eli5: { oque: 'Vitamina fundamental para formação do DNA — especialmente crítica para mulheres em idade fértil.', porq: 'Baixo dentro do normal. Pode ser pouca ingestão de vegetais verdes escuros, leguminosas.', prox: 'Aumentar consumo de folhas verdes (espinafre, couve), leguminosas. Suplementação de ácido fólico se pensar em engravidar.' } },
+    { id: 'vit-b6', name: 'Vitamina B6', result: '20,0', unit: 'µg/L',
+      ref: '12,6 – 45,2 µg/L', status: 'normal',
+      ai: 'Normal.',
+      eli5: { oque: 'Vitamina envolvida no metabolismo de homocisteína, produção de serotonina e imunidade.', porq: 'Normal.', prox: 'Manter.' } },
+  ]},
+
+  { group: 'Outros', anchor: 'outros', items: [
+    { id: 'homocisteina', name: 'Homocisteína', result: '15,4', unit: 'µmol/L',
+      ref: '4,0 – 15,4 µmol/L', status: 'limite',
+      ai: 'Exatamente no limite superior de referência (15,4 µmol/L). Tecnicamente dentro da faixa, mas qualquer valor acima deste é marcador de risco cardiovascular e deficiência de B6/B12/folato.',
+      eli5: { oque: 'Aminoácido que em excesso irrita as artérias por dentro — marcador de risco cardiovascular.', porq: 'Exatamente no limite. B6 e B12 normais, mas ácido fólico está baixo no normal — folato baixo pode manter a homocisteína no limite.', prox: 'Aumentar ácido fólico na dieta. Monitorar — qualquer aumento a partir daqui seria preocupante.' } },
+  ]},
+];
+
+const badgeClass = s => `badge badge-${s}`;
+const badgeLabel = s => ({ normal: 'Normal', limite: 'No Limite', atencao: 'Atenção', alterado: 'Alterado' }[s] || s);
+const doctorKey  = id => `luiza_doctor_${id}`;
+const notesKey   = id => `luiza_notes_${id}`;
+
+function getCounts() {
+  const c = { normal: 0, limite: 0, atencao: 0, alterado: 0 };
+  EXAMS.forEach(g => g.items.forEach(e => c[e.status]++));
+  return c;
+}
+
+function renderSummary() {
+  const c = getCounts();
+  document.getElementById('summary').innerHTML = [
+    { key: 'normal', label: 'Normal' },
+    { key: 'limite', label: 'No Limite' },
+    { key: 'atencao', label: 'Atenção' },
+    { key: 'alterado', label: 'Alterado' },
+  ].map(({ key, label }) => `
+    <div class="summary-card" data-filter="${key}" onclick="setFilter('${key}')">
+      <div class="summary-count ${key}">${c[key]}</div>
+      <div class="summary-label">${label}</div>
+    </div>
+  `).join('');
+}
+
+function renderFilterBar() {
+  document.getElementById('filter-bar').innerHTML = [
+    { key: 'all', label: 'Todos' },
+    { key: 'alterado', label: 'Alterado' },
+    { key: 'atencao', label: 'Atenção' },
+    { key: 'limite', label: 'No Limite' },
+    { key: 'normal', label: 'Normal' },
+  ].map(f => `<button class="filter-btn f-${f.key}" data-filter="${f.key}" onclick="setFilter('${f.key}')">${f.label}</button>`).join('');
+}
+
+let activeFilter = 'all';
+function setFilter(f) {
+  if (activeFilter === f) f = 'all';
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+  document.querySelectorAll('.summary-card').forEach(c => {
+    c.className = 'summary-card' + (c.dataset.filter === f ? ` active-${f}` : '');
+  });
+  let any = false;
+  document.querySelectorAll('.section').forEach(s => {
+    let has = false;
+    s.querySelectorAll('.card').forEach(c => {
+      const show = f === 'all' || c.dataset.status === f;
+      c.style.display = show ? '' : 'none';
+      if (show) has = true;
+    });
+    s.style.display = has ? '' : 'none';
+    if (has) any = true;
+  });
+  document.getElementById('empty-state').style.display = any ? 'none' : 'block';
+  if (f !== 'all') {
+    const first = document.querySelector('.card:not([style*="none"])');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function renderGroups() {
+  document.getElementById('groups').innerHTML = EXAMS.map(group => `
+    <section class="section" id="${group.anchor}">
+      <div class="section-title">${group.group}</div>
+      <div class="section-grid">
+        ${group.items.map(exam => {
+          const dv = localStorage.getItem(doctorKey(exam.id)) || '';
+          const nv = localStorage.getItem(notesKey(exam.id)) || '';
+          return `
+          <div class="card" data-status="${exam.status}">
+            <div class="card-top">
+              <div class="card-head">
+                <div class="card-name">${exam.name}</div>
+                <span class="${badgeClass(exam.status)}">${badgeLabel(exam.status)}</span>
+              </div>
+              <div class="result-row">
+                <span class="result-val ${exam.status}">${exam.result}</span>
+                <span class="result-unit">${exam.unit}</span>
+              </div>
+              <div class="result-ref">${exam.ref}</div>
+            </div>
+            <div class="info-boxes">
+              <div class="info-box info-box-ai">
+                <div class="box-label">Diagnóstico IA</div>
+                <div class="box-text">${exam.ai}</div>
+              </div>
+              <div class="info-box info-box-eli5">
+                <div class="box-label">Em linguagem simples</div>
+                <div class="eli5-rows">
+                  <div class="eli5-row"><span class="eli5-key">O que é:</span>${exam.eli5.oque}</div>
+                  <div class="eli5-row"><span class="eli5-key">Por que está assim:</span>${exam.eli5.porq}</div>
+                  <div class="eli5-row"><span class="eli5-key">Próximos passos:</span>${exam.eli5.prox}</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-notes">
+              <div>
+                <div class="notes-label">Diagnóstico do Médico</div>
+                <textarea id="doctor_${exam.id}" placeholder="Anote o que seu médico disse..." oninput="onInput('${exam.id}','doctor',this)">${dv}</textarea>
+                <div class="notes-footer"><span class="autosave-indicator" id="ind_${exam.id}_doctor">Salvo</span></div>
+              </div>
+              <div>
+                <div class="notes-label">Minhas Anotações</div>
+                <textarea id="notes_${exam.id}" placeholder="Dúvidas, observações ou lembretes..." oninput="onInput('${exam.id}','notes',this)">${nv}</textarea>
+                <div class="notes-footer"><span class="autosave-indicator" id="ind_${exam.id}_notes">Salvo</span></div>
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </section>
+  `).join('');
+}
+
+let debounceTimers = {};
+function onInput(examId, type, el) {
+  clearTimeout(debounceTimers[examId + type]);
+  debounceTimers[examId + type] = setTimeout(() => {
+    localStorage.setItem(type === 'doctor' ? doctorKey(examId) : notesKey(examId), el.value);
+    const ind = document.getElementById(`ind_${examId}_${type}`);
+    if (ind) { ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 1800); }
+  }, 400);
+}
+
+function saveAll() {
+  EXAMS.forEach(g => g.items.forEach(exam => {
+    const d = document.getElementById(`doctor_${exam.id}`);
+    const n = document.getElementById(`notes_${exam.id}`);
+    if (d) localStorage.setItem(doctorKey(exam.id), d.value);
+    if (n) localStorage.setItem(notesKey(exam.id), n.value);
+  }));
+  showToast('Tudo salvo.');
+}
+
+function generateMarkdown() {
+  saveAll();
+  const lines = ['# Exames Luiza — Maio 2026', '', 'Coleta: 11/05/2026 · Biofast Jaguaré', ''];
+  EXAMS.forEach(group => {
+    lines.push(`## ${group.group}`, '');
+    group.items.forEach(exam => {
+      const doctor = localStorage.getItem(doctorKey(exam.id)) || '';
+      const notes  = localStorage.getItem(notesKey(exam.id)) || '';
+      lines.push(
+        `### ${exam.name}`,
+        `- **Resultado:** ${exam.result} ${exam.unit}`,
+        `- **Referência:** ${exam.ref}`,
+        `- **Status:** ${badgeLabel(exam.status)}`,
+        '',
+        `**Diagnóstico IA:** ${exam.ai}`,
+        '',
+        `**Em linguagem simples:**`,
+        `- O que é: ${exam.eli5.oque}`,
+        `- Por que está assim: ${exam.eli5.porq}`,
+        `- Próximos passos: ${exam.eli5.prox}`,
+        '',
+        `**Diagnóstico do Médico:** ${doctor.trim() || '_sem anotação_'}`,
+        '',
+        `**Minhas Anotações:** ${notes.trim() || '_sem anotação_'}`,
+        '', '---', '',
+      );
+    });
+  });
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/markdown' })),
+    download: 'exames-luiza-maio-2026.md',
+  });
+  a.click(); URL.revokeObjectURL(a.href);
+  showToast('Markdown gerado e baixado.');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function init() {
+  renderSummary(); renderFilterBar(); renderGroups();
+  document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+}
+
+if (sessionStorage.getItem(PW_KEY)) init();
+</script>
+</body>
+</html>
