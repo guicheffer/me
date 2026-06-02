@@ -7,6 +7,7 @@
   <title>Exames Luiza — Maio 2026</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     :root {
       --normal:           #34d399;
       --normal-bg:        #022c22;
@@ -20,6 +21,7 @@
       --alterado:         #fb7185;
       --alterado-bg:      #3f0000;
       --alterado-border:  #9f1239;
+      --burning: #ff6b35; --burning-bg: #2d0f06; --burning-border: #9a3412;
       --text:    #f0e8ff;
       --sub:     #d8b4fe;
       --muted:   #a78bfa;
@@ -152,12 +154,22 @@
     .narr-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
     .narr-dot.red { background: var(--alterado); }
     .narr-dot.yellow { background: var(--atencao); }
-    .narr-dot.green { background: var(--normal); }
+    .narr-dot.green   { background: var(--normal); }
+    .narr-dot.burning { background: var(--burning); }
     .narr-strong { font-weight: 600; color: var(--text); }
+    .narr-block-title.burning { color: var(--burning); }
+
+    .criticality-note {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--dim);
+      margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .criticality-note-icon { font-size: 13px; flex-shrink: 0; }
 
     /* ── SUMMARY ── */
     .summary {
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(5, 1fr);
       gap: 8px; margin-bottom: 14px;
     }
     .summary-card {
@@ -172,11 +184,13 @@
     .summary-card.active-limite   { border-color: var(--limite);   background: var(--limite-bg); }
     .summary-card.active-atencao  { border-color: var(--atencao);  background: var(--atencao-bg); }
     .summary-card.active-alterado { border-color: var(--alterado); background: var(--alterado-bg); }
+    .summary-card.active-burning  { border-color: var(--burning);  background: var(--burning-bg); }
     .summary-count { font-size: 30px; font-weight: 800; line-height: 1; }
     .summary-count.normal   { color: var(--normal); }
     .summary-count.limite   { color: var(--limite); }
     .summary-count.atencao  { color: var(--atencao); }
     .summary-count.alterado { color: var(--alterado); }
+    .summary-count.burning  { color: var(--burning); }
     .summary-label { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 500; }
 
     /* ── FILTER BAR ── */
@@ -192,9 +206,10 @@
     .filter-btn.f-limite.active  { background: var(--limite-bg);   color: var(--limite);   border-color: var(--limite-border); }
     .filter-btn.f-atencao.active { background: var(--atencao-bg);  color: var(--atencao);  border-color: var(--atencao-border); }
     .filter-btn.f-alterado.active{ background: var(--alterado-bg); color: var(--alterado); border-color: var(--alterado-border); }
+    .filter-btn.f-burning.active { background: var(--burning-bg);  color: var(--burning);  border-color: var(--burning-border); }
 
     /* ── SECTION ── */
-    .section { margin-bottom: 38px; scroll-margin-top: 115px; }
+    .section { margin-bottom: 38px; scroll-margin-top: 118px; }
     .section-title {
       font-size: 15px; font-weight: 700; color: var(--text);
       margin-bottom: 12px; padding-bottom: 10px;
@@ -212,6 +227,7 @@
     .card[data-status="limite"]   { border-left-color: var(--limite); }
     .card[data-status="atencao"]  { border-left-color: var(--atencao); }
     .card[data-status="alterado"] { border-left-color: var(--alterado); }
+    .card[data-status="burning"]  { border-left-color: var(--burning); }
     .card-top { padding: 15px 15px 0; }
     .card-head {
       display: flex; align-items: flex-start;
@@ -226,12 +242,14 @@
     .badge-limite   { background: var(--limite-bg);   color: var(--limite);   border: 1px solid var(--limite-border); }
     .badge-atencao  { background: var(--atencao-bg);  color: var(--atencao);  border: 1px solid var(--atencao-border); }
     .badge-alterado { background: var(--alterado-bg); color: var(--alterado); border: 1px solid var(--alterado-border); }
+    .badge-burning  { background: var(--burning-bg);  color: var(--burning);  border: 1px solid var(--burning-border); }
     .result-row { display: flex; align-items: baseline; gap: 5px; }
     .result-val { font-size: 24px; font-weight: 800; line-height: 1; }
     .result-val.normal   { color: var(--normal); }
     .result-val.limite   { color: var(--limite); }
     .result-val.atencao  { color: var(--atencao); }
     .result-val.alterado { color: var(--alterado); }
+    .result-val.burning  { color: var(--burning); }
     .result-unit { font-size: 12px; color: var(--muted); }
     .result-ref  { font-size: 11px; color: var(--dim); margin-top: 3px; margin-bottom: 11px; }
 
@@ -270,6 +288,9 @@
 
     @media (max-width: 680px) {
       .section-grid { grid-template-columns: 1fr; }
+      .summary { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 420px) {
       .summary { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 400px) {
@@ -324,100 +345,147 @@
   <main>
     <div class="narrative">
       <div class="narrative-heading">Resumo geral</div>
+      <div class="criticality-note">
+        <span class="criticality-note-icon">↓</span>
+        Os itens abaixo estão em ordem de criticalidade — o que precisa de atenção primeiro aparece primeiro.
+      </div>
 
       <div class="narr-block">
-        <div class="narr-block-title red">Requer atenção imediata</div>
+        <div class="narr-block-title burning">🔥 Urgente — ver com médico</div>
         <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">SHBG 403 nmol/L</span> — muito acima do normal (ref. feminino: 18–136 nmol/L). SHBG elevado "sequestra" testosterona livre, podendo causar queda de libido, fadiga e dificuldade de ganho muscular. Discutir com ginecologista/endocrinologista.</span>
+          <span class="narr-dot burning"></span>
+          <span>
+            <span class="narr-strong">SHBG deu 403 — deveria ser entre 18 e 136.</span>
+            SHBG é uma proteína que "amarra" os hormônios sexuais e os torna inativos. Com SHBG tão alto, a testosterona e o estradiol ficam presos e não chegam às células — pode causar queda de libido, cansaço, secura vaginal. Causa mais comum: anticoncepcional oral combinado.
+            Próximo passo: discutir urgente com ginecologista ou endocrinologista.
+          </span>
         </div>
         <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">PCR Ultrassensível 1,21 mg/dL</span> — acima do limiar de referência (negativo: < 0,50 mg/dL). Indica inflamação ativa ou infecciosa em curso. Nessa situação, não pode ser usado para avaliar risco cardiovascular. Discutir com médico.</span>
+          <span class="narr-dot burning"></span>
+          <span>
+            <span class="narr-strong">PCR deu 11,8 (limite: 5,0) e PCR-us deu 1,21 (limite: 0,5).</span>
+            PCR é a "sirene de inflamação" do corpo — sobe quando tem infecção, inflamação ou lesão. Com dois marcadores elevados, há algum processo ativo no corpo no momento da coleta. Pode ser desde uma infecção leve até inflamação crônica.
+            Próximo passo: identificar a causa com médico. Repetir após resolução.
+          </span>
         </div>
         <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">T3 1,89 ng/mL</span> — levemente acima do limite superior (ref: até 1,81 ng/mL). Sinal de que a tireoide pode estar produzindo mais T3 do que o normal — avaliar em conjunto com TSH e T4L.</span>
+          <span class="narr-dot burning"></span>
+          <span>
+            <span class="narr-strong">T3 deu 1,89 e T4 total deu 13,0 — ambos acima do limite.</span>
+            São os hormônios da tireoide que aceleram o metabolismo. Com os dois levemente elevados mas o TSH ainda normal, pode ser hipertireoidismo subclínico no início. O ponto positivo: anticorpos da tireoide (TPO, TRAb) estão normais — descarta Hashimoto e Graves.
+            Próximo passo: avaliar com endocrinologista.
+          </span>
         </div>
         <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">T4 Tiroxina 13,0 µg/dL</span> — acima do limite (ref: até 12,5 µg/dL). Junto com o T3 elevado, sugere possível hipertireoidismo subclínico — TSH ainda dentro do normal (1,66), mas o conjunto merece avaliação médica.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">DHT Dihidrotestosterona 46,23 pg/mL</span> — resultado bem abaixo do esperado para mulheres pré-menopausa (ref: 24–368 pg/mL). Na verdade está dentro da faixa mas próximo do limite inferior — avaliar com médico no contexto do SHBG elevado e androgênios.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">LH 0,3 mUI/mL</span> — muito abaixo da fase folicular (ref: 2,58–13,07). FSH também < 0,3 mUI/mL. Ambos suprimidos — pode indicar uso de anticoncepcional hormonal, fase lútea ou anovulação. Contextualizar com ginecologista.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">PCR Quantitativa 11,8 mg/L</span> — acima do limite (ref: < 5 mg/L). Processo inflamatório/infeccioso ativo — consistente com a PCR-us também elevada.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">Capacidade de Fixação do Ferro (TIBC) 425 µg/dL</span> — acima do limite superior (ref: até 392 µg/dL). TIBC alto com ferritina baixa (90 ng/mL relativo ao estoque) sugere reserva de ferro em processo de redução. Monitorar.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">DHEA 6,10 ng/mL</span> — acima do limite superior feminino (ref: 0,8–5,0 ng/mL). DHEA elevado pode indicar hiperfunção adrenal leve. Avaliar junto com DHEA-S e androstenediona.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">PTH 12,4 pg/mL</span> — abaixo do limite inferior (ref: 15–65 pg/mL). PTH suprimido com vitamina D adequada (64 ng/mL) pode ser normal, mas vale monitorar hipercalcemia latente.</span>
+          <span class="narr-dot burning"></span>
+          <span>
+            <span class="narr-strong">FSH e LH suprimidos (ambos abaixo de 0,3).</span>
+            FSH e LH são os hormônios que comandam o ciclo menstrual e a ovulação. Quando os dois estão suprimidos assim, o padrão clássico é uso de anticoncepcional hormonal combinado (pílula), que "desliga" esses hormônios.
+            Próximo passo: contextualizar com médico — se tiver usando pílula, é esperado; se não, investigar.
+          </span>
         </div>
       </div>
 
       <div class="narr-block">
-        <div class="narr-block-title yellow">Atenção</div>
+        <div class="narr-block-title red">Alterado — verificar</div>
         <div class="narr-item">
-          <span class="narr-dot yellow"></span>
-          <span><span class="narr-strong">Apolipoproteína B 108 mg/dL</span> — faixa de risco intermediário/alto (< 100 = baixo; ela está em 108). Indica excesso de partículas aterogênicas.</span>
+          <span class="narr-dot red"></span>
+          <span>
+            <span class="narr-strong">TIBC (capacidade de fixação do ferro) deu 425 — limite é 392.</span>
+            TIBC mede a "capacidade livre" dos transportadores de ferro. Quando sobe, significa que o corpo está tentando absorver mais ferro — sinal de que os estoques podem estar diminuindo.
+            Próximo passo: monitorar. Com ferritina em 90 (normal, mas na metade inferior para mulheres), vale checar em 6 meses.
+          </span>
         </div>
         <div class="narr-item">
-          <span class="narr-dot yellow"></span>
-          <span><span class="narr-strong">Estradiol (E2) 500 pg/mL</span> — acima da fase folicular (ref: 30–161). Pode estar na janela ovulatória (até ~1005 pg) ou lútea (até ~319 pg) — resultado depende muito do dia do ciclo. Confirmar com médico.</span>
+          <span class="narr-dot red"></span>
+          <span>
+            <span class="narr-strong">DHEA deu 6,10 — limite feminino é 5,0.</span>
+            DHEA é um hormônio adrenal que serve de matéria-prima para estrogênio e testosterona. Levemente acima do limite pode ser variação individual ou leve hiperfunção adrenal.
+            Próximo passo: discutir com médico — avaliar se é persistente ou pontual.
+          </span>
         </div>
         <div class="narr-item">
-          <span class="narr-dot yellow"></span>
-          <span><span class="narr-strong">Hemoglobina 12,4 g/dL + Hematócrito 38,4%</span> — no limite inferior feminino (ref: ≥ 12,0 g/dL e ≥ 36%). Tecnicamente dentro da faixa mas bem próximo da anemia leve. Acompanhar.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot yellow"></span>
-          <span><span class="narr-strong">Hemácias 4,4 milhões/mm³</span> — ligeiramente abaixo do limite feminino (ref: 4,0–5,2). Na verdade dentro da faixa, mas contexto com hemoglobina no limite merece atenção.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot yellow"></span>
-          <span><span class="narr-strong">Ácido Fólico 4,9 ng/mL</span> — próximo do limite inferior (ref: 3,9–26,8 ng/mL). Não está deficiente, mas está na parte baixa da faixa — importante especialmente para saúde reprodutiva.</span>
+          <span class="narr-dot red"></span>
+          <span>
+            <span class="narr-strong">PTH deu 12,4 — limite inferior é 15.</span>
+            PTH é o hormônio que regula o cálcio no sangue. PTH baixo com vitamina D ótima (64 ng/mL) é esperado — a vitamina D suprime o PTH naturalmente. Provavelmente não é preocupante neste contexto.
+            Próximo passo: confirmar com médico que o cálcio está ok (está — em 9,2).
+          </span>
         </div>
       </div>
 
       <div class="narr-block">
-        <div class="narr-block-title green">Destaques positivos</div>
+        <div class="narr-block-title yellow">Atenção — monitorar</div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span>
+            <span class="narr-strong">ApoB deu 108 — ideal é abaixo de 100.</span>
+            ApoB conta todas as partículas de gordura "ruim" no sangue. Em 108 está na faixa de risco intermediário.
+            Próximo passo: mais fibras (aveia, feijão), menos gordura saturada.
+          </span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span>
+            <span class="narr-strong">Estradiol deu 500 — depende muito do dia do ciclo.</span>
+            Estradiol é o principal hormônio feminino. 500 pg/mL é alto para fase folicular (limite: 161), mas normal para janela de ovulação (até ~1005). O resultado muda muito dependendo do dia da coleta.
+            Próximo passo: confirmar com médico em qual fase do ciclo foi coletado.
+          </span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span>
+            <span class="narr-strong">Hemoglobina 12,4 e hematócrito 38,4 — no limite inferior feminino.</span>
+            Hemoglobina carrega oxigênio no sangue. Em 12,4 está apenas 0,4 acima do limiar de anemia leve (12,0). Nada crítico, mas vale monitorar — especialmente com TIBC levemente elevado.
+            Próximo passo: manter dieta rica em ferro (carne vermelha, feijão, folhas escuras). Repetir em 6 meses.
+          </span>
+        </div>
+        <div class="narr-item">
+          <span class="narr-dot yellow"></span>
+          <span>
+            <span class="narr-strong">Ácido fólico deu 4,9 — próximo do limite inferior (3,9).</span>
+            Folato (vitamina B9) é essencial para formação do DNA e saúde reprodutiva. Está dentro da faixa, mas no 5% inferior. Para uma mulher em idade fértil, é importante manter bom nível.
+            Próximo passo: mais vegetais verdes escuros (espinafre, couve) e leguminosas. Suplementação se pensar em engravidar.
+          </span>
+        </div>
+      </div>
+
+      <div class="narr-block">
+        <div class="narr-block-title green">Tudo certo — pontos altos</div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">Vitamina D 64 ng/mL</span> — ótima (ref. suficiente: 30–100). Nível excelente de vitamina D.</span>
+          <span>
+            <span class="narr-strong">Vitamina D em 64 — excelente.</span>
+            O suficiente começa em 30. Em 64 está muito bem. Vitamina D protege ossos, imunidade e humor.
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">Glicose 73 + Insulina 10,6</span> — glicemia e insulina em jejum normais. Sem resistência à insulina aparente.</span>
+          <span>
+            <span class="narr-strong">Glicose (73) e insulina (10,6) — perfeitos.</span>
+            Sem sinal de resistência à insulina ou risco de diabetes.
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">TSH 1,66 µUI/mL + T4L 1,19 ng/dL</span> — TSH dentro do normal, T4 livre ok. Apesar do T3/T4 total levemente elevados, TSH ainda compensado.</span>
+          <span>
+            <span class="narr-strong">Fígado, rins e pâncreas todos normais.</span>
+            TGO 20, TGP 14 (fígado ok), creatinina 0,82 (rins ok), amilase e lipase normais (pâncreas ok).
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">Cálcio, Fósforo, Potássio, Sódio, Magnésio</span> — todos os eletrólitos dentro das faixas normais.</span>
+          <span>
+            <span class="narr-strong">Vitamina B12 (547) e B6 (20) — boas reservas.</span>
+            Sem deficiências vitamínicas que expliquem os achados hormonais.
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">TGO/TGP, Creatinina, Ureia, Amilase, Lipase</span> — fígado, rins e pâncreas funcionando bem.</span>
-        </div>
-        <div class="narr-item">
-          <span class="narr-dot green"></span>
-          <span><span class="narr-strong">Vitamina B12 547 pg/mL + B6 20 µg/L</span> — reservas de B12 e B6 adequadas.</span>
+          <span>
+            <span class="narr-strong">Cálcio, potássio, sódio, magnésio, fósforo — todos normais.</span>
+            Todos os eletrólitos em ordem. Coração, músculos e nervos com suporte adequado.
+          </span>
         </div>
       </div>
     </div>
@@ -629,11 +697,11 @@ const EXAMS = [
       ai: 'Insulina de jejum dentro do normal. Sem sinais de resistência à insulina.',
       eli5: { oque: 'O hormônio que "abre a porta" das células para o açúcar entrar.', porq: 'Nível adequado em jejum — sem hiperinsulinemia que indicaria resistência à insulina.', prox: 'Manter.' } },
     { id: 'pcr-quant', name: 'PCR Quantitativa', result: '11,8', unit: 'mg/L',
-      ref: 'Inferior a 5,0 mg/L', status: 'alterado',
+      ref: 'Inferior a 5,0 mg/L', status: 'burning',
       ai: 'Acima do limite de referência (< 5 mg/L). Indica processo inflamatório ou infeccioso ativo. Consistente com a PCR-us também elevada (1,21 mg/dL).',
       eli5: { oque: 'A "sirene" de inflamação do corpo — sobe quando há infecção, inflamação ou lesão tecidual.', porq: 'Processo inflamatório ativo no momento da coleta. Pode ser desde uma infecção viral até inflamação sistêmica.', prox: 'Discutir com médico — identificar causa da inflamação.' } },
     { id: 'pcr-us', name: 'PCR Ultrassensível (PCR-us)', result: '1,21', unit: 'mg/dL',
-      ref: 'Negativo: < 0,50 mg/dL', status: 'alterado',
+      ref: 'Negativo: < 0,50 mg/dL', status: 'burning',
       ai: 'Positivo (> 0,50 mg/dL). Indica processo inflamatório/infeccioso em andamento. Nesta situação, não pode ser usado para avaliação de risco cardiovascular.',
       eli5: { oque: 'Versão mais sensível da PCR — detecta inflamações menores.', porq: 'Inflamação ativa no momento da coleta. Em 1,21 está mais de 2x acima do limiar negativo.', prox: 'Repetir após resolução do processo (aguardar pelo menos 2 semanas). Identificar causa com médico.' } },
   ]},
@@ -648,7 +716,7 @@ const EXAMS = [
       ai: 'Dentro da faixa, mas próximo do limite superior. No contexto do SHBG extremamente elevado (403 nmol/L), essa testosterona livre disponível é relativamente escassa.',
       eli5: { oque: 'A testosterona "ativa" — só esta fração age nos tecidos.', porq: 'Tecnicamente normal, mas o SHBG alto está "segurando" grande parte da testosterona total, deixando menos livre.', prox: 'Discutir com médico o impacto do SHBG elevado na testosterona biodisponível.' } },
     { id: 'shbg', name: 'SHBG', result: '403,0', unit: 'nmol/L',
-      ref: 'Ref. (fem. não-grávida): 18 – 136 nmol/L', status: 'alterado',
+      ref: 'Ref. (fem. não-grávida): 18 – 136 nmol/L', status: 'burning',
       ai: 'Muito acima do limite superior feminino (136 nmol/L). SHBG é a proteína que "prende" os hormônios sexuais. Nível tão alto sequestra testosterona e estradiol, deixando menos hormônio livre para agir. Pode causar queda de libido, fadiga, ressecamento vaginal, dificuldade de ganho muscular.',
       eli5: { oque: 'A proteína que "amarra" os hormônios sexuais — quanto mais SHBG, menos hormônio "livre" disponível.', porq: 'Pode ser causado por: uso de anticoncepcional oral (causa mais comum!), hipertireoidismo, dieta com poucas calorias ou muita fibra, predisposição genética.', prox: 'Discutir com ginecologista/endocrinologista. Se usar anticoncepcional oral, pode ser causa direta.' } },
     { id: 'estradiol', name: 'E2 – Estradiol', result: '500', unit: 'pg/mL',
@@ -656,11 +724,11 @@ const EXAMS = [
       ai: 'Valor de 500 pg/mL está acima da fase folicular e lútea, mas dentro da janela ovulatória. O resultado é muito dependente do dia do ciclo na hora da coleta. Contextualizar com médico.',
       eli5: { oque: 'O principal hormônio feminino — regula ciclo, fertilidade, ossos e humor.', porq: 'O valor depende totalmente do dia do ciclo menstrual na hora do exame. 500 pode ser normal na ovulação.', prox: 'Confirmar com médico em qual fase do ciclo a coleta foi feita.' } },
     { id: 'fsh', name: 'FSH', result: '< 0,300', unit: 'mUI/mL',
-      ref: 'Fase folicular: 3,5 – 12,5 mUI/mL', status: 'alterado',
+      ref: 'Fase folicular: 3,5 – 12,5 mUI/mL', status: 'burning',
       ai: 'Suprimido (< 0,3 mUI/mL), bem abaixo da referência. FSH suprimido junto com LH suprimido é o padrão clássico de uso de anticoncepcional hormonal combinado, ou pode indicar fase lútea avançada ou anovulação.',
       eli5: { oque: 'O hormônio que "ordena" os ovários a desenvolver folículos.', porq: 'FSH suprimido junto com LH suprimido sugere anticoncepcional hormonal combinado (pílula) inibindo os hormônios da hipófise. Confirmar com médico.', prox: 'Contextualizar com uso de anticoncepcional.' } },
     { id: 'lh', name: 'LH', result: '0,3', unit: 'mUI/mL',
-      ref: 'Fase folicular: 2,58 – 13,07 mUI/mL', status: 'alterado',
+      ref: 'Fase folicular: 2,58 – 13,07 mUI/mL', status: 'burning',
       ai: 'Suprimido. LH + FSH suprimidos é padrão de supressão hipofisária por anticoncepcional hormonal combinado.',
       eli5: { oque: 'O hormônio que "dispara" a ovulação.', porq: 'Suprimido — consistente com uso de anticoncepcional oral que inibe o ciclo natural.', prox: 'Confirmar com médico.' } },
     { id: 'progesterona', name: 'Progesterona', result: '0,11', unit: 'ng/mL',
@@ -703,11 +771,11 @@ const EXAMS = [
       ai: 'TSH dentro da faixa normal — a hipófise está pedindo uma quantidade normal de produção à tireoide.',
       eli5: { oque: 'O hormônio que "comanda" a tireoide — quando TSH está normal, a tireoide está respondendo adequadamente.', porq: 'Normal.', prox: 'Monitorar junto com T3 e T4 que estão levemente elevados.' } },
     { id: 't3', name: 'T3 – Triiodotironina', result: '1,89', unit: 'ng/mL',
-      ref: '0,60 – 1,81 ng/mL', status: 'alterado',
+      ref: '0,60 – 1,81 ng/mL', status: 'burning',
       ai: 'Levemente acima do limite superior (1,81 ng/mL). T3 é o hormônio tireoidiano mais ativo. Junto com T4 também elevado, mas TSH ainda normal, sugere possível hipertireoidismo subclínico inicial.',
       eli5: { oque: 'A forma mais ativa dos hormônios da tireoide — acelera o metabolismo.', porq: 'Levemente elevado. Junto com T4 alto mas TSH ainda normal — pode ser variação ou início de hipertireoidismo subclínico.', prox: 'Avaliar com médico/endocrinologista. Anticorpos TPO e anti-tireoglobulina normais — afasta tireoidite de Hashimoto.' } },
     { id: 't4-total', name: 'T4 – Tiroxina Total', result: '13,0', unit: 'µg/dL',
-      ref: '4,5 – 12,5 µg/dL', status: 'alterado',
+      ref: '4,5 – 12,5 µg/dL', status: 'burning',
       ai: 'Levemente acima do limite superior (12,5 µg/dL). T4 total pode ser influenciado por proteínas transportadoras — o SHBG elevado pode afetar indiretamente. Avaliar junto com T4 livre.',
       eli5: { oque: 'A forma de "estoque" dos hormônios da tireoide — precisa ser convertida em T3 para agir.', porq: 'Levemente acima do limite. Avaliar em conjunto com T4 livre e TSH.', prox: 'Discutir com médico/endocrinologista.' } },
     { id: 't4l', name: 'T4L – Tiroxina Livre', result: '1,19', unit: 'ng/dL',
@@ -756,23 +824,24 @@ const EXAMS = [
 ];
 
 const badgeClass = s => `badge badge-${s}`;
-const badgeLabel = s => ({ normal: 'Normal', limite: 'No Limite', atencao: 'Atenção', alterado: 'Alterado' }[s] || s);
+const badgeLabel = s => ({ normal: 'Normal', limite: 'No Limite', atencao: 'Atenção', alterado: 'Alterado', burning: '🔥 Urgente' }[s] || s);
 const doctorKey  = id => `luiza_doctor_${id}`;
 const notesKey   = id => `luiza_notes_${id}`;
 
 function getCounts() {
-  const c = { normal: 0, limite: 0, atencao: 0, alterado: 0 };
-  EXAMS.forEach(g => g.items.forEach(e => c[e.status]++));
+  const c = { burning: 0, normal: 0, limite: 0, atencao: 0, alterado: 0 };
+  EXAMS.forEach(g => g.items.forEach(e => c[e.status] !== undefined && c[e.status]++));
   return c;
 }
 
 function renderSummary() {
   const c = getCounts();
   document.getElementById('summary').innerHTML = [
-    { key: 'normal', label: 'Normal' },
-    { key: 'limite', label: 'No Limite' },
-    { key: 'atencao', label: 'Atenção' },
+    { key: 'burning',  label: '🔥 Urgente' },
     { key: 'alterado', label: 'Alterado' },
+    { key: 'atencao',  label: 'Atenção' },
+    { key: 'limite',   label: 'No Limite' },
+    { key: 'normal',   label: 'Normal' },
   ].map(({ key, label }) => `
     <div class="summary-card" data-filter="${key}" onclick="setFilter('${key}')">
       <div class="summary-count ${key}">${c[key]}</div>
@@ -783,11 +852,12 @@ function renderSummary() {
 
 function renderFilterBar() {
   document.getElementById('filter-bar').innerHTML = [
-    { key: 'all', label: 'Todos' },
+    { key: 'all',      label: 'Todos' },
+    { key: 'burning',  label: '🔥 Urgente' },
     { key: 'alterado', label: 'Alterado' },
-    { key: 'atencao', label: 'Atenção' },
-    { key: 'limite', label: 'No Limite' },
-    { key: 'normal', label: 'Normal' },
+    { key: 'atencao',  label: 'Atenção' },
+    { key: 'limite',   label: 'No Limite' },
+    { key: 'normal',   label: 'Normal' },
   ].map(f => `<button class="filter-btn f-${f.key}" data-filter="${f.key}" onclick="setFilter('${f.key}')">${f.label}</button>`).join('');
 }
 
@@ -812,8 +882,10 @@ function setFilter(f) {
   });
   document.getElementById('empty-state').style.display = any ? 'none' : 'block';
   if (f !== 'all') {
-    const first = document.querySelector('.card:not([style*="none"])');
-    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    requestAnimationFrame(() => {
+      const first = document.querySelector('.card:not([style*="none"])');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 }
 

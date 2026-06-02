@@ -7,11 +7,13 @@
   <title>Meus Exames — Maio 2026</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     :root {
       --normal: #22c55e; --normal-bg: #052e16; --normal-border: #166534;
       --limite: #60a5fa; --limite-bg: #172554; --limite-border: #1e40af;
       --atencao: #fbbf24; --atencao-bg: #431407; --atencao-border: #92400e;
       --alterado: #f87171; --alterado-bg: #3f0000; --alterado-border: #991b1b;
+      --burning: #ff6b35; --burning-bg: #2d0f06; --burning-border: #9a3412;
       --text: #f1f5f9; --sub: #cbd5e1; --muted: #94a3b8; --dim: #475569;
       --bg: #0a0f1e; --surface: #111827; --raised: #1e293b; --border: #1f2d3d;
       --radius: 12px;
@@ -150,12 +152,22 @@
     }
     .narr-dot.red { background: var(--alterado); }
     .narr-dot.yellow { background: var(--atencao); }
-    .narr-dot.green { background: var(--normal); }
+    .narr-dot.green   { background: var(--normal); }
+    .narr-dot.burning { background: var(--burning); }
     .narr-strong { font-weight: 600; color: var(--text); }
+    .narr-block-title.burning { color: var(--burning); }
+
+    .criticality-note {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--dim);
+      margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .criticality-note-icon { font-size: 13px; flex-shrink: 0; }
 
     /* ── SUMMARY ── */
     .summary {
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(5, 1fr);
       gap: 8px; margin-bottom: 14px;
     }
     .summary-card {
@@ -170,11 +182,13 @@
     .summary-card.active-limite   { border-color: var(--limite);   background: var(--limite-bg); }
     .summary-card.active-atencao  { border-color: var(--atencao);  background: var(--atencao-bg); }
     .summary-card.active-alterado { border-color: var(--alterado); background: var(--alterado-bg); }
+    .summary-card.active-burning  { border-color: var(--burning);  background: var(--burning-bg); }
     .summary-count { font-size: 30px; font-weight: 800; line-height: 1; }
     .summary-count.normal   { color: var(--normal); }
     .summary-count.limite   { color: var(--limite); }
     .summary-count.atencao  { color: var(--atencao); }
     .summary-count.alterado { color: var(--alterado); }
+    .summary-count.burning  { color: var(--burning); }
     .summary-label { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 500; }
 
     /* ── FILTER BAR ── */
@@ -190,9 +204,10 @@
     .filter-btn.f-limite.active  { background: var(--limite-bg);   color: var(--limite);   border-color: var(--limite-border); }
     .filter-btn.f-atencao.active { background: var(--atencao-bg);  color: var(--atencao);  border-color: var(--atencao-border); }
     .filter-btn.f-alterado.active{ background: var(--alterado-bg); color: var(--alterado); border-color: var(--alterado-border); }
+    .filter-btn.f-burning.active { background: var(--burning-bg);  color: var(--burning);  border-color: var(--burning-border); }
 
     /* ── SECTION ── */
-    .section { margin-bottom: 38px; scroll-margin-top: 110px; }
+    .section { margin-bottom: 38px; scroll-margin-top: 118px; }
     .section-title {
       font-size: 15px; font-weight: 700; color: var(--text);
       margin-bottom: 12px; padding-bottom: 10px;
@@ -210,6 +225,7 @@
     .card[data-status="limite"]   { border-left-color: var(--limite); }
     .card[data-status="atencao"]  { border-left-color: var(--atencao); }
     .card[data-status="alterado"] { border-left-color: var(--alterado); }
+    .card[data-status="burning"]  { border-left-color: var(--burning); }
     .card-top { padding: 15px 15px 0; }
     .card-head {
       display: flex; align-items: flex-start;
@@ -224,12 +240,14 @@
     .badge-limite   { background: var(--limite-bg);   color: var(--limite);   border: 1px solid var(--limite-border); }
     .badge-atencao  { background: var(--atencao-bg);  color: var(--atencao);  border: 1px solid var(--atencao-border); }
     .badge-alterado { background: var(--alterado-bg); color: var(--alterado); border: 1px solid var(--alterado-border); }
+    .badge-burning  { background: var(--burning-bg);  color: var(--burning);  border: 1px solid var(--burning-border); }
     .result-row { display: flex; align-items: baseline; gap: 5px; }
     .result-val { font-size: 24px; font-weight: 800; line-height: 1; }
     .result-val.normal   { color: var(--normal); }
     .result-val.limite   { color: var(--limite); }
     .result-val.atencao  { color: var(--atencao); }
     .result-val.alterado { color: var(--alterado); }
+    .result-val.burning  { color: var(--burning); }
     .result-unit { font-size: 12px; color: var(--muted); }
     .result-ref  { font-size: 11px; color: var(--dim); margin-top: 3px; margin-bottom: 11px; }
 
@@ -270,6 +288,9 @@
 
     @media (max-width: 680px) {
       .section-grid { grid-template-columns: 1fr; }
+      .summary { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 420px) {
       .summary { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 400px) {
@@ -325,41 +346,72 @@
   <main>
     <div class="narrative">
       <div class="narrative-heading">Resumo geral</div>
+      <div class="criticality-note">
+        <span class="criticality-note-icon">↓</span>
+        Os itens abaixo estão em ordem de criticalidade — o que precisa de atenção primeiro aparece primeiro.
+      </div>
+
       <div class="narr-block">
-        <div class="narr-block-title red">Requer ação</div>
+        <div class="narr-block-title burning">🔥 Urgente — ver com médico</div>
         <div class="narr-item">
-          <span class="narr-dot red"></span>
-          <span><span class="narr-strong">Homocisteína 20,3 µmol/L</span> — único valor fora da faixa (ref: até 15,4). Sugere deficiência de B6, B12 ou folato. Falar com médico; provavelmente vai pedir B12 + folato no sangue e indicar complexo B.</span>
+          <span class="narr-dot burning"></span>
+          <span>
+            <span class="narr-strong">Homocisteína deu 20,3 — deveria ser até 15,4.</span>
+            É um aminoácido que, quando alto, irrita as artérias por dentro. Quase sempre falta de vitamina B6, B12 ou ácido fólico na dieta.
+            Próximo passo: falar com médico, ele vai provavelmente pedir B12 e folato no sangue e indicar suplementação de complexo B. Resolvível.
+          </span>
         </div>
       </div>
+
       <div class="narr-block">
-        <div class="narr-block-title yellow">Atenção</div>
+        <div class="narr-block-title yellow">Atenção — monitorar</div>
         <div class="narr-item">
           <span class="narr-dot yellow"></span>
-          <span><span class="narr-strong">Linfócitos 969/mm³</span> — 31 unidades abaixo do mínimo (1.000). Diferença mínima; provável variação do dia, estresse ou inverso dos neutrófilos altos. Mencionar ao médico.</span>
+          <span>
+            <span class="narr-strong">Colesterol total (210) e LDL (101) levemente acima.</span>
+            Colesterol total é a soma de todas as gorduras do sangue — o ideal é abaixo de 200. LDL é o "colesterol ruim" que se deposita nas artérias. Nada grave porque o HDL (o "bom") tá excelente em 89. Provável causa: excesso de gordura saturada (queijo, frios, carne gorda).
+            Próximo passo: mais fibras (aveia, feijão), menos gordura saturada.
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot yellow"></span>
-          <span><span class="narr-strong">Colesterol Total 210 mg/dL + LDL 101 mg/dL</span> — faixa limítrofe. O HDL de 89 mg/dL é excelente e compensa bastante. Reduzir gordura saturada e aumentar fibras.</span>
+          <span>
+            <span class="narr-strong">Linfócitos ficaram em 969 — o mínimo é 1.000.</span>
+            São as células de "memória" do sistema imune, que reconhecem vírus já combatidos. A diferença foi de só 31 unidades — muito provavelmente foi variação do dia, estresse ou reflexo dos neutrófilos altos.
+            Próximo passo: só mencionar ao médico na próxima consulta. Provavelmente vai pedir um hemograma de repetição.
+          </span>
         </div>
       </div>
+
       <div class="narr-block">
-        <div class="narr-block-title green">Destaques positivos</div>
+        <div class="narr-block-title green">Tudo certo — pontos altos</div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">HDL 89 mg/dL</span> — excelente. Maior protetor cardiovascular do painel. Ref. mínima (homens): 55 mg/dL.</span>
+          <span>
+            <span class="narr-strong">HDL (colesterol bom) em 89 — o mínimo pra homens é 55.</span>
+            O HDL recolhe gordura das artérias e manda pro fígado eliminar. Quanto mais, melhor — e tá ótimo. Provavelmente atividade física e boas gorduras na dieta (azeite, abacate, oleaginosas) ajudaram nisso.
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">HbA1c 5,0% + Glicose 77 mg/dL</span> — metabolismo da glicose perfeito. Zero risco de diabetes no horizonte.</span>
+          <span>
+            <span class="narr-strong">HbA1c 5,0% e glicose 77 — açúcar no sangue perfeito.</span>
+            HbA1c é a média do açúcar nos últimos 3 meses. Abaixo de 5,7% é normal — em 5,0% está ótimo. Sem sinal nenhum de pré-diabetes ou diabetes.
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">Fígado, rins e hemograma</span> — TGO/TGP normais, creatinina 1,05 com TFGe de 96, hemograma sem anemia nem alteração relevante.</span>
+          <span>
+            <span class="narr-strong">Fígado, rins e hemograma todos normais.</span>
+            TGO e TGP (enzimas do fígado) ok. Creatinina 1,05 com taxa de filtração renal de 96 — rins funcionando quase a 100%. Hemograma sem anemia nem infecção evidente.
+          </span>
         </div>
         <div class="narr-item">
           <span class="narr-dot green"></span>
-          <span><span class="narr-strong">Triglicérides 100 + Ferritina 247 + ApoA-1 187</span> — todos ótimos.</span>
+          <span>
+            <span class="narr-strong">Triglicérides 100, Ferritina 247, ApoA-1 187 — todos ótimos.</span>
+            Triglicérides mede gordura ligada ao açúcar e álcool. Ferritina é a reserva de ferro. ApoA-1 é a proteína do colesterol bom. Os três em excelente forma.
+          </span>
         </div>
       </div>
     </div>
@@ -518,7 +570,7 @@ const EXAMS = [
       { id: 'ferritina', name: 'Ferritina', result: '247', unit: 'ng/mL', ref: 'Ref.: 30 – 400 ng/mL', status: 'normal',
         ai: 'Reserva de ferro dentro da faixa normal. Sem deficiência nem sobrecarga.',
         eli5: { oque: 'A "reserva estratégica" de ferro do corpo, guardada no fígado.', porq: 'Boa ingestão de ferro. Sem perda por sangramento crônico.', prox: 'Manter.' } },
-      { id: 'homocisteina', name: 'Homocisteína', result: '20,3', unit: 'µmol/L', ref: 'Ref.: 4,0 – 15,4 µmol/L', status: 'alterado',
+      { id: 'homocisteina', name: 'Homocisteína', result: '20,3', unit: 'µmol/L', ref: 'Ref.: 4,0 – 15,4 µmol/L', status: 'burning',
         ai: 'Acima da faixa (15,4 µmol/L). Único valor claramente fora do intervalo. Marcador de risco cardiovascular — indica deficiência de B6, B12 ou folato, ou variante genética MTHFR.',
         eli5: { oque: 'Um aminoácido que em excesso irrita as paredes das artérias por dentro.', porq: 'Quase sempre deficiência de B6, B12 ou folato (B9). Pode ser pouca ingestão de vegetais verdes, ou variante MTHFR.', prox: 'Este é o ponto mais importante do painel. Falar com médico — vai pedir B12 e folato e provavelmente indicar complexo B. Resolvível.' } },
     ],
@@ -527,23 +579,24 @@ const EXAMS = [
 
 // ── Helpers ──
 const badgeClass = s => `badge badge-${s}`;
-const badgeLabel = s => ({ normal: 'Normal', limite: 'No Limite', atencao: 'Atenção', alterado: 'Alterado' }[s] || s);
+const badgeLabel = s => ({ normal: 'Normal', limite: 'No Limite', atencao: 'Atenção', alterado: 'Alterado', burning: '🔥 Urgente' }[s] || s);
 const doctorKey  = id => `exam_doctor_${id}`;
 const notesKey   = id => `exam_notes_${id}`;
 
 function getCounts() {
-  const c = { normal: 0, limite: 0, atencao: 0, alterado: 0 };
-  EXAMS.forEach(g => g.items.forEach(e => c[e.status]++));
+  const c = { burning: 0, normal: 0, limite: 0, atencao: 0, alterado: 0 };
+  EXAMS.forEach(g => g.items.forEach(e => c[e.status] !== undefined && c[e.status]++));
   return c;
 }
 
 function renderSummary() {
   const c = getCounts();
   document.getElementById('summary').innerHTML = [
-    { key: 'normal', label: 'Normal' },
-    { key: 'limite', label: 'No Limite' },
-    { key: 'atencao', label: 'Atenção' },
+    { key: 'burning',  label: '🔥 Urgente' },
     { key: 'alterado', label: 'Alterado' },
+    { key: 'atencao',  label: 'Atenção' },
+    { key: 'limite',   label: 'No Limite' },
+    { key: 'normal',   label: 'Normal' },
   ].map(({ key, label }) => `
     <div class="summary-card" data-filter="${key}" onclick="setFilter('${key}')">
       <div class="summary-count ${key}">${c[key]}</div>
@@ -554,11 +607,12 @@ function renderSummary() {
 
 function renderFilterBar() {
   document.getElementById('filter-bar').innerHTML = [
-    { key: 'all', label: 'Todos' },
+    { key: 'all',      label: 'Todos' },
+    { key: 'burning',  label: '🔥 Urgente' },
     { key: 'alterado', label: 'Alterado' },
-    { key: 'atencao', label: 'Atenção' },
-    { key: 'limite', label: 'No Limite' },
-    { key: 'normal', label: 'Normal' },
+    { key: 'atencao',  label: 'Atenção' },
+    { key: 'limite',   label: 'No Limite' },
+    { key: 'normal',   label: 'Normal' },
   ].map(f => `
     <button class="filter-btn f-${f.key}" data-filter="${f.key}" onclick="setFilter('${f.key}')">${f.label}</button>
   `).join('');
@@ -585,8 +639,10 @@ function setFilter(f) {
   });
   document.getElementById('empty-state').style.display = anyVisible ? 'none' : 'block';
   if (f !== 'all') {
-    const first = document.querySelector('.card:not([style*="none"])');
-    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    requestAnimationFrame(() => {
+      const first = document.querySelector('.card:not([style*="none"])');
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 }
 
