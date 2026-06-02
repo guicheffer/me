@@ -286,6 +286,47 @@
 
     #empty-state { text-align: center; padding: 56px 24px; color: var(--dim); font-size: 14px; display: none; }
 
+    /* ── PAGE TABS ── */
+    #page-tabs { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; }
+    .page-tab-inner { max-width: 1000px; margin: 0 auto; display: flex; }
+    .page-tab {
+      padding: 10px 18px; font-size: 13px; font-weight: 600;
+      color: var(--muted); background: none; border: none; cursor: pointer;
+      border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; white-space: nowrap;
+    }
+    .page-tab:hover { color: var(--text); }
+    .page-tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+    /* ── PLAN ── */
+    .plan-main { max-width: 800px; margin: 0 auto; padding: 24px 20px 64px; }
+    .plan-grid { display: flex; flex-direction: column; gap: 14px; }
+    .plan-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+    .plan-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .plan-card-icon { font-size: 22px; flex-shrink: 0; }
+    .plan-card-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .plan-card-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .plan-list { list-style: none; display: flex; flex-direction: column; }
+    .plan-list li {
+      font-size: 13px; color: var(--sub); padding: 7px 0;
+      border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-start; line-height: 1.5;
+    }
+    .plan-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .plan-list li::before { content: '–'; color: var(--dim); flex-shrink: 0; padding-top: 1px; }
+    .plan-strong { font-weight: 600; color: var(--text); }
+    .plan-diet { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+    .plan-diet-col { background: var(--bg); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--border); }
+    .plan-diet-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-diet-col.up .plan-diet-label   { color: var(--normal); }
+    .plan-diet-col.down .plan-diet-label { color: var(--alterado); }
+    .plan-urgent {
+      background: var(--burning-bg); border: 1px solid var(--burning-border);
+      border-radius: var(--radius); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .plan-urgent-icon { font-size: 18px; flex-shrink: 0; padding-top: 2px; }
+    .plan-urgent-title { font-weight: 700; margin-bottom: 4px; font-size: 14px; color: var(--burning); }
+    .plan-urgent-body { font-size: 13px; color: #fdba74; line-height: 1.55; }
+    @media (max-width: 520px) { .plan-diet { grid-template-columns: 1fr; } }
+
     @media (max-width: 680px) {
       .section-grid { grid-template-columns: 1fr; }
       .summary { grid-template-columns: repeat(3, 1fr); }
@@ -332,7 +373,14 @@
     </div>
   </header>
 
-  <nav>
+  <div id="page-tabs">
+    <div class="page-tab-inner">
+      <button class="page-tab active" onclick="showPage('exams')">Exames</button>
+      <button class="page-tab" onclick="showPage('plan')">Plano de Ação</button>
+    </div>
+  </div>
+
+  <nav id="exam-nav">
     <div class="nav-inner">
       <a href="#hemograma" class="nav-item">Hemograma</a>
       <a href="#lipidios"  class="nav-item">Lipídios</a>
@@ -421,6 +469,121 @@
     <div id="groups"></div>
     <div id="empty-state">Nenhum exame nesta categoria.</div>
   </main>
+
+  <div id="plan-page" style="display:none">
+    <div class="plan-main">
+      <div class="plan-grid">
+
+        <div class="plan-urgent">
+          <div class="plan-urgent-icon">🔥</div>
+          <div>
+            <div class="plan-urgent-title">Ação imediata: Homocisteína elevada</div>
+            <div class="plan-urgent-body">
+              Marcar consulta e pedir: vitamina B12 sérica + ácido fólico sérico + pesquisa da variante MTHFR C677T.
+              Suplementação de Complexo B provavelmente será indicada — não começar sem orientação médica.
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">🥗</div>
+            <div>
+              <div class="plan-card-title">Dieta proposta</div>
+              <div class="plan-card-sub">Foco: baixar homocisteína, LDL e manter o HDL alto</div>
+            </div>
+          </div>
+          <div class="plan-diet">
+            <div class="plan-diet-col up">
+              <div class="plan-diet-label">Aumentar</div>
+              <ul class="plan-list">
+                <li><span><span class="plan-strong">Folhas verdes escuras</span> — espinafre, couve, rúcula (ácido fólico para a homocisteína)</span></li>
+                <li><span><span class="plan-strong">Leguminosas</span> — feijão, lentilha, grão-de-bico todo dia (fibra + folato + LDL)</span></li>
+                <li><span><span class="plan-strong">Aveia</span> — pelo menos 40g/dia (beta-glucana baixa o LDL)</span></li>
+                <li><span><span class="plan-strong">Peixes gordos</span> — salmão, sardinha, atum 2–3x/semana (ômega-3, HDL)</span></li>
+                <li><span><span class="plan-strong">Oleaginosas</span> — castanha, amêndoa, nozes (gordura boa, mantém HDL alto)</span></li>
+                <li><span><span class="plan-strong">Azeite de oliva extravirgem</span> — trocar manteiga e óleos refinados</span></li>
+                <li><span><span class="plan-strong">Ovos</span> — 1–2 por dia (fonte de colina e B12, não eleva LDL em pessoas saudáveis)</span></li>
+              </ul>
+            </div>
+            <div class="plan-diet-col down">
+              <div class="plan-diet-label">Reduzir</div>
+              <ul class="plan-list">
+                <li><span><span class="plan-strong">Carnes processadas</span> — frios, embutidos, linguiça (gordura saturada + sódio)</span></li>
+                <li><span><span class="plan-strong">Queijo em excesso</span> — um dos maiores fontes de gordura saturada no dia a dia</span></li>
+                <li><span><span class="plan-strong">Ultraprocessados</span> — biscoito recheado, salgadinho, fast food</span></li>
+                <li><span><span class="plan-strong">Álcool excessivo</span> — eleva homocisteína e triglicérides</span></li>
+                <li><span><span class="plan-strong">Açúcar adicionado</span> — refrigerante, sucos industriais, doces</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">🏃</div>
+            <div>
+              <div class="plan-card-title">Exercício</div>
+              <div class="plan-card-sub">HDL excelente indica que você já faz alguma coisa certa — manter e progressar</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Aeróbico moderado</span> — 150 min/semana (caminhada rápida, corrida, bike, natação). O que mais sobe o HDL.</span></li>
+            <li><span><span class="plan-strong">Musculação</span> — 2–3x/semana. Além de manter massa muscular, melhora a sensibilidade à insulina e perfil lipídico.</span></li>
+            <li><span><span class="plan-strong">Evitar sedentarismo prolongado</span> — levantar a cada 45–60 min se trabalha sentado.</span></li>
+            <li><span>Não precisa ser radical: 30 min por dia de caminhada rápida já muda o colesterol em 8–12 semanas.</span></li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">💊</div>
+            <div>
+              <div class="plan-card-title">Suplementação a considerar</div>
+              <div class="plan-card-sub">Só após avaliação médica — lista para levar à consulta</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Complexo B (B6 + B9 + B12)</span> — tratamento da homocisteína elevada. Dose a definir com médico.</span></li>
+            <li><span><span class="plan-strong">Ômega-3 (EPA+DHA)</span> — 1–2g/dia. Apoia HDL, reduz inflamação e triglicérides.</span></li>
+            <li><span><span class="plan-strong">Berberina ou psyllium</span> — se LDL não ceder com dieta, são opções não-farmacológicas eficazes (sempre com médico).</span></li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">🧘</div>
+            <div>
+              <div class="plan-card-title">Estresse e sono</div>
+              <div class="plan-card-sub">Linfócitos baixos podem ser sinal de estresse crônico ou sono insuficiente</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Priorizar 7–8h de sono</span> — privação de sono crônica eleva cortisol, baixa linfócitos e piora o perfil lipídico.</span></li>
+            <li><span><span class="plan-strong">Reduzir tela antes de dormir</span> — pelo menos 30 min antes. Luz azul atrasa melatonina.</span></li>
+            <li><span><span class="plan-strong">Alguma prática de descompressão diária</span> — pode ser leve: caminhada sem fone, 10 min de alongamento, respiração profunda. Não precisa ser meditação formal.</span></li>
+            <li><span><span class="plan-strong">Cafeína só até 14h</span> — se consumo for alto, piora qualidade de sono mesmo quando não parece.</span></li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">📅</div>
+            <div>
+              <div class="plan-card-title">Próximos exames</div>
+              <div class="plan-card-sub">Sugestão de acompanhamento</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Agora:</span> consulta médica para homocisteína. Pedir B12 + folato sérico + opcionalmente MTHFR.</span></li>
+            <li><span><span class="plan-strong">Em 3 meses:</span> repetir hemograma (linfócitos) + colesterol + homocisteína se suplementando.</span></li>
+            <li><span><span class="plan-strong">Em 6 meses:</span> painel lipídico completo para ver impacto das mudanças de dieta.</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="toast"></div>
@@ -763,6 +926,15 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function showPage(page) {
+  const isExams = page === 'exams';
+  document.getElementById('exam-nav').style.display = isExams ? '' : 'none';
+  document.querySelector('main').style.display = isExams ? '' : 'none';
+  document.getElementById('plan-page').style.display = isExams ? 'none' : '';
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.toggle('active', t.textContent.trim() === (isExams ? 'Exames' : 'Plano de Ação')));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function init() {

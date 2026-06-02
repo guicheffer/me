@@ -286,6 +286,47 @@
 
     #empty-state { text-align: center; padding: 56px 24px; color: var(--dim); font-size: 14px; display: none; }
 
+    /* ── PAGE TABS ── */
+    #page-tabs { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; }
+    .page-tab-inner { max-width: 1000px; margin: 0 auto; display: flex; }
+    .page-tab {
+      padding: 10px 18px; font-size: 13px; font-weight: 600;
+      color: var(--dim); background: none; border: none; cursor: pointer;
+      border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; white-space: nowrap;
+    }
+    .page-tab:hover { color: var(--text); }
+    .page-tab.active { color: var(--text); border-bottom-color: var(--muted); }
+
+    /* ── PLAN ── */
+    .plan-main { max-width: 800px; margin: 0 auto; padding: 24px 20px 64px; }
+    .plan-grid { display: flex; flex-direction: column; gap: 14px; }
+    .plan-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+    .plan-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .plan-card-icon { font-size: 22px; flex-shrink: 0; }
+    .plan-card-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .plan-card-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .plan-list { list-style: none; display: flex; flex-direction: column; }
+    .plan-list li {
+      font-size: 13px; color: var(--sub); padding: 7px 0;
+      border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-start; line-height: 1.5;
+    }
+    .plan-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .plan-list li::before { content: '–'; color: var(--dim); flex-shrink: 0; padding-top: 1px; }
+    .plan-strong { font-weight: 600; color: var(--text); }
+    .plan-diet { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+    .plan-diet-col { background: var(--bg); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--border); }
+    .plan-diet-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .plan-diet-col.up .plan-diet-label   { color: var(--normal); }
+    .plan-diet-col.down .plan-diet-label { color: var(--alterado); }
+    .plan-urgent {
+      background: var(--burning-bg); border: 1px solid var(--burning-border);
+      border-radius: var(--radius); padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .plan-urgent-icon { font-size: 18px; flex-shrink: 0; padding-top: 2px; }
+    .plan-urgent-title { font-weight: 700; margin-bottom: 4px; font-size: 14px; color: var(--burning); }
+    .plan-urgent-body { font-size: 13px; color: #fdba74; line-height: 1.55; }
+    @media (max-width: 520px) { .plan-diet { grid-template-columns: 1fr; } }
+
     @media (max-width: 680px) {
       .section-grid { grid-template-columns: 1fr; }
       .summary { grid-template-columns: repeat(3, 1fr); }
@@ -326,7 +367,14 @@
     </div>
   </header>
 
-  <nav>
+  <div id="page-tabs">
+    <div class="page-tab-inner">
+      <button class="page-tab active" onclick="showPage('exams')">Exames</button>
+      <button class="page-tab" onclick="showPage('plan')">Plano de Ação</button>
+    </div>
+  </div>
+
+  <nav id="exam-nav">
     <div class="nav-inner">
       <a href="#lipidios"   class="nav-item">Lipídios</a>
       <a href="#hemograma"  class="nav-item">Hemograma</a>
@@ -495,6 +543,126 @@
     <div id="groups"></div>
     <div id="empty-state">Nenhum exame nesta categoria.</div>
   </main>
+
+  <div id="plan-page" style="display:none">
+    <div class="plan-main">
+      <div class="plan-grid">
+
+        <div class="plan-urgent">
+          <div class="plan-urgent-icon">🔥</div>
+          <div>
+            <div class="plan-urgent-title">Ação imediata: SHBG e inflamação</div>
+            <div class="plan-urgent-body">
+              SHBG em 403 é o achado mais impactante. Se estiver usando anticoncepcional oral, discutir troca com ginecologista (DIU hormonal ou métodos não-orais tendem a não elevar SHBG tanto).
+              PCR elevada sugere inflamação ativa — identificar causa antes de reavaliar risco cardiovascular.
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">🥗</div>
+            <div>
+              <div class="plan-card-title">Dieta proposta</div>
+              <div class="plan-card-sub">Foco: reduzir inflamação, aumentar ferro, apoiar hormônios e folato</div>
+            </div>
+          </div>
+          <div class="plan-diet">
+            <div class="plan-diet-col up">
+              <div class="plan-diet-label">Aumentar</div>
+              <ul class="plan-list">
+                <li><span><span class="plan-strong">Carnes vermelhas magras</span> — 3–4x/semana (ferro heme, absorção mais eficiente, ajuda hemoglobina)</span></li>
+                <li><span><span class="plan-strong">Folhas verdes escuras</span> — espinafre, couve, brócolis (ácido fólico + ferro não-heme)</span></li>
+                <li><span><span class="plan-strong">Feijão e lentilha</span> — todos os dias (ferro + folato + fibra)</span></li>
+                <li><span><span class="plan-strong">Vitamina C junto com ferro não-heme</span> — limão ou laranja na refeição aumenta absorção do ferro vegetal</span></li>
+                <li><span><span class="plan-strong">Peixes gordos</span> — salmão, sardinha 2–3x/semana (ômega-3, anti-inflamatório, apoia tireoide)</span></li>
+                <li><span><span class="plan-strong">Ovos</span> — 1–2/dia (colina, B12, proteína completa)</span></li>
+                <li><span><span class="plan-strong">Oleaginosas e azeite</span> — gorduras boas, anti-inflamatório</span></li>
+                <li><span><span class="plan-strong">Cúrcuma + pimenta-preta</span> — potente anti-inflamatório, fácil de incluir em cozidos e arroz</span></li>
+              </ul>
+            </div>
+            <div class="plan-diet-col down">
+              <div class="plan-diet-label">Reduzir</div>
+              <ul class="plan-list">
+                <li><span><span class="plan-strong">Glúten e laticínios em excesso</span> — inflamatórios para algumas pessoas; vale testar por 4 semanas se PCR persistir</span></li>
+                <li><span><span class="plan-strong">Açúcar e ultraprocessados</span> — pró-inflamatórios, pioram perfil lipídico</span></li>
+                <li><span><span class="plan-strong">Álcool</span> — eleva SHBG e piora inflamação</span></li>
+                <li><span><span class="plan-strong">Café junto com refeição de ferro</span> — taninos inibem absorção; tomar 1h antes ou depois</span></li>
+                <li><span><span class="plan-strong">Fibra em excesso numa dieta calórica baixa</span> — SHBG sobe com dietas muito restritivas</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">🏃</div>
+            <div>
+              <div class="plan-card-title">Exercício</div>
+              <div class="plan-card-sub">Musculação e aeróbico têm efeito comprovado no SHBG e na inflamação</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Musculação 3x/semana</span> — exercício resistido reduz SHBG e melhora equilíbrio hormonal em mulheres. É a intervenção de estilo de vida mais eficaz para esse quadro.</span></li>
+            <li><span><span class="plan-strong">Aeróbico moderado 2–3x/semana</span> — 30–40 min de caminhada rápida, bike ou natação. Anti-inflamatório e melhora hemoglobina.</span></li>
+            <li><span><span class="plan-strong">Evitar overtraining</span> — exercício excessivo sem recuperação adequada eleva cortisol e pode aumentar SHBG. Mais não é melhor aqui.</span></li>
+            <li><span><span class="plan-strong">Yoga ou pilates 1–2x/semana</span> — reduz cortisol, apoia saúde hormonal, melhora sono.</span></li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">💊</div>
+            <div>
+              <div class="plan-card-title">Suplementação a considerar</div>
+              <div class="plan-card-sub">Só após avaliação médica — lista para levar à consulta</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Ácido fólico 400–800 µg/dia</span> — folato está no limite inferior; essencial se houver planos reprodutivos.</span></li>
+            <li><span><span class="plan-strong">Ômega-3 (EPA+DHA) 2g/dia</span> — anti-inflamatório, apoia tireoide e saúde hormonal.</span></li>
+            <li><span><span class="plan-strong">Ferro quelato ou bisglicinato</span> — só se médico confirmar deficiência em progresso. Não tomar sem orientação (ferro em excesso é oxidante).</span></li>
+            <li><span><span class="plan-strong">Magnésio glicina 300mg/noite</span> — melhora sono, reduz cortisol, apoia função tireoidiana.</span></li>
+            <li><span><span class="plan-strong">Vitamina D manter nível atual</span> — 64 ng/mL é ótimo; checar dose de manutenção com médico.</span></li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">🧘</div>
+            <div>
+              <div class="plan-card-title">Estresse, sono e hormônios</div>
+              <div class="plan-card-sub">SHBG alto e FSH/LH suprimidos respondem muito bem ao manejo do estresse</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Sono de qualidade — 7–9h</span> — privação de sono eleva cortisol, que eleva SHBG e piora o quadro hormonal.</span></li>
+            <li><span><span class="plan-strong">Rotina de descompressão</span> — não precisa ser meditação: um passeio curto, banho quente, leitura leve antes de dormir. O objetivo é baixar o cortisol noturno.</span></li>
+            <li><span><span class="plan-strong">Atenção ao estresse crônico</span> — o conjunto SHBG elevado + PCR elevada + T3/T4 levemente elevados pode indicar resposta de estresse sustentada. Não é urgente, mas merece cuidado.</span></li>
+            <li><span><span class="plan-strong">Evitar dieta muito restritiva</span> — comer pouco eleva SHBG. Manter calorias adequadas para o peso e atividade.</span></li>
+            <li><span><span class="plan-strong">Limitar cafeína a 1–2 cafés antes de meio-dia</span> — cafeína eleva cortisol; em excesso piora qualidade de sono e equilíbrio hormonal.</span></li>
+          </ul>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-icon">📅</div>
+            <div>
+              <div class="plan-card-title">Próximos exames</div>
+              <div class="plan-card-sub">Sugestão de acompanhamento</div>
+            </div>
+          </div>
+          <ul class="plan-list">
+            <li><span><span class="plan-strong">Agora:</span> ginecologista para SHBG + endocrinologista para tireoide (T3/T4 elevados). Discutir anticoncepcional.</span></li>
+            <li><span><span class="plan-strong">Em 4–6 semanas:</span> repetir PCR para ver se inflamação cedeu. Se ainda alta, investigar causa.</span></li>
+            <li><span><span class="plan-strong">Em 3 meses:</span> repetir hemograma completo + ferritina + TIBC + SHBG (para ver resposta ao manejo).</span></li>
+            <li><span><span class="plan-strong">Em 6 meses:</span> painel tireoidiano completo + hormônios sexuais completos.</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="toast"></div>
@@ -1003,6 +1171,15 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function showPage(page) {
+  const isExams = page === 'exams';
+  document.getElementById('exam-nav').style.display = isExams ? '' : 'none';
+  document.querySelector('main').style.display = isExams ? '' : 'none';
+  document.getElementById('plan-page').style.display = isExams ? 'none' : '';
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.toggle('active', t.textContent.trim() === (isExams ? 'Exames' : 'Plano de Ação')));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function init() {
