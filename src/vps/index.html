@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="Personal WireGuard VPN on AWS Lightsail. Dedicated IP, any region. ~$5/mo. Open source." />
+  <title>vps-lightsail — Personal WireGuard VPN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg: #05050d;
+      --surface: #0e0e1a;
+      --card-bg: rgba(147, 51, 234, 0.08);
+      --card-border: rgba(147, 51, 234, 0.22);
+      --purple: #7c22c8;
+      --purple-light: #9333ea;
+      --purple-glow: rgba(115, 30, 200, 0.28);
+      --text: #f2f0ff;
+      --text-muted: #a09cc0;
+      --text-dim: #4b4870;
+      --divider: rgba(255,255,255,0.07);
+      --radius: 12px;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+    }
+
+    /* ── layout ── */
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+
+    /* ── hero ── */
+    .hero {
+      margin-bottom: 56px;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .aws-logo {
+      width: 52px;
+      opacity: 0.85;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .badge-oss {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #a78bfa;
+      background: rgba(167,139,250,0.1);
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 99px;
+      padding: 4px 10px;
+      margin-bottom: 16px;
+    }
+
+    .badge-oss::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #a78bfa;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #a78bfa 0%, #7c22c8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 28px;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple-light);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.15s, box-shadow 0.15s;
+      box-shadow: 0 0 24px var(--purple-glow);
+    }
+
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--divider);
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    /* ── diagram ── */
+    .diagram {
+      margin: 48px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .diag-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .diag-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .diag-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .diag-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 0 12px;
+    }
+
+    .diag-arrow-line {
+      width: 56px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--card-border), var(--purple-light), var(--card-border));
+    }
+
+    .diag-arrow-tag {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    /* ── cards ── */
+    .section { margin-bottom: 48px; }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+
+    .card-num {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: #a78bfa;
+      margin-bottom: 4px;
+    }
+
+    .card-label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── steps ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 36px;
+      bottom: -4px;
+      width: 1px;
+      background: var(--divider);
+    }
+
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #a78bfa;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-body {
+      padding-bottom: 24px;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--divider);
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #c4b5fd;
+    }
+
+    /* ── devices ── */
+    .device-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .device-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+    }
+
+    .device-icon { font-size: 20px; flex-shrink: 0; }
+
+    .device-name {
+      font-weight: 600;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .device-how {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .device-link {
+      font-size: 12px;
+      color: #a78bfa;
+      text-decoration: none;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .device-link:hover { text-decoration: underline; }
+
+    /* ── divider ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--divider);
+      margin: 48px 0;
+    }
+
+    /* ── footer ── */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      padding-top: 48px;
+    }
+
+    .footer a { color: var(--text-dim); text-decoration: none; }
+    .footer a:hover { color: var(--text-muted); }
+
+    /* ── modal ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,5,13,0.85);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #0e0e1a;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 60px var(--purple-glow);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--divider);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.15s;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal-logo {
+      width: 64px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .modal h2 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .modal p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .modal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .modal-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--divider);
+      color: var(--text-muted);
+    }
+
+    .modal-table td:first-child {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .modal-table td:last-child {
+      text-align: right;
+      color: #a78bfa;
+      font-weight: 600;
+    }
+
+    .modal-note {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- hero -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="badge-oss">Open Source</div>
+        <h1>Personal VPN on<br/><span>AWS Lightsail</span></h1>
+      </div>
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+        alt="AWS"
+        class="aws-logo"
+      />
+    </div>
+    <p class="hero-desc">
+      Dedicated IP in any AWS region. WireGuard. ~$5/mo. No shared pools, no third party.
+    </p>
+    <div class="cta-row">
+      <a href="https://github.com/guicheffer/vps-lightsail" class="btn-primary" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        View on GitHub
+      </a>
+      <button class="btn-ghost" onclick="document.getElementById('costModal').classList.add('open')">
+        💸 Cost breakdown
+      </button>
+    </div>
+  </div>
+
+  <!-- diagram -->
+  <div class="diagram">
+    <div class="diag-node">
+      <div class="diag-icon">💻</div>
+      <div class="diag-label">Your device</div>
+    </div>
+    <div class="diag-arrow">
+      <div class="diag-arrow-line"></div>
+      <div class="diag-arrow-tag">WireGuard</div>
+    </div>
+    <div class="diag-node">
+      <div class="diag-icon">☁️</div>
+      <div class="diag-label">Lightsail VPS</div>
+    </div>
+    <div class="diag-arrow">
+      <div class="diag-arrow-line"></div>
+      <div class="diag-arrow-tag">local IP</div>
+    </div>
+    <div class="diag-node">
+      <div class="diag-icon">🌐</div>
+      <div class="diag-label">Internet</div>
+    </div>
+  </div>
+
+  <!-- stats -->
+  <div class="section">
+    <div class="cards">
+      <div class="card">
+        <div class="card-num">~$5</div>
+        <div class="card-label">per month, flat</div>
+      </div>
+      <div class="card">
+        <div class="card-num">512 GB</div>
+        <div class="card-label">transfer included</div>
+      </div>
+      <div class="card">
+        <div class="card-num">1 IP</div>
+        <div class="card-label">dedicated, yours only</div>
+      </div>
+      <div class="card">
+        <div class="card-num">any</div>
+        <div class="card-label">AWS region</div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- setup -->
+  <div class="section">
+    <div class="section-title">Setup in 3 steps</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Configure AWS CLI</div>
+          <div class="step-desc"><code>aws configure --profile personal</code> — region: <code>sa-east-1</code> for São Paulo, or any other.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Run setup</div>
+          <div class="step-desc"><code>make setup</code> — creates VPS, installs WireGuard, outputs <code>mac-vpn.conf</code> and iPhone QR code.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Connect</div>
+          <div class="step-desc">Import config into WireGuard app. Activate. Done.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- devices -->
+  <div class="section">
+    <div class="section-title">Devices</div>
+    <div class="device-list">
+      <div class="device-row">
+        <div class="device-icon"></div>
+        <div class="device-name">Mac</div>
+        <div class="device-how">Import <code>mac-vpn.conf</code></div>
+        <a href="https://apps.apple.com/app/wireguard/id1451685025" class="device-link" target="_blank" rel="noopener">Get app →</a>
+      </div>
+      <div class="device-row">
+        <div class="device-icon">📱</div>
+        <div class="device-name">iPhone</div>
+        <div class="device-how">Scan QR code from terminal</div>
+        <a href="https://apps.apple.com/app/wireguard/id1441195209" class="device-link" target="_blank" rel="noopener">Get app →</a>
+      </div>
+      <div class="device-row">
+        <div class="device-icon">📺</div>
+        <div class="device-name">Apple TV</div>
+        <div class="device-how">AirPlay from Mac, or GL.iNet router</div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- footer -->
+  <div class="footer">
+    Open source — <a href="https://github.com/guicheffer/vps-lightsail" target="_blank" rel="noopener">github.com/guicheffer/vps-lightsail</a>
+  </div>
+
+</div>
+
+<!-- cost modal -->
+<div class="modal-backdrop" id="costModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('costModal').classList.remove('open')">✕</button>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS" class="modal-logo" />
+    <h2>Cost breakdown</h2>
+    <p>For casual streaming (~10h/week), you stay well within the included transfer. Cost is flat.</p>
+    <table class="modal-table">
+      <tr><td>Lightsail nano (512GB transfer)</td><td>$5.00/mo</td></tr>
+      <tr><td>Static IP (attached)</td><td>free</td></tr>
+      <tr><td>10h/week streaming (~120GB/mo)</td><td>free</td></tr>
+      <tr><td>Over 512GB</td><td>$0.09/GB</td></tr>
+    </table>
+    <div class="modal-note">
+      Tip: use VPN only when needed — not as always-on tunnel — to stay within the included 512GB.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
