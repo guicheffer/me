@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -461,11 +461,83 @@
       font-size: 12px;
       color: var(--text-dim);
     }
+
+    /* ── light mode ── */
+    [data-theme="light"] {
+      --bg: #f5f0ff;
+      --surface: #ede5ff;
+      --card-bg: rgba(109, 40, 217, 0.07);
+      --card-border: rgba(109, 40, 217, 0.2);
+      --purple: #6d28d9;
+      --purple-light: #7c3aed;
+      --purple-glow: rgba(109, 40, 217, 0.25);
+      --text: #1c1541;
+      --text-muted: #4a4580;
+      --text-dim: #9ca3af;
+      --divider: rgba(0,0,0,0.08);
+    }
+
+    [data-theme="light"] .aws-logo { filter: invert(0); }
+    [data-theme="light"] .modal { background: #ede5ff; }
+    [data-theme="light"] code { background: rgba(0,0,0,0.06); color: #6d28d9; }
+    [data-theme="light"] .modal-table td { color: #4a4580; }
+    [data-theme="light"] .modal-table td:first-child { color: #1c1541; }
+    [data-theme="light"] .modal-note { color: #6b7280; }
+    [data-theme="light"] .modal-backdrop { background: rgba(200,190,240,0.7); }
+
+    /* ── topbar ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--divider);
+      z-index: 50;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    .theme-btn {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--divider);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 15px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .theme-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
   </style>
 </head>
 <body>
 
-<div class="page">
+<div class="topbar">
+  <a href="https://guicheffer.me" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    guicheffer.me
+  </a>
+  <button class="theme-btn" id="theme-btn" title="Toggle theme">☀️</button>
+</div>
+
+<div class="page" style="padding-top: 96px;">
 
   <!-- hero -->
   <div class="hero">
@@ -624,5 +696,24 @@
   </div>
 </div>
 
+<script>
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+
+  // inherit saved theme from main site
+  const saved = localStorage.getItem('theme') || 'dark';
+  applyTheme(saved);
+
+  btn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  });
+
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️' : '🌙';
+  }
+</script>
 </body>
 </html>
