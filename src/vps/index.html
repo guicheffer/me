@@ -700,8 +700,9 @@
   const html = document.documentElement;
   const btn = document.getElementById('theme-btn');
 
-  // inherit saved theme from main site
-  const saved = localStorage.getItem('theme') || 'dark';
+  // inherit saved theme from main site, fallback to OS preference
+  const saved = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
   applyTheme(saved);
 
   btn.addEventListener('click', () => {
