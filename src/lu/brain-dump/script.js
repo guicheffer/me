@@ -496,6 +496,14 @@ function renderHome(app) {
         <button class="pill-btn ghost" id="export-btn">${ICONS.download}Exportar</button>
       </div>
 
+      <div class="backup-row">
+        <span>Tudo fica só neste navegador. Pra não perder nada:</span>
+        <button type="button" class="text-link" id="backup-export-btn">baixar backup (.json)</button>
+        <span>·</span>
+        <label class="text-link" for="backup-import-input">restaurar backup</label>
+        <input type="file" id="backup-import-input" accept="application/json" hidden>
+      </div>
+
       <div class="history-heading">
         <h2>Histórico</h2>
         <span>${dates.length} ${dates.length === 1 ? 'dia registrado' : 'dias registrados'}</span>
@@ -538,6 +546,10 @@ function renderHome(app) {
     location.hash = `#/entry/${val}`;
   });
   document.getElementById('export-btn').addEventListener('click', handleExport);
+  document.getElementById('backup-export-btn').addEventListener('click', handleBackupExport);
+  document.getElementById('backup-import-input').addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) handleBackupImportFile(e.target.files[0]);
+  });
 
   app.querySelectorAll('[data-goto]').forEach(el => {
     el.addEventListener('click', () => { location.hash = `#/entry/${el.dataset.goto}`; });
@@ -833,6 +845,47 @@ function printableSpread(dateIso, data) {
         <img src="assets/logo.png" class="page-logo" alt="logo">
       </div>
     </div>`;
+}
+
+function handleBackupExport() {
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    entries: loadEntries(),
+    userName: getUserName(),
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `brain-dump-backup-${todayISO()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function handleBackupImportFile(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    let data;
+    try { data = JSON.parse(reader.result); }
+    catch (e) { alert('Esse arquivo não parece ser um backup válido.'); return; }
+    if (!data || typeof data.entries !== 'object' || !data.entries) {
+      alert('Esse arquivo não parece ser um backup válido.');
+      return;
+    }
+    const current = loadEntries();
+    const merged = { ...current, ...data.entries };
+    const importedCount = Object.keys(data.entries).length;
+    const totalCount = Object.keys(merged).length;
+    const when = data.exportedAt ? formatBR(data.exportedAt.slice(0, 10)) : 'data desconhecida';
+    const ok = confirm(`Backup de ${when} com ${importedCount} dia(s).\n\nIsso vai juntar com o que já está salvo aqui (total ficará em ${totalCount} dia(s)). Dias repetidos serão sobrescritos pelo backup.\n\nRestaurar?`);
+    if (!ok) return;
+    saveEntries(merged);
+    if (data.userName) setUserName(data.userName);
+    location.reload();
+  };
+  reader.readAsText(file);
 }
 
 function handleExport() {
